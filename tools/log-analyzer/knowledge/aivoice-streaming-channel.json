@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "updated": "2026-03-24",
-    "description": "AIVoice 流式通道与实时识别：Token 缓存、Session 池、WebSocket(AIChannel)、转写/NLG(Recognition)。"
+    "updated": "2026-04-09",
+    "description": "AIVoice 实时链路（含录音流程）：录音入口、Token 缓存、Session 池、WebSocket(AIChannel)、转写/NLG(Recognition)、录音结束。"
   },
   "id": "aivoice-streaming-channel",
-  "name": "AIVoice 流式通道与实时识别（WebSocket / Session / Token）",
-  "module_refs": ["AIBuds_Token", "AIBuds_Session", "AIBuds_AIChannel", "AIBuds_Recognition", "AIBuds_ASR", "AIBuds_Network"],
+  "name": "AIVoice 实时链路（录音 + 流式通道 + 识别）",
+  "module_refs": ["AIBuds_Token", "AIBuds_Session", "AIBuds_AIChannel", "AIBuds_Recognition", "AIBuds_ASR", "AIBuds_Network", "AIBuds_Record", "AIBuds_Transfer", "AIBuds_AudioInput", "AIBuds_Coder", "AIBuds_DB"],
   "keywords": [
     "stream",
     "streaming",
@@ -35,7 +35,18 @@
     "send_data",
     "receive_data",
     "session pool",
-    "timeout"
+    "timeout",
+    "录音",
+    "recording",
+    "record",
+    "start recording",
+    "stop recording",
+    "pause",
+    "resume",
+    "audio input",
+    "transcription task",
+    "AIBuds",
+    "aibuds"
   ],
   "primary_tags": [
     "AIBuds_Token",
@@ -47,7 +58,11 @@
     "AIBuds_ASR",
     "AIBuds_Network",
     "AIBuds_Record",
-    "AIBuds_AudioInput"
+    "AIBuds_AudioInput",
+    "AIBuds_Transfer",
+    "AIBuds_Coder",
+    "AIBuds_Amplitude",
+    "AIBuds_DB"
   ],
   "noise_tags": [],
   "check_order": [
@@ -109,6 +124,34 @@
     {
       "pattern": "scene: packet - ASR_.*send failed",
       "cause": "旧版通道上 ASR 分包发送失败（网络或连接已断）"
+    },
+    {
+      "pattern": "The source language is empty",
+      "cause": "源语言未设置，需在录音前选择语言"
+    },
+    {
+      "pattern": "The target language is empty",
+      "cause": "目标语言未设置"
+    },
+    {
+      "pattern": "The recording task already exists",
+      "cause": "录音任务已存在，上一次录音未正确结束"
+    },
+    {
+      "pattern": "Device startup exception",
+      "cause": "设备启动异常，检查蓝牙连接或设备状态"
+    },
+    {
+      "pattern": "requestEndAsr failed",
+      "cause": "结束 ASR 请求失败，可能网络异常或服务端错误"
+    },
+    {
+      "pattern": "Recording interrupted.*dpsUpdate",
+      "cause": "录音被外部事件中断（如来电），检查中断源"
+    },
+    {
+      "pattern": "The recording duration has reached the limit",
+      "cause": "录音时长达上限，自动停止"
     }
   ],
   "normal_behaviors": [
@@ -126,6 +169,16 @@
       "pattern": "scene: create - reuse same token",
       "description": "Token 参数命中缓存，复用同一 tokenId",
       "how_to_identify": "紧随其后的 update/start 正常"
+    },
+    {
+      "pattern": "Token Already exists",
+      "description": "Token 映射已存在，属于正常复用行为",
+      "how_to_identify": "日志中出现 Token Already exists 后紧跟正常录音流程"
+    },
+    {
+      "pattern": "Transcription task paused/resumed",
+      "description": "用户主动暂停和恢复转写任务",
+      "how_to_identify": "pause 和 resume 成对出现，且前后日志无异常"
     }
   ],
   "phases": [
