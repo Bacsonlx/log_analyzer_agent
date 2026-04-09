@@ -139,14 +139,16 @@ def test_parse_asr_records_interleaved_requests(tmp_path):
     assert req_b["duration_ms"] == 8000
 
 
-def test_normalize_template_id_maps_deprecated_translation():
+def test_normalize_template_id_maps_deprecated_ids():
     assert _normalize_template_id("translation") == "audio-recognition"
+    assert _normalize_template_id("recording") == "audio-recognition"
     assert _normalize_template_id("audio-recognition") == "audio-recognition"
     assert _normalize_template_id("auto") == "auto"
 
 
 def test_template_phases_has_single_recognition_entry():
     assert "translation" not in _TEMPLATE_PHASES
+    assert "recording" not in _TEMPLATE_PHASES
     ar = _TEMPLATE_PHASES["audio-recognition"]
     assert ar["label"] == "实时链路"
     assert ar["phases"][0]["name"] == "选择设备"

@@ -7,7 +7,6 @@ import { esc, safeFetchJson } from '../utils/helpers.js';
 import { TEMPLATES } from '../templates/index.js';
 
 const SCENARIO_OPTIONS = [
-  '录音问题',
   '实时链路',
   '云同步上传',
   '离线文件传输',
@@ -15,7 +14,6 @@ const SCENARIO_OPTIONS = [
 ];
 
 const SCENARIO_TEMPLATE_MAP = {
-  '录音问题': 'recording',
   '实时链路': 'audio-recognition',
   '云同步上传': 'cloud-upload',
   '离线文件传输': 'offline-transcription',
