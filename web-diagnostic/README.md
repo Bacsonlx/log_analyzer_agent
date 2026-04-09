@@ -101,14 +101,13 @@ npm run build    # 构建到 dist/
 
 ### 场景模板（AIVoice）
 
-内置四类场景，Claude 按照预定义 phase 输出结构化报告：
+内置三类模板，Claude 按照预定义 phase 输出结构化报告：
 
 | 模板 ID | 场景 |
 |---------|------|
-| `audio-recognition` | 语音识别（ASR） |
-| `recording` | 录音 |
+| `audio-recognition` | 实时链路 |
 | `cloud-upload` | 云端上传 |
-| `offline-transcription` | 离线转写 |
+| `offline-transcription` | 离线转写/总结 |
 
 AIBuds 日志中的 `[AIBuds_ASR]` 行会被自动提取、解析为 ASR 记录表格（包括 request_id、耗时、识别文本、中间更新次数）。
 

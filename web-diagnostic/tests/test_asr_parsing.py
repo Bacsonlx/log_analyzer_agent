@@ -10,6 +10,7 @@ from server import (
     _extract_pipeline_result,
     _extract_template_data,
     _merge_asr_into_recordings,
+    _normalize_knowledge_scenario_id,
     _normalize_template_id,
     _parse_asr_records,
 )
@@ -141,18 +142,25 @@ def test_parse_asr_records_interleaved_requests(tmp_path):
 
 def test_normalize_template_id_maps_deprecated_translation():
     assert _normalize_template_id("translation") == "audio-recognition"
+    assert _normalize_template_id("recording") == "audio-recognition"
     assert _normalize_template_id("audio-recognition") == "audio-recognition"
     assert _normalize_template_id("auto") == "auto"
 
 
 def test_template_phases_has_single_recognition_entry():
     assert "translation" not in _TEMPLATE_PHASES
+    assert "recording" not in _TEMPLATE_PHASES
     ar = _TEMPLATE_PHASES["audio-recognition"]
     assert ar["label"] == "实时链路"
     assert ar["phases"][0]["name"] == "选择设备"
     assert ar["phases"][-1]["name"] == "识别结束"
     assert isinstance(ar["phases"][0]["modules"], list)
     assert len(ar["phases"][0]["modules"]) > 0
+
+
+def test_normalize_knowledge_scenario_id_maps_deprecated_recording():
+    assert _normalize_knowledge_scenario_id("aivoice-recording") == "aivoice-streaming-channel"
+    assert _normalize_knowledge_scenario_id("aivoice-translation") == "aivoice-translation"
 
 
 def test_merge_asr_into_recordings_by_record_id():
