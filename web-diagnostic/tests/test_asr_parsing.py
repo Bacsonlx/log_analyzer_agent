@@ -141,12 +141,14 @@ def test_parse_asr_records_interleaved_requests(tmp_path):
 
 def test_normalize_template_id_maps_deprecated_translation():
     assert _normalize_template_id("translation") == "audio-recognition"
+    assert _normalize_template_id("recording") == "audio-recognition"
     assert _normalize_template_id("audio-recognition") == "audio-recognition"
     assert _normalize_template_id("auto") == "auto"
 
 
 def test_template_phases_has_single_recognition_entry():
     assert "translation" not in _TEMPLATE_PHASES
+    assert "recording" not in _TEMPLATE_PHASES
     ar = _TEMPLATE_PHASES["audio-recognition"]
     assert ar["label"] == "实时链路"
     assert ar["phases"][0]["name"] == "选择设备"
@@ -273,7 +275,7 @@ def test_extract_template_data_flat_phases_still_works():
 
 tail"""
     data, clean = _extract_template_data(body)
-    assert data["template"] == "recording"
+    assert data["template"] == "audio-recognition"
     assert len(data["phases"]) == 1
     assert "x" in clean and "tail" in clean
 

@@ -9,7 +9,7 @@ Docker 部署指引见 [DOCKER.md](DOCKER.md)。
 - **日志自动拉取**：通过 SSO/OAuth 认证后，输入 Ticket ID 即可从 App Log Platform 自动下载日志
 - **文件上传**：支持拖拽上传 `.log` / `.txt` / `.zip` / `.gz`（单文件最大 50 MB）
 - **AI 实时诊断**：Claude Code CLI + log-analyzer MCP 工具，流式输出工具调用过程
-- **场景化报告**：内置 AIVoice 场景模板（识别音频、录音、云端上传等），输出结构化时间轴报告
+- **场景化报告**：内置 AIVoice 场景模板（实时链路、云端上传、离线转写等），输出结构化时间轴报告
 - **分析历史**：结果自动保存，支持回溯查看和下载
 - **知识库积累**：可从诊断结果中提取规律写入知识库，供后续诊断参考
 
@@ -101,12 +101,11 @@ npm run build    # 构建到 dist/
 
 ### 场景模板（AIVoice）
 
-内置四类场景，Claude 按照预定义 phase 输出结构化报告：
+内置三类场景，Claude 按照预定义 phase 输出结构化报告：
 
 | 模板 ID | 场景 |
 |---------|------|
-| `audio-recognition` | 语音识别（ASR） |
-| `recording` | 录音 |
+| `audio-recognition` | 实时链路（录音 → 识别/翻译/ASR 全流程） |
 | `cloud-upload` | 云端上传 |
 | `offline-transcription` | 离线转写 |
 

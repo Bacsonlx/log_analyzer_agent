@@ -361,8 +361,10 @@ async def _run_task(task: QueuedTask):
                 result_cost = event.cost_usd
                 # 提取 template_data，将 JSON 块从正文中分离
                 template_data, result_text = _extract_template_data(result_text)
-                if template_data and template_data.get("template") == "translation":
-                    template_data["template"] = "audio-recognition"
+                if template_data and isinstance(template_data.get("template"), str):
+                    template_data["template"] = _normalize_template_id(
+                        template_data["template"]
+                    )
                 # 统一为 recordings 格式，合并服务端 ASR 数据
                 _ensure_recordings_format(template_data)
                 _merge_asr_into_recordings(template_data, server_asr_records)
@@ -444,10 +446,6 @@ _TEMPLATE_PHASES: dict[str, dict] = {
         ],
         "recordings_by_field": True,
     },
-    "recording": {
-        "label": "录音问题",
-        "phases": ["录音入口", "任务初始化", "音频源选择", "录音进行中", "录音结束"],
-    },
     "cloud-upload": {
         "label": "云同步上传",
         "phases": ["发起上传", "获取加密密钥", "文件加密", "文件上传", "DB状态更新"],
@@ -457,7 +455,7 @@ _TEMPLATE_PHASES: dict[str, dict] = {
 
 def _normalize_template_id(template: str) -> str:
     """将已废弃的模版 id 映射为当前 canonical id（兼容旧客户端与历史 JSON）。"""
-    if template == "translation":
+    if template in ("translation", "recording"):
         return "audio-recognition"
     return template
 
@@ -765,6 +763,8 @@ def _extract_template_data(text: str) -> tuple[dict | None, str]:
             clean = (text[:fence] + text[blob_end:]).strip()
         else:
             clean = (text[:fence] + text[end_fence + 3 :]).strip()
+        if isinstance(data.get("template"), str):
+            data["template"] = _normalize_template_id(data["template"])
         return data, clean
 
 
