@@ -1,0 +1,328 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_AIChannel",
+  "description": "WebSocket/流式通道、连接、数据包与链路时序（含原 `[AI]` 类时序日志）",
+  "source_files": [
+    "ThingAutomaticSpeechRecognitionRequest.m",
+    "ThingNewAutomaticSpeechRecognitionRequest.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "event",
+    "lifecycle",
+    "packet",
+    "pick_data",
+    "receive_data",
+    "request",
+    "send_data",
+    "session",
+    "stream",
+    "timer",
+    "tts",
+    "ws",
+    "ws_message"
+  ],
+  "log_stats": {
+    "total": 55,
+    "by_level": {
+      "debug": 2,
+      "info": 44,
+      "error": 9
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: pick_data - start already begun .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ws - channel not connected, connecting .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ws - channel already connected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - stop already called .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ws - disconnected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ws - connected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: request - started at .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - begin at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: send_data - begin at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: receive_data - begin at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: tts - completed at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: stream - not connected, connecting .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: stream - already connected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: stream - disconnected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: stream - connected .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: send_data - begin at .* intervalMs: .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: receive_data - begin at .* intervalMs: .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: packet - ASR_START send failed .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: packet - ASR_MID send failed .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: packet - ASR_END send failed .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: timer - ASR timeout .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ws_message - server error .* message: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: packet - stream end event failed .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: session - state not success, disconnect error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: timer - timeout eventId: .* sessionId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: lifecycle - dealloc .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - data after stop ignored .* length: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - stop .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: packet - ASR_START .* options: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: packet - ASR_END .* options: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - end at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: send_data - end at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: receive_data - end at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: request - startTime .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: session - create in progress, waiting .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: event - send end at .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: event - end received session matched at .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: stream - connection close at .* sessionId: .* eventId: .* requestId: .* packetSessionId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: session - close at .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: packet - legacy ASR_START .* options: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: packet - legacy ASR_END request: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pick_data - end at .* intervalMs: .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: send_data - end at .* intervalMs: .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: receive_data - end at .* intervalMs: .* sessionId: .* eventId: .* requestId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    "scene: packet - ASR_MID %@ length: %lld",
+    "scene: ws_message - type %@ %@",
+    "scene: request - finished at %@ intervalMs: %.3f",
+    "scene: tts - partial at %@ intervalMs: %.3f",
+    "scene: tts - interrupted at %@ intervalMs: %.3f",
+    "scene: packet - legacy ASR_MID %@ length: %lld",
+    "scene: request - finished sessionId: %@ eventId: %@ requestI"
+  ]
+}

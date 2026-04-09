@@ -1,0 +1,102 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_PhoneAndEntryBuds",
+  "description": "手机+入门版耳机面对面翻译",
+  "source_files": [
+    "ThingPhoneAndEntryBudsRecordTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 16,
+    "by_level": {
+      "info": 5,
+      "debug": 10,
+      "error": 1
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Mobile phone -Entry-level headset translation task preparation completed, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Unsupported audio format, Device ID: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRTimeout, using the last updated result.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "The recording duration has reached the limit. （.* seconds), recording stops automatically; Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start phone -Entry-level headset translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start preparing the mobile phone -Entry-level headset translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start/stop phone -Entry-level headset translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Mobile phone -Entry-level headset translation task paused, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop phone -Entry-level headset translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "VADMaximum length truncation, pause playback",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Playing buffered TTS data: %lu bytes",
+    " Finished playing buffered TTS data, remaining buffer: %lu b",
+    " Played additional buffered TTS data: %lu bytes",
+    " Buffering new TTS data while playing buffered TTS: %lu byte",
+    " Save last time ASRResult : %@",
+    " Save the last translation result : %@"
+  ]
+}

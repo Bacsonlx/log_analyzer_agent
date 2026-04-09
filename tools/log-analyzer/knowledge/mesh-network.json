@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "mesh-network",
+  "name": "Mesh 组网问题",
+  "keywords": ["mesh", "组网", "sigmesh", "beacon mesh", "sub device"],
+  "primary_tags": [
+    "thingmesh_SigMeshController",
+    "thingmesh_SigMeshConnectImpl",
+    "thingmesh_ThingAllMeshManager",
+    "thingmesh_SigMeshLocalController",
+    "thingmesh_ThingMeshLocalController",
+    "BlueMeshModel",
+    "BlueMeshControlModel",
+    "BleMeshController"
+  ],
+  "secondary_tags": [
+    "SigMeshBatchConnectModule",
+    "BleMeshControllerManager",
+    "BleMeshManager",
+    "BeaconMeshProxySender",
+    "BeaconMeshActInfoParser",
+    "MeshAdvTransmitter",
+    "CheckDeviceActivatorStatus",
+    "BlueMeshCallback"
+  ],
+  "check_order": [
+    "1. 检查 thingmesh_SigMeshConnectImpl 确认 Mesh 连接状态",
+    "2. 检查 thingmesh_SigMeshController 确认控制器命令执行",
+    "3. 检查 BleMeshController 确认子设备通信",
+    "4. 检查 thingmesh_ThingAllMeshManager 确认设备管理",
+    "5. 检查 MeshAdvTransmitter 确认广播数据",
+    "6. 检查 BeaconMeshProxySender 确认代理发送"
+  ],
+  "common_causes": [
+    {"pattern": "provision.*fail", "cause": "Mesh 配网失败，检查网关连接状态和 Mesh 密钥"},
+    {"pattern": "connect.*mesh.*timeout", "cause": "Mesh 连接超时，设备可能不在 Mesh 网络范围"},
+    {"pattern": "command.*send.*fail", "cause": "Mesh 命令发送失败，检查代理节点连接"},
+    {"pattern": "ota.*mesh", "cause": "Mesh OTA 失败，确认网关与子设备连接稳定"}
+  ]
+}

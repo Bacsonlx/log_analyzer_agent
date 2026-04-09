@@ -1,0 +1,246 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Transfer",
+  "description": "离线录音、实时转写、同声传译",
+  "source_files": [
+    "ThingAudioRecordTransferTask.m",
+    "ThingFaceToFaceTranslateTask.m",
+    "ThingPhoneAndProBudsRecordTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 45,
+    "by_level": {
+      "debug": 11,
+      "info": 30,
+      "error": 4
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "The recording duration has reached the limit.  [Success ] Stop recording, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Recording duration has reached the limit. Start recording again.  [Success ]，Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task ready, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task paused successfully. Device. ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task resumed successfully. Device. ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ASRAll tasks completed; last save performed. ASRResult",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Execute Finish StopSuccess",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task resumed successfully. Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Recording duration has reached the limit. Start recording again.  [Failed ]，Device ID: .* error: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The recording duration has reached the limit.  [Failed ] Stop recording, Device ID: .* error: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unsupported audio source type : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Received start command  - Device startup exception",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unsupported audio format ：.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unsupported audio format",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRTimeout, using the last updated result.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Initialize transcription task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The recording duration has reached the limit. （.* seconds), recording stops automatically; Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "dealloc task recordID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start preparing the transcription task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start/pause transcription task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start transcription recovery task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start/stop transcription task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task stopped, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start speaking  - .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Ended due to unpaid fees",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Received start command  - formate: .*, type: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Execute  Deal StopOperation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Execute Finish StopOperation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Audio interruption ended",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Audio interruption ended; attempting to resume playback",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "handleRouteChange not finish start",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start restoring transcription task, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Switch transcription task mode, Device ID: %@, Audio Source",
+    " channel :%d, Length  %d",
+    " Switch audio source to  ==> %@",
+    " record_control Label   Mark FinshOperation ",
+    " Phone call recording does not handle audio interruptions. ",
+    " Audio interrupted ",
+    " Route change debounce: Ignore duplicate triggers and measur",
+    " New audio Device available ",
+    " Switching BTThe Device is not the entry-level headset. ",
+    " Save Last ASRResult : %@",
+    " Save the last translation result : %@"
+  ]
+}

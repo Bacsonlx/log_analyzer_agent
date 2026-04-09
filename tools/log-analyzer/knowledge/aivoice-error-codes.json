@@ -1,0 +1,144 @@
+{
+  "_meta": {
+    "updated": "2026-03-19",
+    "description": "AIVoice (ThingAudioRecordInterface) 错误码知识库，来源：ThingAudioRecordInterfaceConstants.h"
+  },
+  "id": "aivoice-error-codes",
+  "name": "AIVoice 错误码知识库",
+  "categories": {
+    "recording_inner": {
+      "name": "录音内部错误",
+      "errors": [
+        {"code": "10001", "full_code": "ThingAudioRecordInnerError", "reason": "内部错误", "solution": "检查日志上下文确定具体内部错误原因"},
+        {"code": "10002", "full_code": "ThingAudioRecordPidNotAssociated", "reason": "设备 PID 未关联", "solution": "确认设备授权信息和 PID 绑定关系"},
+        {"code": "10003", "full_code": "ThingAudioRecordLanguageError", "reason": "语言设置错误", "solution": "检查源语言和目标语言是否正确设置"}
+      ]
+    },
+    "recording_network": {
+      "name": "录音网络与超时",
+      "errors": [
+        {"code": "10011", "full_code": "ThingAudioRecordNetworkError", "reason": "网络错误", "solution": "检查网络连接状态"},
+        {"code": "10012", "full_code": "ThingAudioRecordNotExistsError", "reason": "录音记录不存在", "solution": "确认录音 ID 是否正确"},
+        {"code": "10021", "full_code": "ThingAudioRecordTimeoutError", "reason": "操作超时", "solution": "检查网络状况或设备响应"},
+        {"code": "10022", "full_code": "ThingAudioRecordCallHangUpError", "reason": "通话挂断", "solution": "正常行为：通话结束触发"}
+      ]
+    },
+    "recording_file": {
+      "name": "录音文件操作",
+      "errors": [
+        {"code": "10031", "full_code": "ThingAudioRecordCreateDirectoryError", "reason": "创建目录失败", "solution": "检查存储空间和权限"},
+        {"code": "10032", "full_code": "ThingAudioRecordCreateFileError", "reason": "创建文件失败", "solution": "检查存储空间和权限"},
+        {"code": "10033", "full_code": "ThingAudioRecordFileRemoteRemoveError", "reason": "文件被远端删除", "solution": "文件在云端已被删除，需重新录音"}
+      ]
+    },
+    "recording_state": {
+      "name": "录音状态错误",
+      "errors": [
+        {"code": "10041", "full_code": "ThingAudioRecordOperateError", "reason": "操作错误", "solution": "检查当前录音状态是否允许该操作"},
+        {"code": "10042", "full_code": "ThingAudioRecordAlreadyStartError", "reason": "录音已开始", "solution": "重复开始录音，忽略即可"},
+        {"code": "10043", "full_code": "ThingAudioRecordAlreadyPauseError", "reason": "录音已暂停", "solution": "重复暂停操作"},
+        {"code": "10044", "full_code": "ThingAudioRecordAlreadyResumeError", "reason": "录音已恢复", "solution": "重复恢复操作"},
+        {"code": "10045", "full_code": "ThingAudioRecordAlreadyStopError", "reason": "录音已停止", "solution": "重复停止操作"},
+        {"code": "10046", "full_code": "ThingAudioRecordAlreadyInRequestError", "reason": "已在请求中", "solution": "等待上一次请求完成"},
+        {"code": "10047", "full_code": "ThingAudioRecordDeviceAlreadyInRecordError", "reason": "设备已在录音", "solution": "先停止当前录音再开始新录音"},
+        {"code": "10048", "full_code": "ThingAudioRecordDeviceNotInRecordError", "reason": "设备未在录音", "solution": "先开始录音再执行此操作"},
+        {"code": "10049", "full_code": "ThingAudioRecordResumeNotInPauseError", "reason": "未在暂停状态无法恢复", "solution": "仅在暂停状态才能恢复"}
+      ]
+    },
+    "recording_device": {
+      "name": "设备与音频",
+      "errors": [
+        {"code": "10061", "full_code": "ThingAudioRecordDeviceError", "reason": "设备错误", "solution": "检查设备连接状态"},
+        {"code": "10062", "full_code": "ThingAudioRecordDPError", "reason": "设备不支持录音控制 DP", "solution": "确认设备固件是否支持录音功能"},
+        {"code": "10063", "full_code": "ThingAudioRecordDPValueError", "reason": "DP 值错误", "solution": "检查 DP 下发值是否正确"},
+        {"code": "10064", "full_code": "ThingAudioRecordDeviceNotAllConnect", "reason": "设备未全部连接", "solution": "确保所有需要的设备均已连接（如左右耳）"},
+        {"code": "10071", "full_code": "ThingAudioRecordAudioFormatError", "reason": "音频格式错误", "solution": "检查音频格式是否受支持"},
+        {"code": "10072", "full_code": "ThingAudioRecordAudioNotExistsError", "reason": "音频不存在", "solution": "确认音频文件路径"},
+        {"code": "10073", "full_code": "ThingAudioRecordAudioEngineInitError", "reason": "音频引擎初始化失败", "solution": "检查系统音频权限和资源占用"},
+        {"code": "10074", "full_code": "ThingAudioRecordAudioEngineResumeError", "reason": "音频引擎恢复失败", "solution": "尝试重新初始化音频引擎"},
+        {"code": "10075", "full_code": "ThingAudioRecordAudioEngineInterruptResumeError", "reason": "音频引擎中断恢复失败", "solution": "可能需要重启应用"}
+      ]
+    },
+    "recording_misc": {
+      "name": "其他录音错误",
+      "errors": [
+        {"code": "10081", "full_code": "ThingAudioRecordAudioPaymentRequired", "reason": "需要付费", "solution": "引导用户开通付费功能"},
+        {"code": "10082", "full_code": "ThingAudioBlueToothConnectError", "reason": "蓝牙连接错误", "solution": "检查蓝牙连接状态和配对"},
+        {"code": "10083", "full_code": "ThingAudioRecordDeviceOfflineError", "reason": "设备离线", "solution": "确认设备在线状态"}
+      ]
+    },
+    "offline_transfer": {
+      "name": "离线文件传输",
+      "errors": [
+        {"code": "10090", "full_code": "ThingAudioRecordFetchOfflineListFailed", "reason": "拉取离线列表失败", "solution": "检查设备连接和蓝牙通信"},
+        {"code": "10091", "full_code": "ThingAudioRecordOpenHostspotFailed", "reason": "打开热点失败", "solution": "检查 WiFi 权限"},
+        {"code": "10092", "full_code": "ThingAudioRecordConnectHostspotFailed", "reason": "连接热点失败", "solution": "检查 WiFi 权限和局域网权限"},
+        {"code": "10093", "full_code": "ThingAudioRecordFetchHostspotRouterFailed", "reason": "获取热点路由失败", "solution": "检查设备 AP 模式是否正常"},
+        {"code": "10095", "full_code": "ThingAudioRecordTransmissionSpeedContinuouslyZero", "reason": "传输速度持续为 0 超 10 秒", "solution": "检查 AP 信号强度和距离"},
+        {"code": "10096", "full_code": "ThingAudioRecordWifiChangeAPWifiDisConnect", "reason": "AP WiFi 非当前 WiFi 断开", "solution": "确保 WiFi 不要自动切换"},
+        {"code": "10097", "full_code": "ThingAudioRecordNoteRecordingUnableTransform", "reason": "卡片录音无法转换", "solution": "检查录音格式兼容性"},
+        {"code": "10300", "full_code": "ThingAudioFileTransferAPLinkWithOtherDeviceError", "reason": "热点被其他设备连接", "solution": "断开其他设备后重试"},
+        {"code": "10301", "full_code": "ThingAudioFileTransferCheckIPhoneWifiConfigError", "reason": "热点连接失败，检查 WiFi 权限/局域网", "solution": "在设置中开启 WiFi 和局域网权限"},
+        {"code": "10302", "full_code": "ThingAudioFileTransferAPUsedOROpenVPNError", "reason": "VPN 开启或 AP 通道被占用", "solution": "关闭 VPN 后重试"},
+        {"code": "10303", "full_code": "ThingAudioFileTransferAPLinkTimeOutRebootError", "reason": "AP 连接超时，需重启设备", "solution": "重启设备后重试"},
+        {"code": "10304", "full_code": "ThingAudioFileTransferAppEnterBackgroudError", "reason": "App 进入后台无法连接", "solution": "保持 App 在前台运行"},
+        {"code": "10305", "full_code": "ThingAudioFileTransferIPhoneAuthorizationError", "reason": "授权异常", "solution": "检查应用授权设置"}
+      ]
+    },
+    "translate": {
+      "name": "翻译相关",
+      "errors": [
+        {"code": "10100", "full_code": "ThingAudioTranslateCommonError", "reason": "翻译通用错误", "solution": "检查网络和翻译服务状态"},
+        {"code": "10101", "full_code": "ThingAudioTranslateTTSUrlError", "reason": "TTS URL 错误", "solution": "检查 TTS 服务配置"},
+        {"code": "-1002", "full_code": "ThingAudioTranslateFileNotExistError", "reason": "翻译文件不存在", "solution": "确认文件路径正确"}
+      ]
+    },
+    "cloud_sync": {
+      "name": "云同步上传/下载",
+      "errors": [
+        {"code": "10200", "full_code": "ThingAudioRecordRepeatUploadFileError", "reason": "请勿重复上传", "solution": "文件已上传，跳过即可"},
+        {"code": "10201", "full_code": "ThingAudioRecordUploadFileNotExistError", "reason": "原文件不存在", "solution": "检查本地文件是否被清理"},
+        {"code": "10202", "full_code": "ThingAudioRecordEncryptFileError", "reason": "加密失败", "solution": "检查加密密钥和文件完整性"},
+        {"code": "10203", "full_code": "ThingAudioRecordGetStorageConfigError", "reason": "获取存储配置失败", "solution": "检查网络或云端服务"},
+        {"code": "10204", "full_code": "ThingAudioRecordUploadingError", "reason": "上传失败", "solution": "检查网络状况和存储配额"},
+        {"code": "10205", "full_code": "ThingAudioRecordSyncResultToServerError", "reason": "同步结果到服务端失败", "solution": "检查网络连接"},
+        {"code": "10206", "full_code": "ThingAudioRecordRepeatDownloadFileError", "reason": "请勿重复下载", "solution": "文件已下载，跳过即可"},
+        {"code": "10207", "full_code": "ThingAudioRecordGetDecryptKeyError", "reason": "获取解密密钥失败", "solution": "检查密钥服务状态"},
+        {"code": "10208", "full_code": "ThingAudioRecordGetDownloadUrlError", "reason": "获取下载 URL 失败", "solution": "检查云端文件是否存在"},
+        {"code": "10209", "full_code": "ThingAudioRecordEncryptedFileNotExistError", "reason": "加密文件不存在", "solution": "文件可能被清理，需重新上传"},
+        {"code": "10210", "full_code": "ThingAudioRecordDecryptFileError", "reason": "解密失败", "solution": "密钥可能不匹配"},
+        {"code": "10211", "full_code": "ThingAudioRecordDownloadingError", "reason": "下载失败", "solution": "检查网络和存储空间"},
+        {"code": "10212", "full_code": "ThingAudioRecordAudioFileNotExistError", "reason": "文件记录不存在", "solution": "确认 fileId 是否正确"},
+        {"code": "10213", "full_code": "ThingAudioRecordSyncCloudSwitchNotOpen", "reason": "云同步开关未开启", "solution": "在设置中开启云同步功能"},
+        {"code": "10214", "full_code": "ThingAudioRecordSyncCloudSwitchNetworkTypeNotMatch", "reason": "云同步网络类型不匹配", "solution": "切换到 WiFi 或更改同步策略"}
+      ]
+    },
+    "file_import": {
+      "name": "文件导入",
+      "errors": [
+        {"code": "20101", "full_code": "FileImportCountExceed", "reason": "导入数量超限", "solution": "减少导入文件数量"},
+        {"code": "20102", "full_code": "FileImportSizeExceed", "reason": "文件过大", "solution": "选择较小的文件"},
+        {"code": "20103", "full_code": "FileImportFormatError", "reason": "文件格式错误", "solution": "使用支持的音频格式（MP3/M4A/WAV 等）"},
+        {"code": "20104", "full_code": "FileImportSpaceInsufficient", "reason": "存储空间不足", "solution": "清理存储空间后重试"}
+      ]
+    },
+    "file_share": {
+      "name": "文件分享",
+      "errors": [
+        {"code": "20201", "full_code": "FileShareSensitiveWord", "reason": "包含敏感词", "solution": "修改内容中的敏感词"},
+        {"code": "20202", "full_code": "FileShareFailed", "reason": "分享失败", "solution": "检查网络状况"},
+        {"code": "20203", "full_code": "FileSharePasswordInvalid", "reason": "分享密码无效", "solution": "检查密码格式"},
+        {"code": "20204", "full_code": "FileShareNeedTranscribe", "reason": "需先完成转写才能分享", "solution": "等待转写完成后再分享"}
+      ]
+    },
+    "merge": {
+      "name": "文件合并",
+      "errors": [
+        {"code": "20220", "full_code": "MergeParamEmpty", "reason": "合并入参为空", "solution": "检查输入参数"},
+        {"code": "20221", "full_code": "MergeNetworkUnavailable", "reason": "网络不可用", "solution": "检查网络连接"},
+        {"code": "20222", "full_code": "MergeFileNotExist", "reason": "合并文件不存在", "solution": "确认文件路径"},
+        {"code": "20230", "full_code": "MergeReportFailed", "reason": "合并上报失败", "solution": "检查网络"}
+      ]
+    }
+  }
+}

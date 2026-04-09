@@ -1,0 +1,207 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Session",
+  "description": "流式会话创建与池管理",
+  "source_files": [
+    "ThingNewAutomaticSpeechRecognitionRequest.m",
+    "ThingSmartAISessionEntry.m",
+    "ThingSmartAISessionPool.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "create",
+    "pool"
+  ],
+  "log_stats": {
+    "total": 37,
+    "by_level": {
+      "info": 1,
+      "error": 7,
+      "debug": 29
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: create - success sessionId: .* tokenId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - new sessionId already in pool tokenId: .* sessionId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - already idle sessionId: .* tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: create - failed tokenId: .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "recoverable: scene: pool - getSession nil completion tokenId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "recoverable: scene: pool - full tokenId: .* count: .* max: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "recoverable: scene: pool - became full during create tokenId: .* sessionId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pool - creation failed tokenId: .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "recoverable: scene: pool - mark idle invalid tokenId: .* sessionId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "recoverable: scene: pool - remove invalid tokenId: .* sessionId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pool - removed empty list tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: pool - initialized",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - created new list tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - close discard sessionId: .* tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - release tokenId: .* session count: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - close idle sessionId: .* tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - release no pool tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - release complete tokenId: .* session count: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - release complete no pool tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - batch close sessionId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - remove no list tokenId: .* sessionId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - removed sessionId: .* tokenId: .* size: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - remove not found sessionId: .* tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - prune idle count: .* tokenId: .* maxSize: .* removed: [.*] newSize: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pool - discard eligible sessionId: .* canRelease: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    "scene: pool - max size per token %lu",
+    "scene: pool - reuse idle sessionId: %@ tokenId: %@",
+    "scene: pool - no idle session, requesting creation tokenId: ",
+    "scene: pool - added sessionId: %@ tokenId: %@ size: %lu",
+    "scene: pool - no list for mark idle tokenId: %@ sessionId: %",
+    "scene: pool - marked idle sessionId: %@ tokenId: %@",
+    "scene: pool - not in main pool, discard path sessionId: %@ t",
+    "scene: pool - move to discard sessionId: %@ tokenId: %@",
+    "scene: pool - discard batch check count: %@ keys: %@",
+    "scene: pool - clear all count: %lu"
+  ]
+}

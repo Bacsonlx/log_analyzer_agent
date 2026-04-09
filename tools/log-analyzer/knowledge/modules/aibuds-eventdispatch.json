@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_EventDispatch",
+  "description": "向小程序等派发刷新/推送类事件",
+  "source_files": [
+    "ThingAudioRecordSyncManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "push_refresh"
+  ],
+  "log_stats": {
+    "total": 11,
+    "by_level": {
+      "error": 1,
+      "info": 1,
+      "debug": 9
+    }
+  },
+  "success_signals": [],
+  "failure_signals": [
+    {
+      "pattern": "scene: push_refresh - Mini program push refresh notify but config empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Delay timer triggered, starting event dispatch.",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Notification mini-program push refresh , recordId=%@",
+    " Distribute the mini-program push refresh event to  %lu a li",
+    " Distribute mini-program push notifications to refresh.  onP",
+    " Merge duplicates recordIdevent : %@",
+    " Event enqueued; current queue length : %lu",
+    " Reached maximum number of events (%ld)，Distribute immediate",
+    " Distribute  %lu an event ",
+    " Queue dispatches file update events; remaining queue length",
+    " Queue file list update event "
+  ]
+}

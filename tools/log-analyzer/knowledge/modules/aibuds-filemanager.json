@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_FileManager",
+  "description": "文件路径与文件工具类",
+  "source_files": [
+    "ThingAudioRecordFileManager.m",
+    "ThingAudioRecordFileUtils.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 28,
+    "by_level": {
+      "error": 19,
+      "debug": 3,
+      "info": 6
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "MP3File already exists : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "MP3File downloaded successfully : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File verification successful (step .*, next attempt): .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File moved to notes successfully  translateFileId=%lld, newFileId=.*, recordId=.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Migrate from translation files  files Table created successfully  translateFileId=%lld, newFileId=.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Create Folder  .* - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Temporary file does not exist  - .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to copy file  - .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Download MP3File failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create directory : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to move file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File path is empty : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File does not exist (retried) .*）: .* -> .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File is unreadable : .* -> .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve file attributes : .* -> .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalid file size : .* -> .*, size: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create file handle : .* -> .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to list directory contents : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to move file to note  translateFileId=%lld, error=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to query translation file  translateFileId=%lld, error=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Update translation file  noteFileId Failed  translateFileId=%lld, newFileId=.*, error=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Add from translation file  files Table creation failed  translateFileId=%lld, error=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Start downloading MP3File : .* -> .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " File does not exist yet; please wait for SDK rename (step %",
+    " File verification passed : %@ -> %@, size: %@ bytes",
+    " Diagnostics - directory listing (%@): %@"
+  ]
+}

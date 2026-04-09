@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_FaceToFace",
+  "description": "面对面翻译",
+  "source_files": [
+    "ThingFaceToFaceTranslateTask.m",
+    "ThingPhoneAndEntryBudsRecordTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "error_code"
+  ],
+  "log_stats": {
+    "total": 16,
+    "by_level": {
+      "debug": 9,
+      "info": 6,
+      "error": 1
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Face-to-face translation task preparation completed, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Old Device is unavailable (e.g., headphones unplugged or Bluetooth disconnected) ）",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: error_code -  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unsupported audio format, Device ID: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRTimeout, using the last updated result.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Release face-to-face translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The recording duration has reached the limit. （.* seconds), recording stops automatically; Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start face-to-face translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start preparing for the face-to-face translation task: Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start/pause face-to-face translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Face-to-face translation task paused, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop face-to-face translation task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    "New audio Device available ",
+    " Save last time ASRResult : %@",
+    " Save the last translation result : %@"
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_PhoneAndBuds",
+  "description": "手机+专业版耳机面对面翻译",
+  "source_files": [
+    "ThingPhoneAndProBudsRecordTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 34,
+    "by_level": {
+      "debug": 4,
+      "error": 6,
+      "info": 24
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Recording duration has reached the limit.  [Success ] Stop recording, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task preparation completed, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task paused successfully. Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Headset microphone enabled successfully",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Successfully enabled phone microphone",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Formal suspension succeeded, callback to the mini program succeeded.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Formal activation succeeded, callback to the mini-program succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Formal recovery succeeded, and the callback to the mini-program succeeded.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Formal termination succeeded; callback to the mini-program succeeded.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Old Device is unavailable (e.g., headphones unplugged or Bluetooth disconnected) ）",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Create multiple input sources CoderFailed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Recording duration has reached the limit.  [Failed ] Stop recording, Device ID: .* error: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unsupported audio source type : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Ended due to overdue payment",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "multiSourceCoder Not initialized",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Initialize mobile phone headset mode task, Device ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The recording duration has reached the limit. （.* seconds), recording stops automatically. Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "dealloc task recordID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start preparing the task, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start/stop task, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task stopped, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "handleRouteChange not finish start",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Audio interruption ended; attempting to resume playback",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " mapping  input %@ to channel %ld",
+    " complete requestId:%@ complete:%@",
+    " Save last time ASRResult : %@",
+    " Save the last translation result : %@",
+    " Settings  Coder MP3 File path : %@",
+    " New audio Device available ",
+    " Phone call recording does not handle audio interruptions. ",
+    " Audio interrupted "
+  ]
+}

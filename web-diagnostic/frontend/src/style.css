@@ -1,0 +1,172 @@
+@import 'highlight.js/styles/github-dark.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 赛博朋克基础 ── */
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.cyber-grid {
+  background-image:
+    linear-gradient(to right, rgba(61, 199, 245, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(61, 199, 245, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(61, 199, 245, 0.015) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.neon-border {
+  box-shadow:
+    0 0 6px rgba(61, 199, 245, 0.3),
+    inset 0 0 2px rgba(61, 199, 245, 0.1);
+}
+
+.neon-glow {
+  text-shadow: 0 0 8px rgba(61, 199, 245, 0.4);
+}
+
+/* ── 动画 ── */
+@keyframes pulse-neon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-neon {
+  animation: pulse-neon 2.5s ease-in-out infinite;
+}
+
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: terminal-blink 1s step-end infinite;
+}
+
+/* ── 视图过渡 ── */
+.view-enter {
+  animation: viewFadeIn 0.3s ease-out;
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 拖拽区域 ── */
+.dropzone-active {
+  border-color: #3dc7f5 !important;
+  background: rgba(61, 199, 245, 0.08) !important;
+}
+
+/* ── 步骤连线 ── */
+.step-line::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 28px;
+  bottom: -8px;
+  width: 1px;
+  background: rgba(61, 199, 245, 0.15);
+}
+.step-line:last-child::before {
+  display: none;
+}
+
+/* ── 报告内容样式 ── */
+.report-content h1,
+.report-content h2,
+.report-content h3 {
+  color: #3dc7f5;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+  font-weight: 700;
+}
+.report-content h1 { font-size: 1.25rem; }
+.report-content h2 { font-size: 1.1rem; }
+.report-content h3 { font-size: 1rem; }
+.report-content p { margin: 0.4em 0; color: #cbd5e1; }
+.report-content ul,
+.report-content ol { margin: 0.3em 0 0.3em 1.5em; color: #94a3b8; }
+.report-content code {
+  font-size: 0.85em;
+  background: rgba(61, 199, 245, 0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.report-content pre {
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.6em 0;
+}
+.report-content pre code {
+  background: none;
+  padding: 0;
+}
+.report-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.6em 0;
+}
+.report-content th,
+.report-content td {
+  border: 1px solid #1e3a42;
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 0.85em;
+}
+.report-content th {
+  background: #16252a;
+  color: #3dc7f5;
+}
+.report-content strong { color: #e2e8f0; }
+.report-content blockquote {
+  border-left: 3px solid #3dc7f5;
+  padding-left: 12px;
+  margin: 0.6em 0;
+  color: #94a3b8;
+}
+
+/* ── 抽屉动画 ── */
+.drawer-enter {
+  animation: drawerSlideIn 0.3s ease-out;
+}
+.drawer-leave {
+  animation: drawerSlideOut 0.2s ease-in forwards;
+}
+
+@keyframes drawerSlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes drawerSlideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* ── 折叠面板 ── */
+.collapsible-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+.collapsible-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+}

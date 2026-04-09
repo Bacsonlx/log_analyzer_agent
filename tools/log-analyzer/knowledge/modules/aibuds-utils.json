@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Utils",
+  "description": "工具模块",
+  "source_files": [
+    "ThingAudioRecordFileToolManager.m",
+    "ThingAudioRecordRestApi.m",
+    "ThingAudioRecordUtils.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 25,
+    "by_level": {
+      "debug": 6,
+      "error": 18,
+      "info": 1
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: share — Sharing succeeded, result: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Failed to retrieve file list ：.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "fileWriteQueue Does not exist, skipping file writing",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Exception occurred while closing file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File handle closed, skipping write.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create file handle or the file handle is closed; skipping write.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File handle closed before writing; skipping write.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to write to file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The file handle was closed before writing; skipping the write operation.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File write exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Initialization file handler exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create directory : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Initialization file handle exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to open file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: share — Failed to query sharing link, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Create MP3File : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Create File : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Path does not exist ：%@",
+    " Directory entry: %@",
+    " File: %@"
+  ]
+}

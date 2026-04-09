@@ -1,0 +1,139 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_DataSource",
+  "description": "数据源与缓存（含原 Cache 场景）",
+  "source_files": [
+    "ThingAudioRecordCache.m",
+    "ThingAudioRecordDataSourceManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "cache",
+    "cache_mem"
+  ],
+  "log_stats": {
+    "total": 42,
+    "by_level": {
+      "info": 5,
+      "debug": 36,
+      "error": 1
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Data center initialization completed  - Cache :.* Maximum quantity :.* TTL:.*s",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cache initialization completed  maxCount:.* ttl:.*s",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: cache - Received memory warning, clearing cache",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to invalidate file cache  fileId:.* (Mapping does not exist )",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalidate file cache  fileId:.* recordId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Batch invalidate file cache  count:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalidate file cache  recordId:.* fileId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalidate file cache  recordId:.* (Not found fileId)",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalidate transcription cache  fileId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Batch invalidate transcription cache  count:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalidate summary result cache  fileId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Batch invalidate summary result cache  count:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [],
+  "noise_patterns": [
+    " Cache %@",
+    " File details cache hit  fileId:%lld",
+    " File details cache miss, querying database  fileId:%lld",
+    " File detail cache hit  recordId:%@",
+    " File detail cache miss, querying database  recordId:%@",
+    " Transcription result cache hit  fileId:%lld",
+    " Transcription result cache miss, querying database  fileId:",
+    " Summary result cache hit  fileId:%lld",
+    " Summary result cache miss, querying database  fileId:%lld",
+    " Update Configuration  maxCount:%lu ttl:%.0fs",
+    " Clear all cache ",
+    " Clear all caches related to the file  fileId:%ld recordId:%",
+    " File cache miss  fileId:%ld (Mapping does not exist )",
+    " File cache expired  fileId:%ld recordId:%@",
+    " File cache hit  fileId:%ld recordId:%@ hitRate:%.2f%%",
+    " File cache miss  fileId:%ld recordId:%@",
+    " Set file cache  fileId:%lld recordId:%@",
+    " File cache does not exist or has expired.  recordId:%@",
+    " File cache hit  recordId:%@ hitRate:%.2f%%",
+    " File cache miss  recordId:%@"
+  ]
+}

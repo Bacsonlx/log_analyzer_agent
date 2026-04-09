@@ -1,0 +1,113 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Phone",
+  "description": "电话翻译",
+  "source_files": [
+    "ThingAudioRecordCallTranslationTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 14,
+    "by_level": {
+      "info": 13,
+      "debug": 1
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "The recording duration has reached the limit.  [Success ] Stop recording, Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Pro Phone translation task completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The call is considered disconnected and the task ends automatically if no audio stream is received within 3 seconds.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "The recording duration has reached the limit.  [Failed ] Stop recording, Device ID: .* error: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Initialization  : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The recording duration has reached the limit. （.* seconds), recording stops automatically. Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Release  : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Device end command : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start speaking  - .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "End speaking  - .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Ended due to overdue payment",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_interrupt Incoming call interruption start event",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_interrupt No processing required 「Incoming call interruption starts 」Command",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " record_interrupt: %@"
+  ]
+}

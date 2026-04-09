@@ -1,0 +1,41 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "ota-upgrade",
+  "name": "OTA 升级问题",
+  "keywords": ["ota", "升级", "固件", "firmware", "upgrade"],
+  "primary_tags": [
+    "ThingOtaPresenter",
+    "ThingOTAExecutor",
+    "ThingOTABLETask",
+    "ThingSmartOTAService",
+    "ThingSmartOTACenter",
+    "ThingGwOTACheck"
+  ],
+  "secondary_tags": [
+    "OTAMqttProtocolModel",
+    "FirmwareBatchUpgrade",
+    "ThingGwOTATask",
+    "ThingOTALocalLANTask",
+    "ThingOTAMeshSubTask",
+    "DirectlyConnectDeviceOtaTask",
+    "thing-OTA_"
+  ],
+  "check_order": [
+    "1. 检查 ThingSmartOTACenter 确认 OTA 检查是否发现新固件",
+    "2. 检查 ThingOTAExecutor 确认升级任务执行状态",
+    "3. BLE OTA：检查 ThingOTABLETask 确认 BLE 传输进度",
+    "4. 局域网 OTA：检查 ThingOTALocalLANTask",
+    "5. 网关 OTA：检查 ThingGwOTATask / ThingOTAMeshSubTask",
+    "6. 检查 OTAMqttProtocolModel 确认 MQTT 协议交互"
+  ],
+  "common_causes": [
+    {"pattern": "download.*fail", "cause": "固件下载失败，检查网络和下载链接"},
+    {"pattern": "ble.*ota.*disconnect", "cause": "BLE OTA 传输中断连，可能是信号不稳定"},
+    {"pattern": "verify.*fail|checksum", "cause": "固件校验失败，文件可能损坏"},
+    {"pattern": "ota.*timeout", "cause": "OTA 超时，可能是传输速度过慢或设备无响应"},
+    {"pattern": "not.*support.*ota", "cause": "设备不支持 OTA，检查设备固件版本"}
+  ]
+}

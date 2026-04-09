@@ -1,0 +1,94 @@
+{
+  "_meta": {
+    "updated": "2026-03-19",
+    "description": "AIVoice 离线文件传输诊断知识库，覆盖 AP WiFi 热点传输场景"
+  },
+  "id": "aivoice-file-transfer",
+  "name": "AIVoice 离线文件传输问题",
+  "module_refs": ["AIBuds_FileTransfer", "AIBuds_DB", "AIBuds_Record", "AIBuds_Network"],
+  "keywords": [
+    "file transfer",
+    "文件传输",
+    "AP",
+    "hotspot",
+    "热点",
+    "WiFi",
+    "offline transfer",
+    "离线传输",
+    "download speed",
+    "下载速度",
+    "转码",
+    "transcode"
+  ],
+  "primary_tags": [
+    "AIBuds_FileTransfer"
+  ],
+  "secondary_tags": [
+    "AIBuds_DB",
+    "AIBuds_Record"
+  ],
+  "noise_tags": [],
+  "check_order": [
+    "1. 检查 AIBuds_FileTransfer 文件传输是否发起",
+    "2. 检查传输状态（status: 0=未知, 1=传输中, 2=成功, 3=失败）",
+    "3. 检查下载速度是否正常（Download speed）",
+    "4. 检查文件转码是否完成（File transcoding progress update）",
+    "5. 检查 AP 热点连接相关错误（10300-10305 错误码）"
+  ],
+  "common_causes": [
+    {
+      "pattern": "status\\s*=\\s*3",
+      "cause": "文件传输失败（ThingAudioRecordTransferFailure），检查 AP 连接和网络"
+    },
+    {
+      "pattern": "APLinkWithOtherDeviceError",
+      "cause": "热点被其他设备连接（错误码 10300）"
+    },
+    {
+      "pattern": "CheckIPhoneWifiConfigError",
+      "cause": "热点连接失败（错误码 10301），检查 WiFi 权限和局域网权限"
+    },
+    {
+      "pattern": "APUsedOROpenVPNError",
+      "cause": "VPN 开启或 AP 通道被占用（错误码 10302）"
+    },
+    {
+      "pattern": "APLinkTimeOutRebootError",
+      "cause": "AP 连接超时（错误码 10303），需重启设备"
+    },
+    {
+      "pattern": "AppEnterBackgroudError",
+      "cause": "App 进入后台无法连接（错误码 10304）"
+    },
+    {
+      "pattern": "TransmissionSpeedContinuouslyZero",
+      "cause": "传输速度持续为 0 超 10 秒（错误码 10095），检查 AP 信号"
+    },
+    {
+      "pattern": "WifiChangeAPWifiDisConnect",
+      "cause": "AP WiFi 非当前 WiFi 断开（错误码 10096）"
+    }
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "File transcoding",
+      "description": "文件传输完成后需转码处理，属于正常流程",
+      "how_to_identify": "出现在 File transfer 成功之后"
+    }
+  ],
+  "phases": [
+    {
+      "name": "文件传输",
+      "tags": ["AIBuds_FileTransfer"],
+      "success_pattern": "status\\s*=\\s*2",
+      "failure_pattern": "status\\s*=\\s*3|APLink|VPN|BackgroudError"
+    },
+    {
+      "name": "文件转码",
+      "tags": ["AIBuds_FileTransfer"],
+      "success_pattern": "transcoding.*progress.*100|transcoding completed",
+      "failure_pattern": "transcoding.*fail"
+    }
+  ],
+  "known_issues": []
+}

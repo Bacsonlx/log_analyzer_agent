@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html class="dark" lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIVoice AI 诊断</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#3dc7f5",
+        "bg-dark": "#0a0f12",
+        "surface": "#16252a",
+        "surface-2": "#1a2e35",
+        "neon-green": "#00ff9d",
+        "neon-purple": "#bc13fe",
+        "accent-red": "#ff4d4d",
+        "accent-yellow": "#ffb347",
+      },
+      fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+    },
+  },
+}
+</script>
+<style>
+body { font-family: 'Space Grotesk', sans-serif; }
+.scanline { background: linear-gradient(to bottom, transparent 50%, rgba(61,199,245,0.03) 50%); background-size: 100% 4px; pointer-events: none; }
+.neon-border { box-shadow: 0 0 6px rgba(61,199,245,0.4), inset 0 0 2px rgba(61,199,245,0.15); }
+.neon-glow { text-shadow: 0 0 8px rgba(61,199,245,0.5); }
+.cyber-grid { background-image: linear-gradient(to right,rgba(61,199,245,0.04) 1px,transparent 1px), linear-gradient(to bottom,rgba(61,199,245,0.04) 1px,transparent 1px); background-size: 24px 24px; }
+#dropzone.dragover { border-color: #3dc7f5; background: rgba(61,199,245,0.08); }
+.report-content h1,.report-content h2,.report-content h3 { color: #3dc7f5; margin-top: 1.2em; margin-bottom: 0.4em; font-weight: 700; }
+.report-content h1 { font-size: 1.25rem; } .report-content h2 { font-size: 1.1rem; } .report-content h3 { font-size: 1rem; }
+.report-content p { margin: 0.4em 0; color: #cbd5e1; }
+.report-content ul,.report-content ol { margin: 0.3em 0 0.3em 1.5em; color: #94a3b8; }
+.report-content code { font-size: 0.85em; background: rgba(61,199,245,0.1); padding: 1px 5px; border-radius: 3px; }
+.report-content pre { border-radius: 6px; overflow-x: auto; margin: 0.6em 0; }
+.report-content pre code { background: none; padding: 0; }
+.report-content table { border-collapse: collapse; width: 100%; margin: 0.6em 0; }
+.report-content th,.report-content td { border: 1px solid #1e3a42; padding: 6px 10px; text-align: left; font-size: 0.85em; }
+.report-content th { background: #16252a; color: #3dc7f5; }
+.report-content strong { color: #e2e8f0; }
+.report-content blockquote { border-left: 3px solid #3dc7f5; padding-left: 12px; margin: 0.6em 0; color: #94a3b8; }
+.step-line::before { content:''; position:absolute; left:11px; top:28px; bottom:-8px; width:1px; background: rgba(61,199,245,0.2); }
+.step-line:last-child::before { display:none; }
+@keyframes pulse-neon { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.pulse-neon { animation: pulse-neon 1.5s ease-in-out infinite; }
+@keyframes terminal-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor-blink { animation: terminal-blink 1s step-end infinite; }
+</style>
+</head>
+<body class="bg-bg-dark text-slate-100 h-screen flex flex-col overflow-hidden cyber-grid">
+
+<!-- Header -->
+<header class="flex-shrink-0 h-14 border-b border-primary/20 bg-bg-dark/80 backdrop-blur-md flex items-center justify-between px-6 z-50">
+  <div class="flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary text-2xl">memory</span>
+    <h1 class="text-base font-bold tracking-wider uppercase">AI<span class="text-primary">Voice</span></h1>
+    <div class="h-4 w-px bg-primary/20 mx-1"></div>
+    <span class="text-[10px] text-primary/60 uppercase tracking-widest font-medium">AI 诊断平台</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <!-- Stats Counter -->
+    <div id="totalCount" class="hidden flex items-center gap-2.5 px-3 py-1 bg-primary/5 border border-primary/20 rounded-lg">
+      <div class="flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary text-base">task_alt</span>
+        <span class="text-[10px] text-primary/50 uppercase tracking-widest font-bold">已诊断</span>
+      </div>
+      <span id="totalNum" class="text-lg font-bold text-primary font-mono neon-glow leading-none">0</span>
+    </div>
+    <div class="h-4 w-px bg-primary/10"></div>
+    <a href="https://wiki.tuya-inc.com:7799/page/2031271880815542351" target="_blank" class="flex items-center gap-1 text-[10px] text-primary/60 hover:text-primary transition-colors uppercase tracking-widest">
+      <span class="material-symbols-outlined text-sm">description</span>说明文档
+    </a>
+    <div class="relative">
+      <button onclick="document.getElementById('noticePopover').classList.toggle('hidden')" class="flex items-center gap-1 text-[10px] text-accent-yellow/80 hover:text-accent-yellow transition-colors">
+        <span class="material-symbols-outlined text-base">warning</span>
+        <span class="uppercase tracking-widest font-medium">注意事项</span>
+      </button>
+      <div id="noticePopover" class="hidden absolute right-0 top-full mt-2 w-80 bg-surface border border-accent-yellow/30 rounded-lg shadow-lg shadow-accent-yellow/10 p-4 z-[100]">
+        <div class="flex items-center gap-2 mb-3 pb-2 border-b border-accent-yellow/20">
+          <span class="material-symbols-outlined text-accent-yellow text-lg">warning</span>
+          <span class="text-accent-yellow font-bold text-xs uppercase tracking-wider">使用须知</span>
+        </div>
+        <ul class="space-y-2.5 text-xs text-slate-300 leading-relaxed">
+          <li class="flex gap-2">
+            <span class="text-primary mt-0.5 flex-shrink-0">01</span>
+            <span>本工具依赖源码 AI 优化引导分析，仅支持已配置的项目。<strong class="text-accent-yellow">当前定位为 AIVoice 诊断（含设备连接与语音/AIBuds 场景）</strong>，未配置的项目请勿使用。</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="text-primary mt-0.5 flex-shrink-0">02</span>
+            <span>本质由 <strong class="text-primary">Claude Code + MCP</strong> 驱动，请勿进行提示词注入攻击，后台有完整日志审计。</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="text-primary mt-0.5 flex-shrink-0">03</span>
+            <span>当前为<strong class="text-accent-red">内部调试阶段</strong>，功能和性能持续优化中，请温柔对待。</span>
+          </li>
+        </ul>
+        <button onclick="localStorage.setItem('notice_dismissed','1');document.getElementById('noticePopover').classList.add('hidden')" class="mt-3 w-full py-1.5 text-[10px] text-primary/60 hover:text-primary border border-primary/20 rounded transition-colors uppercase tracking-widest">知道了</button>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="statusDot" class="w-2 h-2 rounded-full bg-slate-600"></span>
+      <span id="statusText" class="text-[10px] text-slate-500 uppercase tracking-widest">未连接</span>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== VIEW: IDLE ==================== -->
+<div id="viewIdle" class="flex-1 overflow-y-auto">
+<div class="max-w-6xl mx-auto p-6 lg:p-8 space-y-8">
+  <!-- New Task -->
+  <div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
+    <!-- Upload & Config (3 cols) -->
+    <div id="idleMainColumn" class="space-y-4 xl:col-span-3">
+      <h2 class="text-sm font-bold text-slate-100 uppercase tracking-widest flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-lg">add_circle</span>新建诊断任务
+      </h2>
+      <!-- App 日志平台 SSO（多租户，自动下载必填） -->
+      <div id="ssoPanel" class="bg-surface border border-primary/20 rounded-lg p-4 space-y-3">
+        <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-base">key</span>日志平台登录态
+        </label>
+        <p class="text-[10px] text-slate-500 leading-relaxed">
+          <strong class="text-slate-300">自动下载日志</strong>需有效 SSO。<strong class="text-slate-400">优先使用下方「一键登录（OAuth）」</strong>（部署需配置 APP_LOG_OAUTH_*）。若无 OAuth，可打开
+          <a href="https://app-log-cn.tuya-inc.com:7799/" target="_blank" rel="noopener noreferrer" class="text-primary underline hover:text-primary/80">App 日志平台</a>
+          登录后，在 Chrome → Application → Cookies 复制 <code class="text-primary/80">SSO_USER_TOKEN</code>，或在本区粘贴整段 <code class="text-primary/80">Cookie</code> / 多 Cookie 字符串后点「保存并验证」（纯网页无法自动读取其他站点 Cookie）。<strong class="text-slate-400">未验证前请选择「手动上传」进行分析；验证通过后将显示自动下载、用户信息、任务队列与历史记录。</strong>
+        </p>
+        <div id="oauthAppLogRow" class="hidden">
+          <button type="button" id="oauthAppLogBtn" onclick="startAppLogOAuth()"
+            class="w-full sm:w-auto px-4 py-2 bg-primary/25 hover:bg-primary/40 border border-primary/50 rounded text-[10px] text-primary font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-base">login</span>一键登录（OAuth）
+          </button>
+          <p class="text-[10px] text-slate-600 mt-1">需在服务端配置 APP_LOG_OAUTH_* 环境变量；授权结束返回本页后会自动绑定当前会话。</p>
+        </div>
+        <div>
+          <label class="text-[10px] text-slate-500 mb-1 block">Cookie（可选，与下方 Token 二选一）</label>
+          <textarea id="ssoCookieInput" rows="2" autocomplete="off" placeholder="例如：SSO_USER_TOKEN=xxx 或整段 Cookie: 行"
+            class="w-full bg-bg-dark border border-primary/15 rounded px-3 py-2 text-xs focus:outline-none focus:border-primary/50 placeholder-slate-600 font-mono resize-y min-h-[2.5rem]"></textarea>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 sm:items-stretch">
+          <input type="password" id="ssoTokenInput" autocomplete="off" placeholder="或直接粘贴 SSO_USER_TOKEN 值"
+            class="flex-1 min-w-0 bg-bg-dark border border-primary/15 rounded px-3 py-2 text-xs focus:outline-none focus:border-primary/50 placeholder-slate-600 font-mono">
+          <button type="button" id="ssoVerifyBtn" onclick="verifySsoToken()"
+            class="px-4 py-2 bg-primary/20 hover:bg-primary/35 border border-primary/40 rounded text-[10px] text-primary font-bold uppercase tracking-wider shrink-0 whitespace-nowrap">保存并验证</button>
+        </div>
+        <p id="ssoStatus" class="text-[10px] text-slate-500 leading-relaxed">连接服务器后可在此查看状态。</p>
+      </div>
+      <!-- User Info Fields -->
+      <div id="userInfoPanel" class="bg-surface border border-primary/20 rounded-lg p-4 space-y-3">
+        <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest">用户信息（可选，填写后可自动关联日志）</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-[10px] text-slate-500 mb-1 block">Socrates 工单号</label>
+            <div class="relative">
+              <input type="text" id="socratesIdInput" placeholder="输入工单 ID，如 48712" class="w-full bg-bg-dark border border-primary/15 rounded px-3 py-2 pr-16 text-xs focus:outline-none focus:border-primary/50 transition placeholder-slate-600">
+              <button onclick="fetchTicketInfo()" id="fetchTicketBtn" class="absolute right-1 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-primary/15 hover:bg-primary/30 border border-primary/30 rounded text-[10px] text-primary font-bold uppercase tracking-wider transition-all flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">sync</span>获取
+              </button>
+            </div>
+            <p id="ticketStatus" class="text-[10px] mt-1 hidden"></p>
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-500 mb-1 block">App Ticket ID</label>
+            <input type="text" id="ticketIdInput" placeholder="App 端 Ticket ID" class="w-full bg-bg-dark border border-primary/15 rounded px-3 py-2 text-xs focus:outline-none focus:border-primary/50 transition placeholder-slate-600">
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-500 mb-1 block">账号（手机号 / 邮箱）</label>
+            <input type="text" id="accountInput" placeholder="如 86-138xxxx0001" class="w-full bg-bg-dark border border-primary/15 rounded px-3 py-2 text-xs focus:outline-none focus:border-primary/50 transition placeholder-slate-600">
+          </div>
+          <div>
+            <label class="text-[10px] text-slate-500 mb-1 block">UID</label>
+            <input type="text" id="uidInput" placeholder="用户 UID" class="w-full bg-bg-dark border border-primary/15 rounded px-3 py-2 text-xs focus:outline-none focus:border-primary/50 transition placeholder-slate-600">
+            <p id="uidStatus" class="text-[10px] mt-1 hidden"></p>
+          </div>
+        </div>
+      </div>
+      <!-- Log Source Toggle -->
+      <div class="bg-surface border border-primary/20 rounded-lg p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest">日志来源</label>
+          <div class="flex bg-bg-dark rounded p-0.5 border border-primary/15">
+            <button id="modeAuto" onclick="setLogMode('auto')" class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-all bg-primary text-bg-dark">自动下载</button>
+            <button id="modeManual" onclick="setLogMode('manual')" class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-all text-slate-500 hover:text-slate-300">手动上传</button>
+          </div>
+        </div>
+        <!-- Manual Upload -->
+        <div id="logManual" class="hidden">
+          <div id="dropzone" class="border-2 border-dashed border-primary/30 rounded-lg p-6 flex flex-col items-center text-center gap-3 hover:border-primary/60 transition-all cursor-pointer group relative overflow-hidden" onclick="document.getElementById('fileInput').click()">
+            <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+              <span class="material-symbols-outlined text-2xl text-primary">upload_file</span>
+            </div>
+            <div>
+              <p class="text-slate-100 font-bold text-xs uppercase tracking-wide mb-0.5">拖拽或点击上传日志文件</p>
+              <p class="text-slate-500 text-[10px]">支持 .log / .xlog，支持平台原始/格式化内容，Logcat 格式</p>
+            </div>
+            <input type="file" id="fileInput" class="hidden" accept=".log,.xlog,.gz,.zip,.txt" onchange="handleFile(this.files[0])">
+          </div>
+          <div id="fileInfo" class="hidden bg-bg-dark border border-primary/15 rounded-lg p-3 mt-2 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-neon-green">description</span>
+              <div>
+                <p id="fileName" class="text-xs font-bold text-slate-200"></p>
+                <p id="fileSize" class="text-[10px] text-slate-500"></p>
+              </div>
+            </div>
+            <button onclick="clearUpload()" class="text-slate-500 hover:text-accent-red transition-colors">
+              <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+          </div>
+        </div>
+        <!-- Auto Download -->
+        <div id="logAuto" class="space-y-2">
+          <div class="flex items-start gap-2 p-3 bg-primary/5 border border-primary/10 rounded text-[10px] text-primary/80">
+            <span class="material-symbols-outlined text-sm mt-px">info</span>
+            <span>系统将根据上方填写的 Ticket ID、账号或 UID 自动从平台下载对应日志，无需手动上传文件。请确保至少填写一项用户信息。</span>
+          </div>
+        </div>
+      </div>
+      <!-- Problem Description -->
+      <div id="problemPanel" class="bg-surface border border-primary/20 rounded-lg p-4 space-y-3">
+        <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest">问题描述</label>
+        <textarea id="problemInput" rows="3" placeholder="描述你遇到的问题，例如：BLE 配网失败、MQTT 断连、OTA 升级异常..." class="w-full bg-bg-dark border border-primary/15 rounded p-3 text-sm resize-none focus:outline-none focus:border-primary/50 transition placeholder-slate-600"></textarea>
+        <div class="flex items-center gap-3 flex-wrap">
+          <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest">诊断场景</label>
+          <select id="scenarioSelect" class="bg-bg-dark border border-primary/15 rounded px-3 py-1.5 text-xs focus:border-primary/50 outline-none text-slate-300">
+            <option value="">自动识别（支持全部问题排查）</option>
+            <optgroup label="AIVoice">
+              <option value="BLE配网">BLE 配网</option>
+              <option value="MQTT通信">MQTT 通信</option>
+              <option value="OTA升级">OTA 升级</option>
+              <option value="设备控制">设备控制</option>
+              <option value="网络连接">网络连接</option>
+              <option value="录音问题">录音问题</option>
+              <option value="翻译/ASR">翻译 / ASR / TTS</option>
+              <option value="云同步上传">云同步上传</option>
+              <option value="离线文件传输">离线文件传输(AP)</option>
+              <option value="转写/总结">转写 / 总结</option>
+            </optgroup>
+          </select>
+        </div>
+        <button onclick="startAnalysis()" id="startBtn" class="w-full bg-primary text-bg-dark py-2.5 rounded font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+          <span class="material-symbols-outlined text-sm">rocket_launch</span>启动诊断
+        </button>
+      </div>
+    </div>
+    <!-- Queue (2 cols); SSO 通过前隐藏 -->
+    <div id="idleSidebar" class="xl:col-span-2 space-y-4 hidden">
+      <h2 class="text-sm font-bold text-slate-100 uppercase tracking-widest flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-lg">reorder</span>任务队列
+      </h2>
+      <div class="bg-surface border border-primary/20 rounded-lg overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-primary/5 border-b border-primary/10">
+            <tr>
+              <th class="px-4 py-2.5 text-[10px] font-bold text-primary/70 uppercase">任务</th>
+              <th class="px-4 py-2.5 text-[10px] font-bold text-primary/70 uppercase">状态</th>
+              <th class="px-4 py-2.5 text-[10px] font-bold text-primary/70 uppercase text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody id="queueBody" class="divide-y divide-primary/5 text-xs">
+            <tr><td colspan="3" class="px-4 py-6 text-center text-slate-600 text-xs">暂无任务</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- History -->
+      <h2 class="text-sm font-bold text-slate-100 uppercase tracking-widest flex items-center gap-2 pt-2">
+        <span class="material-symbols-outlined text-primary text-lg">history</span>历史记录
+      </h2>
+      <div id="historyList" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+        <div class="text-center text-slate-600 text-xs py-4">暂无历史记录</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== VIEW: ANALYZING ==================== -->
+<div id="viewAnalyzing" class="flex-1 hidden overflow-hidden">
+<div class="flex h-full">
+  <!-- Left Panel: Task Info -->
+  <aside class="w-64 flex-shrink-0 border-r border-primary/20 bg-surface/50 flex flex-col p-4 gap-4">
+    <div>
+      <span class="text-[10px] text-primary/60 uppercase font-bold tracking-widest">当前任务</span>
+      <h3 id="taskTitle" class="text-slate-100 text-sm font-bold mt-1 leading-snug">日志分析</h3>
+      <p id="taskFile" class="text-[10px] text-slate-500 mt-1 break-all"></p>
+    </div>
+    <div>
+      <div class="flex justify-between items-end mb-1">
+        <span class="text-[10px] text-primary/60 uppercase font-bold">进度</span>
+        <span id="progressPct" class="text-primary font-mono text-sm">0%</span>
+      </div>
+      <div class="h-1.5 bg-primary/10 rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full bg-primary rounded-full transition-all duration-500" style="width:0%;box-shadow:0 0 8px rgba(61,199,245,0.6)"></div>
+      </div>
+    </div>
+    <div id="stepsPanel" class="flex-1 overflow-y-auto space-y-0 mt-2"></div>
+    <div class="mt-auto pt-4 border-t border-primary/10">
+      <span id="elapsedTime" class="text-[10px] text-slate-500 font-mono block mb-3">已用时: 0s</span>
+      <button onclick="stopAnalysis()" class="w-full py-2.5 rounded bg-accent-red/10 border border-accent-red/40 text-accent-red hover:bg-accent-red/20 font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">stop_circle</span>终止任务
+      </button>
+    </div>
+  </aside>
+  <!-- Center: Terminal -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex items-center justify-between px-4 py-2 border-b border-primary/20 bg-surface/30">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary pulse-neon"></span>
+        <span class="text-[10px] font-bold text-primary uppercase tracking-widest">实时分析日志</span>
+      </div>
+      <span id="eventCounter" class="text-[10px] text-primary/40 font-mono">事件: 0</span>
+    </div>
+    <div id="terminal" class="flex-1 overflow-y-auto p-4 font-mono text-xs space-y-1 bg-black/20 scanline">
+      <div class="text-primary/40">[ SYSTEM ] 等待诊断启动...</div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- ==================== VIEW: RESULT ==================== -->
+<div id="viewResult" class="flex-1 hidden overflow-y-auto">
+<div class="max-w-5xl mx-auto p-6 lg:p-8 space-y-6">
+  <!-- Status Banner -->
+  <div id="resultBanner" class="border-l-4 border-neon-green bg-neon-green/5 p-5 rounded-r-lg">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span id="resultIcon" class="material-symbols-outlined text-neon-green">check_circle</span>
+          <h1 id="resultTitle" class="text-xl font-bold tracking-wide uppercase">诊断完成</h1>
+          <span id="scoreBadge" class="hidden ml-2 px-2 py-0.5 rounded text-[11px] font-bold font-mono border"></span>
+        </div>
+        <p id="resultMeta" class="text-slate-500 text-xs"></p>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="openKnowledgeModal()" id="knowledgeBtn" class="hidden px-4 py-2 border border-accent-yellow/40 text-accent-yellow font-bold text-xs rounded hover:bg-accent-yellow/10 transition-all flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+          <span class="material-symbols-outlined text-sm">library_add</span>归纳到知识库
+        </button>
+        <button onclick="shareReport()" id="shareBtn" class="px-4 py-2 border border-primary/40 text-primary font-bold text-xs rounded hover:bg-primary/10 transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm" id="shareIcon">share</span><span id="shareLabel">分享链接</span>
+        </button>
+        <button onclick="downloadReport()" class="px-4 py-2 border border-neon-green/40 text-neon-green font-bold text-xs rounded hover:bg-neon-green/10 transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">download</span>下载报告
+        </button>
+        <button onclick="switchView('idle')" class="px-4 py-2 border border-primary/40 text-primary font-bold text-xs rounded hover:bg-primary/10 transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">home</span>返回首页
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Report Body -->
+  <div class="bg-surface border border-primary/20 rounded-lg p-6 lg:p-8">
+    <div id="reportContent" class="report-content text-sm leading-relaxed"></div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== MODAL: Knowledge Base ==================== -->
+<div id="kbModal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeKnowledgeModal()"></div>
+  <div class="absolute inset-x-4 top-[10%] bottom-[10%] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[640px] flex flex-col bg-surface border border-primary/30 rounded-lg shadow-2xl neon-border overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-primary/20 bg-surface-2">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-accent-yellow text-lg">library_add</span>
+        <h3 class="text-sm font-bold uppercase tracking-widest">归纳到知识库</h3>
+      </div>
+      <button onclick="closeKnowledgeModal()" class="text-slate-500 hover:text-slate-300 transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <!-- Step 1: User Input -->
+    <div id="kbInputStep" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <div>
+        <label class="text-[10px] font-bold text-primary/60 uppercase tracking-widest block mb-2">补充说明（可选）</label>
+        <textarea id="kbUserNote" rows="4" placeholder="你可以补充问题的背景信息、已知原因、修复方案等，帮助 AI 生成更准确的知识库条目..." class="w-full bg-bg-dark border border-primary/15 rounded p-3 text-sm resize-none focus:outline-none focus:border-primary/50 transition placeholder-slate-600"></textarea>
+      </div>
+      <div class="flex items-start gap-2 p-3 bg-primary/5 border border-primary/10 rounded text-[10px] text-primary/80">
+        <span class="material-symbols-outlined text-sm mt-px">info</span>
+        <span>AI 将基于刚才的诊断分析上下文，提取关键问题特征、根因和解决方案，归纳为结构化知识库条目。你的补充说明会帮助提升归纳质量。</span>
+      </div>
+    </div>
+    <!-- Step 2: Progress -->
+    <div id="kbProgressStep" class="hidden flex-1 overflow-y-auto p-5 space-y-3">
+      <div id="kbProgress" class="flex items-center gap-3">
+        <div class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <span class="text-sm text-primary">正在归纳分析结果...</span>
+      </div>
+      <div id="kbLog" class="font-mono text-[11px] space-y-1 text-slate-500"></div>
+    </div>
+    <!-- Step 3: Result -->
+    <div id="kbResultArea" class="hidden flex-1 overflow-y-auto p-5">
+      <div id="kbResultContent" class="report-content text-sm leading-relaxed"></div>
+    </div>
+    <div class="flex items-center justify-end gap-3 px-5 py-3 border-t border-primary/20 bg-surface-2">
+      <span id="kbStatus" class="text-[10px] text-slate-500 mr-auto"></span>
+      <button onclick="startKnowledgeSummary()" id="kbStartBtn" class="px-4 py-2 bg-accent-yellow text-bg-dark font-bold text-xs rounded hover:brightness-110 transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">auto_awesome</span>开始归纳
+      </button>
+      <button onclick="closeKnowledgeModal()" id="kbCloseBtn" class="px-4 py-2 border border-primary/30 text-primary font-bold text-xs rounded hover:bg-primary/10 transition-all">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="flex-shrink-0 border-t border-primary/20 bg-bg-dark px-6 py-1.5 flex justify-between items-center text-[10px] font-mono uppercase tracking-widest">
+  <div class="flex gap-4 text-primary/30">
+    <span>AIVoice AI Diagnostic</span>
+    <a href="mailto:aobing.hu@tuya.com" class="text-primary/30 hover:text-primary/60 transition-colors">Designed by 敖丙</a>
+  </div>
+  <div class="text-primary/20">Powered by Claude Code + MCP</div>
+</footer>
+
+<script>
+marked.setOptions({
+  highlight: (code, lang) => {
+    if (lang && hljs.getLanguage(lang)) return hljs.highlight(code, {language:lang}).value;
+    return hljs.highlightAuto(code).value;
+  },
+  breaks: true,
+});
+
+let ws = null;
+let uploadedFilePath = '';
+let uploadedFileName = '';
+let currentView = 'idle';
+let logMode = 'auto';
+let analysisStartTime = 0;
+let elapsedTimer = null;
+let eventCount = 0;
+let steps = [];
+let resultText = '';
+let assistantText = '';
+let taskQueue = [];
+let taskHistory = [];
+let taskIdCounter = 0;
+let activeServerTaskId = '';
+let currentResultMd = '';
+let currentResultName = '';
+let currentHistoryFile = '';
+let webSessionId = '';
+let ssoVerified = false;
+let pendingOAuthBridge = '';
+let oauthAppLogEnabled = false;
+
+(function initOAuthParamsFromUrl() {
+  const p = new URLSearchParams(location.search);
+  pendingOAuthBridge = p.get('oauth_bridge') || '';
+  const oe = p.get('oauth_error');
+  if (oe) {
+    try {
+      alert(decodeURIComponent(oe.replace(/\+/g, ' ')));
+    } catch (e) {
+      alert(oe);
+    }
+  }
+  if (pendingOAuthBridge || oe) {
+    const u = new URL(location.href);
+    u.searchParams.delete('oauth_bridge');
+    u.searchParams.delete('oauth_error');
+    const q = u.searchParams.toString();
+    history.replaceState(null, '', u.pathname + (q ? '?' + q : '') + u.hash);
+  }
+})();
+
+function connect() {
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(`${proto}//${location.host}/ws/chat`);
+  ws.onopen = () => {
+    setStatus('connected');
+    refreshOAuthUi();
+  };
+  ws.onclose = () => {
+    setStatus('disconnected');
+    
+    setTimeout(connect, 3000);
+  };
+  ws.onerror = () => setStatus('error');
+  ws.onmessage = (e) => handleMessage(JSON.parse(e.data));
+}
+
+function setStatus(state) {
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusText');
+  const map = { connected:['bg-neon-green','运行中'], disconnected:['bg-slate-600','未连接'], error:['bg-accent-red','连接错误'] };
+  const [cls, label] = map[state] || map.disconnected;
+  dot.className = 'w-2 h-2 rounded-full ' + cls;
+  txt.textContent = label;
+}
+
+function switchView(view) {
+  currentView = view;
+  document.getElementById('viewIdle').classList.toggle('hidden', view !== 'idle');
+  document.getElementById('viewAnalyzing').classList.toggle('hidden', view !== 'analyzing');
+  document.getElementById('viewResult').classList.toggle('hidden', view !== 'result');
+  if (view === 'idle') {
+    applyIdleLayoutGate();
+    updateStartBtn();
+  }
+}
+
+function applyIdleLayoutGate() {
+  const sidebar = document.getElementById('idleSidebar');
+  const mainCol = document.getElementById('idleMainColumn');
+  const userInfo = document.getElementById('userInfoPanel');
+  const problem = document.getElementById('problemPanel');
+  const logManual = document.getElementById('logManual');
+  const logAuto = document.getElementById('logAuto');
+  if (sidebar) sidebar.classList.toggle('hidden', !ssoVerified);
+  if (mainCol) {
+    mainCol.classList.toggle('xl:col-span-3', ssoVerified);
+    mainCol.classList.toggle('xl:col-span-5', !ssoVerified);
+  }
+  if (!ssoVerified && logMode === 'auto') {
+    userInfo?.classList.add('hidden');
+    logManual?.classList.add('hidden');
+    logAuto?.classList.add('hidden');
+    problem?.classList.add('hidden');
+  } else if (!ssoVerified && logMode === 'manual') {
+    userInfo?.classList.add('hidden');
+    logManual?.classList.remove('hidden');
+    logAuto?.classList.add('hidden');
+    problem?.classList.remove('hidden');
+  } else {
+    problem?.classList.remove('hidden');
+    userInfo?.classList.toggle('hidden', logMode === 'manual');
+    logManual?.classList.toggle('hidden', logMode !== 'manual');
+    logAuto?.classList.toggle('hidden', logMode !== 'auto');
+  }
+}
+
+function setLogMode(mode) {
+  logMode = mode;
+  const btnManual = document.getElementById('modeManual');
+  const btnAuto = document.getElementById('modeAuto');
+  const active = 'px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-all bg-primary text-bg-dark';
+  const inactive = 'px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-all text-slate-500 hover:text-slate-300';
+  btnAuto.className = mode === 'auto' ? active : inactive;
+  btnManual.className = mode === 'manual' ? active : inactive;
+  applyIdleLayoutGate();
+  updateSsoUi();
+  updateStartBtn();
+}
+
+function hasUserInfo() {
+  return !!(document.getElementById('socratesIdInput').value.trim()
+    || document.getElementById('ticketIdInput').value.trim()
+    || document.getElementById('accountInput').value.trim()
+    || document.getElementById('uidInput').value.trim());
+}
+
+function updateStartBtn() {
+  const btn = document.getElementById('startBtn');
+  const problem = document.getElementById('problemInput').value.trim();
+  const hasFile = !!uploadedFilePath;
+  const hasInfo = hasUserInfo();
+  const wsOk = ws && ws.readyState === WebSocket.OPEN;
+  const ssoOkForAuto = logMode !== 'auto' || ssoVerified;
+  if (logMode === 'auto') {
+    btn.disabled = !(problem && hasInfo && ssoOkForAuto) || !wsOk;
+  } else {
+    btn.disabled = !(problem || hasFile) || !wsOk;
+  }
+}
+
+document.getElementById('problemInput').addEventListener('input', updateStartBtn);
+document.getElementById('socratesIdInput').addEventListener('input', updateStartBtn);
+document.getElementById('ticketIdInput').addEventListener('input', updateStartBtn);
+document.getElementById('accountInput').addEventListener('input', updateStartBtn);
+document.getElementById('uidInput').addEventListener('input', updateStartBtn);
+const ssoTokenInput = document.getElementById('ssoTokenInput');
+if (ssoTokenInput) ssoTokenInput.addEventListener('input', updateStartBtn);
+const ssoCookieInput = document.getElementById('ssoCookieInput');
+if (ssoCookieInput) ssoCookieInput.addEventListener('input', updateStartBtn);
+
+async function refreshOAuthUi() {
+  try {
+    const res = await fetch('/api/oauth/app-log/status');
+    const data = await res.json();
+    oauthAppLogEnabled = !!data.enabled;
+    const row = document.getElementById('oauthAppLogRow');
+    if (row) row.classList.toggle('hidden', !oauthAppLogEnabled);
+  } catch (e) {
+    oauthAppLogEnabled = false;
+    const row = document.getElementById('oauthAppLogRow');
+    if (row) row.classList.add('hidden');
+  }
+}
+
+function startAppLogOAuth() {
+  if (!webSessionId) {
+    alert('请等待 WebSocket 连接就绪后再试');
+    return;
+  }
+  if (!oauthAppLogEnabled) {
+    alert('当前环境未配置 App 日志 OAuth');
+    return;
+  }
+  window.location.href = '/api/oauth/app-log/start?web_session_id=' + encodeURIComponent(webSessionId);
+}
+
+async function tryClaimOAuthBridge() {
+  if (!pendingOAuthBridge || !webSessionId) return;
+  const b = pendingOAuthBridge;
+  pendingOAuthBridge = '';
+  try {
+    const res = await fetch('/api/sso-bridge-claim', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bridge_token: b, web_session_id: webSessionId }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      ssoVerified = true;
+      document.getElementById('ssoCookieInput').value = '';
+      document.getElementById('ssoTokenInput').value = '';
+      applyIdleLayoutGate();
+      updateSsoUi();
+      updateStartBtn();
+    } else {
+      alert(data.error || '领取登录态失败');
+    }
+  } catch (e) {
+    alert('领取失败: ' + e.message);
+  }
+}
+
+// ---- Socrates Ticket Fetch ----
+async function fetchTicketInfo() {
+  const input = document.getElementById('socratesIdInput');
+  const btn = document.getElementById('fetchTicketBtn');
+  const status = document.getElementById('ticketStatus');
+  let rawValue = input.value.trim();
+  if (!rawValue) { showTicketStatus('请输入工单 ID', 'text-accent-red'); return; }
+
+  const idMatch = rawValue.match(/[?&]id=(\d+)/);
+  const ticketId = idMatch ? idMatch[1] : rawValue.replace(/\D/g, '');
+  if (!ticketId) { showTicketStatus('无法识别工单 ID', 'text-accent-red'); return; }
+
+  input.value = ticketId;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="w-3 h-3 border-2 border-primary border-t-transparent rounded-full animate-spin inline-block"></span>获取中';
+  showTicketStatus('正在获取工单信息...', 'text-primary/60');
+
+  try {
+    const hdrs = { Accept: 'application/json' };
+    if (webSessionId) hdrs['X-Web-Diagnostic-Session'] = webSessionId;
+    const res = await fetch(`/api/fetch-ticket?ticket_id=${encodeURIComponent(ticketId)}`, { headers: hdrs });
+    const data = await res.json();
+    if (data.error) {
+      showTicketStatus(data.error, 'text-accent-red');
+      return;
+    }
+
+    const p = data.params || {};
+    if (p.account) document.getElementById('accountInput').value = p.account;
+    if (p.uid) document.getElementById('uidInput').value = p.uid;
+    if (data.title) {
+      const problemInput = document.getElementById('problemInput');
+      if (!problemInput.value.trim()) {
+        let desc = `[工单#${ticketId}] ${data.title}`;
+        if (data.problem_text) {
+          const lines = data.problem_text.split('\n').filter(l => l.trim() && !l.match(/^\d+、/) && !l.includes('？'));
+          const useful = lines.slice(0, 5).join('\n');
+          if (useful) desc += '\n' + useful;
+        }
+        problemInput.value = desc;
+      }
+    }
+
+    let infoItems = [];
+    if (data.title) infoItems.push(data.title);
+    if (data.customer) infoItems.push(`客户: ${data.customer}`);
+    if (p.uid) {
+      const src = p.uid_source === 'account_lookup' ? '(自动查询)' : '';
+      infoItems.push(`UID: ${p.uid}${src}`);
+    }
+    if (p.region) infoItems.push(`区域: ${p.region}`);
+    if (p.pid) infoItems.push(`PID: ${p.pid}`);
+    if (p.platform) infoItems.push(p.platform);
+    showTicketStatus('已获取: ' + infoItems.join(' · '), 'text-neon-green');
+    const uidStatusEl = document.getElementById('uidStatus');
+    if (data.uid_lookup_msg) {
+      uidStatusEl.textContent = '⚠ ' + data.uid_lookup_msg;
+      uidStatusEl.className = 'text-[10px] mt-1 text-accent-yellow';
+      uidStatusEl.classList.remove('hidden');
+    } else {
+      uidStatusEl.classList.add('hidden');
+    }
+    updateStartBtn();
+  } catch (e) {
+    showTicketStatus('请求失败: ' + e.message, 'text-accent-red');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-xs">sync</span>获取';
+  }
+}
+
+function showTicketStatus(text, colorClass) {
+  const el = document.getElementById('ticketStatus');
+  el.textContent = text;
+  el.className = `text-[10px] mt-1 ${colorClass}`;
+  el.classList.remove('hidden');
+}
+
+document.getElementById('socratesIdInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); fetchTicketInfo(); }
+});
+
+// ---- File Upload ----
+async function handleFile(file) {
+  if (!file) return;
+  const form = new FormData();
+  form.append('file', file);
+  try {
+    const res = await fetch('/api/upload', { method: 'POST', body: form });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    uploadedFilePath = data.path;
+    uploadedFileName = data.filename;
+    document.getElementById('fileName').textContent = data.filename;
+    document.getElementById('fileSize').textContent = `路径: ${data.path}`;
+    document.getElementById('fileInfo').classList.remove('hidden');
+    updateStartBtn();
+  } catch (e) { alert('上传失败: ' + e.message); }
+}
+
+function clearUpload() {
+  uploadedFilePath = '';
+  uploadedFileName = '';
+  document.getElementById('fileInfo').classList.add('hidden');
+  document.getElementById('fileInput').value = '';
+  updateStartBtn();
+}
+
+const dz = document.getElementById('dropzone');
+document.body.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+document.body.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+document.body.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+// ---- Analysis ----
+function startAnalysis() {
+  const problem = document.getElementById('problemInput').value.trim();
+  const scenario = document.getElementById('scenarioSelect').value;
+  const socratesId = document.getElementById('socratesIdInput').value.trim();
+  const ticketId = document.getElementById('ticketIdInput').value.trim();
+  const account = document.getElementById('accountInput').value.trim();
+  const uid = document.getElementById('uidInput').value.trim();
+
+  if (logMode === 'auto' && !hasUserInfo()) return;
+  if (logMode === 'manual' && !problem && !uploadedFilePath) return;
+
+  let parts = [];
+  if (socratesId) parts.push(`Socrates 工单号: ${socratesId}`);
+  if (ticketId) parts.push(`App Ticket ID: ${ticketId}`);
+  if (account) parts.push(`账号: ${account}`);
+  if (uid) parts.push(`UID: ${uid}`);
+
+  let message = '';
+  if (parts.length) message += `用户信息: ${parts.join(', ')}\n`;
+  if (scenario) message += `诊断场景: ${scenario}\n`;
+
+  if (logMode === 'auto') {
+    message += '请搜索并下载日志，然后进行诊断分析。\n';
+    message += '日志搜索优先级：优先使用 UID 搜索（search_logs query_type=uid），如果没有 UID 才使用账号搜索。\n';
+  }
+
+  if (problem) {
+    message += `问题描述: ${problem}\n`;
+  } else {
+    message += uploadedFilePath ? '请分析这个日志文件的问题。\n' : '请诊断分析。\n';
+  }
+
+  let displayName;
+  let filePath;
+  if (logMode === 'manual') {
+    displayName = uploadedFileName || '无文件';
+    filePath = uploadedFilePath;
+    if (uploadedFilePath) {
+      message += `请优先分析已上传的日志文件，如需更多信息可结合用户信息搜索补充日志。\n`;
+    }
+  } else {
+    displayName = uid || ticketId || account || '自动下载';
+    filePath = '';
+  }
+
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    const localId = ++taskIdCounter;
+    const task = { id: localId, serverTaskId: '', message, filePath, fileName: displayName, status: 'queued', startTime: null, result: null };
+    taskQueue.push(task);
+    ws.send(JSON.stringify({ message, file_path: filePath }));
+    renderQueue();
+  }
+
+  document.getElementById('problemInput').value = '';
+  if (logMode === 'manual') clearUpload();
+}
+
+function onTaskQueued(serverTaskId, position) {
+  const pending = taskQueue.find(t => t.status === 'queued' && !t.serverTaskId);
+  if (pending) {
+    pending.serverTaskId = serverTaskId;
+    if (position > 1) pending.status = 'waiting';
+  }
+  renderQueue();
+}
+
+function onTaskStarted(serverTaskId) {
+  const task = taskQueue.find(t => t.serverTaskId === serverTaskId) || taskQueue.find(t => t.status === 'queued' || t.status === 'waiting');
+  if (task) {
+    task.status = 'running';
+    task.startTime = Date.now();
+    activeServerTaskId = serverTaskId;
+  }
+  renderQueue();
+
+  eventCount = 0;
+  steps = [];
+  resultText = '';
+  assistantText = '';
+  analysisStartTime = Date.now();
+
+  const t = task || { message: '', fileName: '' };
+  document.getElementById('taskTitle').textContent = t.message.slice(0, 40) + (t.message.length > 40 ? '...' : '');
+  document.getElementById('taskFile').textContent = t.fileName && t.fileName !== '无文件' ? t.fileName : '';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressPct').textContent = '0%';
+  document.getElementById('stepsPanel').innerHTML = '';
+  document.getElementById('terminal').innerHTML = '<div class="text-primary/40">[ SYSTEM ] 正在初始化诊断引擎...</div>';
+  document.getElementById('eventCounter').textContent = '事件: 0';
+
+  switchView('analyzing');
+  startTimer();
+  termLog('SYSTEM', '诊断请求已发送，等待 AI 响应...');
+}
+
+function stopAnalysis() {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ action: 'stop', task_id: activeServerTaskId }));
+  }
+  const running = taskQueue.find(t => t.status === 'running');
+  if (running) {
+    running.status = 'stopped';
+    renderQueue();
+  }
+  activeServerTaskId = '';
+  stopTimer();
+  termLog('SYSTEM', '任务已终止');
+  setTimeout(() => switchView('idle'), 800);
+}
+
+function removeTask(id) {
+  const task = taskQueue.find(t => t.id === id);
+  if (task && task.serverTaskId && ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ action: 'stop', task_id: task.serverTaskId }));
+  }
+  taskQueue = taskQueue.filter(t => t.id !== id);
+  renderQueue();
+}
+
+// ---- Timer ----
+function startTimer() {
+  stopTimer();
+  elapsedTimer = setInterval(() => {
+    const sec = Math.floor((Date.now() - analysisStartTime) / 1000);
+    document.getElementById('elapsedTime').textContent = `已用时: ${sec}s`;
+  }, 1000);
+}
+function stopTimer() { if (elapsedTimer) { clearInterval(elapsedTimer); elapsedTimer = null; } }
+
+function updateSsoUi() {
+  const el = document.getElementById('ssoStatus');
+  if (!el) return;
+  if (ssoVerified) {
+    logMode === 'auto'
+      ? (el.textContent = '已通过校验，「自动下载」将使用你的登录态拉取日志。')
+      : (el.textContent = '已通过校验；当前为手动上传模式，可不依赖此 Token。');
+    el.className = 'text-[10px] text-neon-green leading-relaxed';
+  } else if (webSessionId) {
+    el.textContent = logMode === 'auto'
+      ? '自动下载：请先完成上方验证。'
+      : '自动下载前需验证；纯手动上传日志可直接分析。';
+    el.className = 'text-[10px] text-accent-yellow/90 leading-relaxed';
+  } else {
+    el.textContent = '正在等待 WebSocket 会话…';
+    el.className = 'text-[10px] text-slate-500 leading-relaxed';
+  }
+}
+
+async function verifySsoToken() {
+  const cookieEl = document.getElementById('ssoCookieInput');
+  const cookieRaw = cookieEl ? cookieEl.value.trim() : '';
+  const tokRaw = document.getElementById('ssoTokenInput').value.trim();
+  if (!cookieRaw && !tokRaw) {
+    alert('请填写 Cookie 或 SSO_USER_TOKEN 后验证');
+    return;
+  }
+  if (!webSessionId) { alert('WebSocket 未就绪，请稍后重试'); return; }
+  const btn = document.getElementById('ssoVerifyBtn');
+  btn.disabled = true;
+  try {
+    const body = { web_session_id: webSessionId };
+    if (cookieRaw) body.cookie = cookieRaw;
+    else body.token = tokRaw;
+    const res = await fetch('/api/sso-verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      ssoVerified = true;
+      document.getElementById('ssoTokenInput').value = '';
+      if (document.getElementById('ssoCookieInput')) document.getElementById('ssoCookieInput').value = '';
+      applyIdleLayoutGate();
+      updateSsoUi();
+      updateStartBtn();
+    } else {
+      alert(data.error || '验证失败');
+    }
+  } catch (e) {
+    alert('请求失败: ' + e.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ---- WebSocket Message Handling ----
+function handleMessage(msg) {
+  if (msg.type === 'hello') {
+    webSessionId = msg.web_session_id || '';
+    ssoVerified = false;
+    applyIdleLayoutGate();
+    updateSsoUi();
+    updateStartBtn();
+    tryClaimOAuthBridge();
+    return;
+  }
+  if (msg.type === 'need_sso') {
+    const tid = msg.task_id || '';
+    if (tid) {
+      const t = taskQueue.find(x => x.serverTaskId === tid);
+      if (t) taskQueue = taskQueue.filter(x => x.id !== t.id);
+    }
+    renderQueue();
+    const el = document.getElementById('ssoStatus');
+    const hint = msg.hint || msg.content || '自动下载需要先完成日志平台登录态验证。';
+    if (el) {
+      el.textContent = hint;
+      el.className = 'text-[10px] text-accent-yellow/90 leading-relaxed';
+    }
+    document.getElementById('ssoPanel')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  if (msg.type === 'sso_ok') {
+    ssoVerified = true;
+    applyIdleLayoutGate();
+    updateSsoUi();
+    updateStartBtn();
+    return;
+  }
+  if (msg.type === 'queued') {
+    onTaskQueued(msg.task_id, msg.position);
+    if (msg.position > 1) termLog('SYSTEM', `任务已排队，当前位置: 第 ${msg.position} 位`);
+    return;
+  }
+  if (msg.type === 'task_started') {
+    onTaskStarted(msg.task_id);
+    return;
+  }
+  if (msg.type === 'queue_update') {
+    return;
+  }
+  if (msg.type === 'history_file') {
+    currentHistoryFile = msg.file || '';
+    return;
+  }
+  if (msg.type === 'knowledge_result') {
+    onKnowledgeResult(msg.content, msg.git_synced);
+    return;
+  }
+  if (msg.type === 'knowledge_progress') {
+    onKnowledgeProgress(msg);
+    return;
+  }
+
+  eventCount++;
+  document.getElementById('eventCounter').textContent = `事件: ${eventCount}`;
+
+  if (msg.type === 'tool_use') {
+    const name = formatToolName(msg.tool_name);
+    addStep(name, 'active');
+    termLog('TOOL', `调用 ${name}...`);
+    updateProgress();
+  } else if (msg.type === 'tool_result') {
+    completeLastStep();
+    const preview = (msg.content || '').slice(0, 120).replace(/\n/g, ' ');
+    if (preview) termLog('DATA', preview);
+    updateProgress();
+  } else if (msg.type === 'text') {
+    assistantText += msg.content;
+    const lines = msg.content.split('\n').filter(l => l.trim());
+    lines.forEach(l => termLog('AI', l.slice(0, 200)));
+  } else if (msg.type === 'result') {
+    stopTimer();
+    activeServerTaskId = '';
+    const finalText = msg.final_text || assistantText;
+    const running = taskQueue.find(t => t.status === 'running');
+    if (running) {
+      running.status = 'done';
+      running.result = finalText;
+      running.duration = msg.duration_ms;
+      taskHistory.unshift({ ...running });
+      taskQueue = taskQueue.filter(t => t.id !== running.id);
+    }
+    renderQueue();
+    loadHistory();
+    completeLastStep();
+    setProgress(100);
+    termLog('DONE', `诊断完成 (${(msg.duration_ms/1000).toFixed(1)}s)`);
+
+    setTimeout(() => showResult(finalText, msg, true), 800);
+  } else if (msg.type === 'error') {
+    stopTimer();
+    activeServerTaskId = '';
+    termLog('ERROR', msg.content);
+    const running = taskQueue.find(t => t.status === 'running');
+    if (running) { running.status = 'error'; }
+    renderQueue();
+    setTimeout(() => switchView('idle'), 2000);
+  } else if (msg.type === 'stopped') {
+    stopTimer();
+    activeServerTaskId = '';
+    termLog('SYSTEM', '任务已被终止');
+  }
+}
+
+function formatToolName(name) {
+  return name.replace('mcp__log-analyzer__', '').replace('mcp__protocol-kb__', '').replace(/_/g, ' ');
+}
+
+// ---- Steps Panel ----
+function addStep(name, status) {
+  steps.push({ name, status });
+  renderSteps();
+}
+
+function completeLastStep() {
+  const active = steps.findLast(s => s.status === 'active');
+  if (active) active.status = 'done';
+  renderSteps();
+}
+
+function renderSteps() {
+  const panel = document.getElementById('stepsPanel');
+  panel.innerHTML = steps.map((s, i) => {
+    const icon = s.status === 'done' ? '<span class="material-symbols-outlined text-neon-green text-sm">check_circle</span>'
+               : '<span class="w-3 h-3 rounded-full border-2 border-primary pulse-neon inline-block"></span>';
+    const textCls = s.status === 'done' ? 'text-slate-500' : 'text-primary';
+    return `<div class="flex items-center gap-2 py-1.5 step-line relative pl-1">
+      ${icon}
+      <span class="text-[11px] font-medium ${textCls} uppercase">${esc(s.name)}</span>
+    </div>`;
+  }).join('');
+  panel.scrollTop = panel.scrollHeight;
+}
+
+// ---- Progress ----
+function updateProgress() {
+  const doneCount = steps.filter(s => s.status === 'done').length;
+  const total = Math.max(steps.length, doneCount + 2);
+  setProgress(Math.min(Math.round(doneCount / total * 90), 90));
+}
+
+function setProgress(pct) {
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+// ---- Terminal Log ----
+function termLog(tag, text) {
+  const term = document.getElementById('terminal');
+  const time = ((Date.now() - analysisStartTime) / 1000).toFixed(1);
+  const colorMap = { SYSTEM:'text-primary/40', TOOL:'text-neon-purple', DATA:'text-primary/60', AI:'text-slate-400', DONE:'text-neon-green', ERROR:'text-accent-red' };
+  const color = colorMap[tag] || 'text-slate-500';
+  const el = document.createElement('div');
+  el.className = color;
+  el.textContent = `[ ${time}s ] [ ${tag} ] ${text}`;
+  term.appendChild(el);
+  term.scrollTop = term.scrollHeight;
+}
+
+// ---- Score Parsing ----
+function parseScore(text) {
+  const m = text.match(/\[诊断可信度:\s*([\d.]+)\s*\/\s*10\s*\]/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+function stripScoreLine(text) {
+  return text.replace(/\n*\[诊断可信度:\s*[\d.]+\s*\/\s*10\s*\]\s*$/, '').trim();
+}
+
+// ---- Result View ----
+function showResult(text, meta, fromLive) {
+  currentResultMd = text || '';
+  const now = new Date();
+  currentResultName = `诊断报告_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+
+  const score = parseScore(text);
+  const scoreBadge = document.getElementById('scoreBadge');
+  const knowledgeBtn = document.getElementById('knowledgeBtn');
+
+  if (score !== null) {
+    scoreBadge.classList.remove('hidden');
+    scoreBadge.textContent = `可信度 ${score}/10`;
+    if (score >= 8) {
+      scoreBadge.className = 'ml-2 px-2 py-0.5 rounded text-[11px] font-bold font-mono border border-neon-green/50 text-neon-green bg-neon-green/10';
+    } else if (score >= 5) {
+      scoreBadge.className = 'ml-2 px-2 py-0.5 rounded text-[11px] font-bold font-mono border border-accent-yellow/50 text-accent-yellow bg-accent-yellow/10';
+    } else {
+      scoreBadge.className = 'ml-2 px-2 py-0.5 rounded text-[11px] font-bold font-mono border border-accent-red/50 text-accent-red bg-accent-red/10';
+    }
+    knowledgeBtn.classList.toggle('hidden', !(fromLive && score >= 5));
+  } else {
+    scoreBadge.classList.add('hidden');
+    knowledgeBtn.classList.toggle('hidden', !fromLive);
+  }
+
+  const banner = document.getElementById('resultBanner');
+  const resultIcon = document.getElementById('resultIcon');
+  const hasLogFailure = /诊断失败|未找到日志|未找到.*记录/i.test(text);
+  const isLowScore = score !== null && score < 5;
+  const hasCritical = /严重|critical|错误|失败|异常|error/i.test(text);
+  const hasWarning = /警告|warning|注意/i.test(text);
+
+  if (hasLogFailure || isLowScore) {
+    banner.className = 'border-l-4 border-accent-red bg-accent-red/5 p-5 rounded-r-lg';
+    resultIcon.className = 'material-symbols-outlined text-accent-red';
+    resultIcon.textContent = 'cancel';
+    document.getElementById('resultTitle').innerHTML = '<span class="text-accent-red">' + (hasLogFailure ? '诊断失败' : '可信度不足') + '</span>';
+  } else if (hasCritical) {
+    banner.className = 'border-l-4 border-accent-yellow bg-accent-yellow/5 p-5 rounded-r-lg';
+    resultIcon.className = 'material-symbols-outlined text-accent-yellow';
+    resultIcon.textContent = 'warning';
+    document.getElementById('resultTitle').innerHTML = '<span class="text-accent-yellow">发现问题</span>';
+  } else if (hasWarning) {
+    banner.className = 'border-l-4 border-accent-yellow bg-accent-yellow/5 p-5 rounded-r-lg';
+    resultIcon.className = 'material-symbols-outlined text-accent-yellow';
+    resultIcon.textContent = 'warning';
+    document.getElementById('resultTitle').innerHTML = '<span class="text-accent-yellow">存在警告</span>';
+  } else {
+    banner.className = 'border-l-4 border-neon-green bg-neon-green/5 p-5 rounded-r-lg';
+    resultIcon.className = 'material-symbols-outlined text-neon-green';
+    resultIcon.textContent = 'check_circle';
+    document.getElementById('resultTitle').innerHTML = '<span class="text-neon-green">诊断完成</span>';
+  }
+
+  const dur = meta.duration_ms ? `${(meta.duration_ms/1000).toFixed(1)}s` : '-';
+  const cost = meta.cost_usd > 0 ? ` | $${meta.cost_usd.toFixed(4)}` : '';
+  const scoreInfo = score !== null ? ` | 可信度: ${score}/10` : '';
+  document.getElementById('resultMeta').textContent = `分析耗时: ${dur}${cost} | 工具调用: ${steps.length} 次${scoreInfo}`;
+
+  const displayText = stripScoreLine(text) || '无分析结果';
+  const html = marked.parse(displayText);
+  document.getElementById('reportContent').innerHTML = html;
+  document.querySelectorAll('#reportContent pre code').forEach(el => hljs.highlightElement(el));
+
+  switchView('result');
+}
+
+let kbModalOpen = false;
+
+function openKnowledgeModal() {
+  if (!currentResultMd) { alert('暂无报告内容'); return; }
+  kbModalOpen = true;
+  document.getElementById('kbModal').classList.remove('hidden');
+  document.getElementById('kbInputStep').classList.remove('hidden');
+  document.getElementById('kbProgressStep').classList.add('hidden');
+  document.getElementById('kbResultArea').classList.add('hidden');
+  document.getElementById('kbStartBtn').classList.remove('hidden');
+  document.getElementById('kbStatus').textContent = '';
+  document.getElementById('kbUserNote').value = '';
+  document.getElementById('kbLog').innerHTML = '';
+  document.getElementById('kbResultContent').innerHTML = '';
+}
+
+function startKnowledgeSummary() {
+  const userNote = document.getElementById('kbUserNote').value.trim();
+
+  document.getElementById('kbInputStep').classList.add('hidden');
+  document.getElementById('kbProgressStep').classList.remove('hidden');
+  document.getElementById('kbStartBtn').classList.add('hidden');
+  document.getElementById('kbStatus').textContent = '正在处理...';
+
+  let prompt = `请将你刚才的诊断分析结果归纳为一条结构化的 JSON 知识库条目。
+输出一个 JSON 对象（用 \`\`\`json 代码块包裹），格式如下：
+{
+  "scenario_id": "匹配的场景文件名（见下方列表）",
+  "title": "简短的问题标题",
+  "error_codes": [相关错误码数字],
+  "error_messages": ["相关错误消息关键词"],
+  "description": "问题的详细描述",
+  "root_cause": "根因分析",
+  "key_log_sequence": ["关键日志步骤1", "关键日志步骤2"],
+  "diagnosis_method": "诊断方法说明",
+  "solution": ["解决方案1", "解决方案2"]
+}
+不要重复报告原文，直接输出 JSON。scenario_id 必须是以下已有场景之一：
+AIVoice（设备连接类）: ble-provisioning / mqtt-connection / device-offline / ota-upgrade / ble-connection / hardware-activate / lan-control / mesh-network
+AIVoice（语音/AIBuds）: aivoice-recording / aivoice-cloud-upload / aivoice-file-transfer / aivoice-translation / aivoice-transcription`;
+  if (userNote) {
+    prompt += `\n\n用户补充说明：${userNote}`;
+  }
+
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ action: 'knowledge', message: prompt }));
+    kbLogAppend('SYSTEM', '归纳请求已发送...');
+  } else {
+    kbLogAppend('ERROR', 'WebSocket 未连接，请刷新页面后重试');
+    document.getElementById('kbStatus').textContent = '连接失败';
+  }
+}
+
+function closeKnowledgeModal() {
+  kbModalOpen = false;
+  document.getElementById('kbModal').classList.add('hidden');
+}
+
+function kbLogAppend(tag, text) {
+  const log = document.getElementById('kbLog');
+  const colorMap = { SYSTEM:'text-primary/50', TOOL:'text-neon-purple', AI:'text-slate-400', DONE:'text-neon-green', ERROR:'text-accent-red' };
+  const el = document.createElement('div');
+  el.className = colorMap[tag] || 'text-slate-500';
+  el.textContent = `[ ${tag} ] ${text}`;
+  log.appendChild(el);
+  log.scrollTop = log.scrollHeight;
+}
+
+function onKnowledgeResult(content, gitSynced) {
+  document.getElementById('kbProgress').classList.add('hidden');
+  document.getElementById('kbProgressStep').classList.add('hidden');
+  if (content && content.trim()) {
+    document.getElementById('kbResultArea').classList.remove('hidden');
+    document.getElementById('kbResultContent').innerHTML = marked.parse(content);
+    document.querySelectorAll('#kbResultContent pre code').forEach(el => hljs.highlightElement(el));
+    const syncMsg = gitSynced ? ' · 已同步到 Git' : '';
+    document.getElementById('kbStatus').textContent = '归纳完成' + syncMsg;
+    kbLogAppend('DONE', '归纳完成');
+    if (gitSynced) kbLogAppend('SYSTEM', '知识库已同步到 Git 仓库');
+  } else {
+    document.getElementById('kbStatus').textContent = '未返回内容';
+    kbLogAppend('ERROR', '归纳完成但未返回内容，可能会话上下文已过期');
+  }
+}
+
+function onKnowledgeProgress(msg) {
+  if (msg.tool_name) {
+    kbLogAppend('TOOL', `调用 ${formatToolName(msg.tool_name)}...`);
+  } else if (msg.content) {
+    kbLogAppend('AI', msg.content.slice(0, 120));
+  }
+}
+
+function downloadReport() {
+  if (!currentResultMd) { alert('暂无报告内容'); return; }
+  const blob = new Blob([currentResultMd], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentResultName}.md`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function shareReport() {
+  if (!currentHistoryFile) { alert('报告尚未保存，无法分享'); return; }
+  const shareUrl = `${location.origin}/?report=${encodeURIComponent(currentHistoryFile)}`;
+  copyToClipboard(shareUrl).then((ok) => {
+    const icon = document.getElementById('shareIcon');
+    const label = document.getElementById('shareLabel');
+    if (ok) {
+      icon.textContent = 'check';
+      label.textContent = '已复制';
+      setTimeout(() => { icon.textContent = 'share'; label.textContent = '分享链接'; }, 2000);
+    }
+  });
+}
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text).then(() => true).catch(() => fallbackCopy(text));
+  }
+  return Promise.resolve(fallbackCopy(text));
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  return ok;
+}
+
+// ---- Queue Rendering ----
+function renderQueue() {
+  const body = document.getElementById('queueBody');
+  if (taskQueue.length === 0) {
+    body.innerHTML = '<tr><td colspan="3" class="px-4 py-6 text-center text-slate-600 text-xs">暂无任务</td></tr>';
+    return;
+  }
+  body.innerHTML = taskQueue.map(t => {
+    const statusMap = {
+      queued: '<span class="bg-primary/10 text-primary text-[9px] px-2 py-0.5 border border-primary/20 rounded uppercase font-bold">排队中</span>',
+      waiting: '<span class="bg-accent-yellow/10 text-accent-yellow text-[9px] px-2 py-0.5 border border-accent-yellow/20 rounded uppercase font-bold">等待中</span>',
+      running: '<div class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-neon-green pulse-neon"></span><span class="text-neon-green text-[10px] font-bold uppercase">分析中</span></div>',
+      done: '<span class="text-neon-green text-[10px] font-bold uppercase">完成</span>',
+      stopped: '<span class="text-slate-500 text-[10px] font-bold uppercase">已停止</span>',
+      error: '<span class="text-accent-red text-[10px] font-bold uppercase">出错</span>',
+    };
+    const actions = (t.status === 'queued' || t.status === 'waiting')
+      ? `<button onclick="removeTask(${t.id})" class="text-slate-500 hover:text-accent-red transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>`
+      : t.status === 'running'
+      ? `<button onclick="stopAnalysis()" class="text-accent-red hover:bg-accent-red/10 p-1 rounded transition-colors"><span class="material-symbols-outlined text-lg">stop_circle</span></button>`
+      : '';
+    return `<tr class="hover:bg-primary/5 transition-colors">
+      <td class="px-4 py-2.5 text-slate-300 text-xs">${esc(t.message.slice(0,30))}${t.message.length>30?'...':''}</td>
+      <td class="px-4 py-2.5">${statusMap[t.status]||''}</td>
+      <td class="px-4 py-2.5 text-right">${actions}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadHistory() {
+  try {
+    const res = await fetch('/api/history?limit=20');
+    const data = await res.json();
+    taskHistory = data.history || [];
+    renderHistory();
+    const total = taskHistory.length;
+    const countEl = document.getElementById('totalCount');
+    if (total > 0) {
+      document.getElementById('totalNum').textContent = total;
+      countEl.classList.remove('hidden');
+    } else {
+      countEl.classList.add('hidden');
+    }
+  } catch (e) { console.error('Failed to load history:', e); }
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (taskHistory.length === 0) {
+    list.innerHTML = '<div class="text-center text-slate-600 text-xs py-4">暂无历史记录</div>';
+    return;
+  }
+  list.innerHTML = taskHistory.slice(0, 10).map(t => {
+    const dur = t.duration_ms ? `${(t.duration_ms/1000).toFixed(1)}s` : '-';
+    const isFailed = t.has_failure || (t.score !== null && t.score !== undefined && t.score < 5) || t.status === 'error';
+    const statusIcon = (t.status === 'done' && !isFailed)
+      ? '<span class="material-symbols-outlined text-neon-green text-sm">done_all</span>'
+      : '<span class="material-symbols-outlined text-accent-red text-sm">cancel</span>';
+    return `<div class="bg-surface border border-primary/20 rounded p-3 hover:border-primary/40 transition-all group relative">
+      <div class="flex items-center gap-2 mb-1 cursor-pointer" onclick="loadHistoryDetail('${esc(t.file)}')">
+        ${statusIcon}
+        <span class="h-px flex-1 bg-primary/10"></span>
+        <span class="text-[10px] text-primary/40 font-mono">${dur}</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <p class="flex-1 text-xs font-bold text-slate-300 group-hover:text-primary transition-colors leading-snug cursor-pointer" onclick="loadHistoryDetail('${esc(t.file)}')">${esc(t.name)}</p>
+        <button onclick="event.stopPropagation();deleteHistory('${esc(t.file)}')" class="opacity-0 group-hover:opacity-100 text-slate-600 hover:text-accent-red transition-all flex-shrink-0 p-0.5" title="删除">
+          <span class="material-symbols-outlined text-sm">delete</span>
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function loadHistoryDetail(filename) {
+  try {
+    const res = await fetch('/api/history/' + encodeURIComponent(filename));
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    currentHistoryFile = filename;
+    steps = [];
+    for (let i = 0; i < (data.tool_count || 0); i++) steps.push({ name: 'tool ' + (i+1), status: 'done' });
+    showResult(data.result || '无结果', { duration_ms: data.duration_ms || 0, cost_usd: data.cost_usd || 0 }, false);
+    if (data.name) currentResultName = data.name.replace(/[\/\\:*?"<>|]/g, '_');
+  } catch (e) { alert('加载失败: ' + e.message); }
+}
+
+async function deleteHistory(filename) {
+  if (!confirm('确定删除这条历史记录？')) return;
+  try {
+    const res = await fetch('/api/history/' + encodeURIComponent(filename), { method: 'DELETE' });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    loadHistory();
+  } catch (e) { alert('删除失败: ' + e.message); }
+}
+
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function escAttr(s) { return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n'); }
+
+// ---- Init ----
+refreshOAuthUi();
+applyIdleLayoutGate();
+connect();
+updateStartBtn();
+loadHistory();
+setInterval(updateStartBtn, 1000);
+
+(function checkShareUrl() {
+  const params = new URLSearchParams(location.search);
+  const reportFile = params.get('report');
+  if (reportFile) {
+    history.replaceState(null, '', location.pathname);
+    setTimeout(() => loadHistoryDetail(reportFile), 300);
+  }
+})();
+if (!localStorage.getItem('notice_dismissed')) {
+  document.getElementById('noticePopover').classList.remove('hidden');
+}
+document.addEventListener('click', e => {
+  const pop = document.getElementById('noticePopover');
+  if (pop && !pop.classList.contains('hidden') && !e.target.closest('.relative')) pop.classList.add('hidden');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Quanlity",
+  "description": "音质与质量检测（含振幅相关质量逻辑）",
+  "source_files": [
+    "ThingAudioRecordAmplitudeFileWriter.m",
+    "ThingAudioRecordAmplitudeUtils.m",
+    "ThingAudioRecordVoiceDetect+QuanlityDetect.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 40,
+    "by_level": {
+      "error": 20,
+      "info": 5,
+      "debug": 15
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "amplitudesFromMp3FileAsync: Asynchronous amplitude generation completed, file : .*, Type : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "_cacheAmplitudeContentWithFileRecord success: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Quality inspection cache initialization completed ，frameSize: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Processing No.  .* Data count, size : .* Byte  samples: .* Detection successful",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Failed to create temporary amplitude file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to open temporary amplitude file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to close amplitude file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to write to temporary amplitude file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Write failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "saveAmplitudeFromTempFile: Invalid parameter",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "saveAmplitudeFromTempFile: Failed to copy file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3File: The file path is empty.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3File: File does not exist : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3File: amplitudeMaxCountInvalid",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3File: Failed to open file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3File: Create MP3Decoder failure",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create amplitude file writer",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Decoding exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Amplitude file write failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to read temporary amplitude file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "amplitudesFromMp3FileAsync: fileId Invalid, skip calculation, file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "_cacheAmplitudeContentWithFileRecord error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioQualityDetector Initialization failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The received data array is empty; ignore it.",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Processing No.  .* Amount of data, size : .* Byte   samples: .* Detection failed",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Initialize cache ，frameSize: .*, splitArrayCount: .*, maxFrameSize: .*, shouldAddData: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Send to Mini Program :  Quality inspection data  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Received after splitting and reassembling  .* A piece of data, starting quality inspection",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " readAmplitudeFromFilePath correctedPath is null",
+    " readAmplitudeFromFilePath: MP3File regenerated ",
+    " amplitudesFromMp3FileAsync: Skip the file currently being r",
+    " _cacheAmplitudeContentWithFileRecord fileRecord is not a Th",
+    " _recordFilePathWith: fileRecord is not a ThingAudioRecordFi",
+    " Reach maximum frame rate  %lu，Split into  %lu A concatenate",
+    " Add data, current frame count : %lu / %lu",
+    " Clear all cached data ",
+    " %lu Split the data into  %lu Each concatenated data item, w",
+    " Quality inspection data  %.2f timestamp: %d"
+  ]
+}

@@ -1,0 +1,491 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Merge",
+  "description": "多段录音合并与合并转码适配",
+  "source_files": [
+    "ThingAudioMergeTranscodeAdapter.m",
+    "ThingAudiorecordAudioMergeManager.m",
+    "ThingAudiorecordAudioMergeService.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "event_dispatch",
+    "merge",
+    "merge_manager",
+    "transcode"
+  ],
+  "log_stats": {
+    "total": 78,
+    "by_level": {
+      "debug": 5,
+      "error": 35,
+      "info": 38
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Step1 success  filesCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step2 success  download done",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step1.5 skip download  all files already local",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step3 success  newRecordId:.* newFileName:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step4 success  cloud merge reported",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step5 success  local record created",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step6 success  cloud record updated",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step7: merge success  newRecordId:.* recordIdListCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "requestCloudFileMerge success  recordId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Merge success newRecordId: .*, fileId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cloud data updated successfully  recordId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: onComplete completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "mergeAudioFilesWithRecordIdList failed  recordIdList empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: merge - cancelCurrentRecordListMerge ignored, no merge in progress, status:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "cancelCurrentRecordListMerge failed  SyncManager nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step1 failed  error:.*  got:.* expected:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step2 failed  SyncManager nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step2 failed  error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step3 failed  error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step4 failed  recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step5 failed  newRecordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Step6 failed  recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "queryRecordListWithRecordIdList failed, because SyncManager nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Create merged file failed  path: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "file not found  path:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "decoder initialize failed  error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "decoder set output config failed  error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "decode failed  file:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestCloudFileMerge API result=false  recordId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestCloudFileMerge API failed  recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Add file record failed  error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateCloudAudioRecord failed  SyncManager nil  recordId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Cloud data update failed  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateCloudAudioRecord fileWithRecordId failed  recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "syncRecord failed  SyncManager nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "notifyMergeStatus status:.* subStatus:.* progress:.* errorCode:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: create adapter failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "parseFileInfo failed  file:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: transcode - Decoding failed, stopping decoder: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: create MP3 encoder failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: appendPCMData called after completion, ignored",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: appendRawMP3FileAtPath called after completion, ignored",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "appendRawMP3: open source file failed  path:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "appendRawMP3: stream copy exception  path:.*  reason:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: onComplete called after completion, ignored",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: transcode - Coding complete, ignore error callback",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: onError: .* .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: close file handle exception: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: write MP3 frame failed: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "mergeAudioFilesWithRecordIdList start  count:.* recordIds:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "executeMergeAudioTask start  recordIdListCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step2: start download  count:.* ids:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step3: start local merge  count:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step4: start cloud merge  recordId:.* mergedCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Step5: create new record  newRecordId:.* fileName:.* filesCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "queryRecordListWithRecordIdList start  recordIdListCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "mergeAndWriteMp3WithFiles start filesCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: transcode - Start audio transcoding: .* -> MP3",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "requestCloudFileMerge start  recordId:.* mergedCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "createMergedFileRecord start  newRecordId:.* fileName:.* filesCount:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "createMergedFileRecord newAsrStatus:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "createMergedFileRecord newSource:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "createMergedFileRecord newDuration:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "updateCloudAudioRecord start  recordId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ThingAudioMergeTranscodeAdapter: initialized  outputPath:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "appendRawMP3: direct copy done  path:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: merge_manager - Remove listener : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " queryRecordListMergeStatus  status:%ld subStatus:%ld progre",
+    " cancelCurrentRecordListMerge requested",
+    " cancelCurrentRecordListMerge  batch downloads cancel reques",
+    " Step1: query recordList by recordIdList  count:%lu",
+    " Step1.5: check download status  filesCount:%lu",
+    " Step6: update cloud record  recordId:%@",
+    " dealCancelRequested detected cancel requested",
+    " resetCurrentStatus requested",
+    " resetCurrentStatus done",
+    " scene: event_dispatch - sync audio file merge event status",
+    " scene: merge_manager - Add listener : %@"
+  ]
+}

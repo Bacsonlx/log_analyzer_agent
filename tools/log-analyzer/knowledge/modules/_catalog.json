@@ -1,0 +1,494 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "total_modules": 37,
+    "total_log_calls": 2258
+  },
+  "modules": {
+    "AIBuds_AIChannel": {
+      "file_count": 2,
+      "log_count": 55,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "event",
+        "lifecycle",
+        "packet",
+        "pick_data",
+        "receive_data",
+        "request",
+        "send_data",
+        "session",
+        "stream",
+        "timer",
+        "tts",
+        "ws",
+        "ws_message"
+      ],
+      "knowledge_file": "modules/aibuds-aichannel.json"
+    },
+    "AIBuds_ASR": {
+      "file_count": 3,
+      "log_count": 68,
+      "levels": [
+        "debug",
+        "error"
+      ],
+      "scenes": [
+        "db",
+        "transfer_timing"
+      ],
+      "knowledge_file": "modules/aibuds-asr.json"
+    },
+    "AIBuds_AudioInput": {
+      "file_count": 8,
+      "log_count": 81,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "ai_buds_switch"
+      ],
+      "knowledge_file": "modules/aibuds-audioinput.json"
+    },
+    "AIBuds_BatteryMonitor": {
+      "file_count": 3,
+      "log_count": 23,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "battery_event"
+      ],
+      "knowledge_file": "modules/aibuds-batterymonitor.json"
+    },
+    "AIBuds_CloudSync": {
+      "file_count": 11,
+      "log_count": 391,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "audio_download",
+        "cloud_api",
+        "encrypt",
+        "miniapp_notify",
+        "multipart",
+        "storage",
+        "sync_manager",
+        "sync_switch"
+      ],
+      "knowledge_file": "modules/aibuds-cloudsync.json"
+    },
+    "AIBuds_Coder": {
+      "file_count": 7,
+      "log_count": 38,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-coder.json"
+    },
+    "AIBuds_DB": {
+      "file_count": 8,
+      "log_count": 175,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "cloud_db",
+        "import_table"
+      ],
+      "knowledge_file": "modules/aibuds-db.json"
+    },
+    "AIBuds_DataSource": {
+      "file_count": 2,
+      "log_count": 42,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "cache",
+        "cache_mem"
+      ],
+      "knowledge_file": "modules/aibuds-datasource.json"
+    },
+    "AIBuds_EventDispatch": {
+      "file_count": 1,
+      "log_count": 11,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "push_refresh"
+      ],
+      "knowledge_file": "modules/aibuds-eventdispatch.json"
+    },
+    "AIBuds_FaceToFace": {
+      "file_count": 2,
+      "log_count": 16,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "error_code"
+      ],
+      "knowledge_file": "modules/aibuds-facetoface.json"
+    },
+    "AIBuds_FileManager": {
+      "file_count": 2,
+      "log_count": 28,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-filemanager.json"
+    },
+    "AIBuds_FileTransfer": {
+      "file_count": 11,
+      "log_count": 284,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "ap_switch",
+        "background_task",
+        "delete",
+        "download_time",
+        "miniapp",
+        "post_process",
+        "segmented_transcode"
+      ],
+      "knowledge_file": "modules/aibuds-filetransfer.json"
+    },
+    "AIBuds_FileUpdate": {
+      "file_count": 2,
+      "log_count": 15,
+      "levels": [
+        "debug"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-fileupdate.json"
+    },
+    "AIBuds_Import": {
+      "file_count": 8,
+      "log_count": 214,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "copy",
+        "file_access",
+        "file_picker",
+        "import_coder",
+        "manager",
+        "pcm_mp3",
+        "scheduler"
+      ],
+      "knowledge_file": "modules/aibuds-import.json"
+    },
+    "AIBuds_MQTT": {
+      "file_count": 3,
+      "log_count": 60,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "connection",
+        "edit_summary",
+        "edit_transcription",
+        "event",
+        "summary_mqtt",
+        "trans_mqtt",
+        "translate_mqtt"
+      ],
+      "knowledge_file": "modules/aibuds-mqtt.json"
+    },
+    "AIBuds_Merge": {
+      "file_count": 3,
+      "log_count": 78,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "event_dispatch",
+        "merge",
+        "merge_manager",
+        "transcode"
+      ],
+      "knowledge_file": "modules/aibuds-merge.json"
+    },
+    "AIBuds_MiniApp": {
+      "file_count": 1,
+      "log_count": 11,
+      "levels": [
+        "debug",
+        "error"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-miniapp.json"
+    },
+    "AIBuds_Network": {
+      "file_count": 1,
+      "log_count": 54,
+      "levels": [
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-network.json"
+    },
+    "AIBuds_Phone": {
+      "file_count": 1,
+      "log_count": 14,
+      "levels": [
+        "debug",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-phone.json"
+    },
+    "AIBuds_PhoneAndBuds": {
+      "file_count": 1,
+      "log_count": 34,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-phoneandbuds.json"
+    },
+    "AIBuds_PhoneAndEntryBuds": {
+      "file_count": 1,
+      "log_count": 16,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-phoneandentrybuds.json"
+    },
+    "AIBuds_Quanlity": {
+      "file_count": 3,
+      "log_count": 40,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-quanlity.json"
+    },
+    "AIBuds_Recognition": {
+      "file_count": 2,
+      "log_count": 13,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "nlg",
+        "transcribe"
+      ],
+      "knowledge_file": "modules/aibuds-recognition.json"
+    },
+    "AIBuds_Record": {
+      "file_count": 5,
+      "log_count": 100,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "audio_record",
+        "live_activity",
+        "live_activity_native"
+      ],
+      "knowledge_file": "modules/aibuds-record.json"
+    },
+    "AIBuds_SI": {
+      "file_count": 8,
+      "log_count": 72,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-si.json"
+    },
+    "AIBuds_Search": {
+      "file_count": 2,
+      "log_count": 5,
+      "levels": [
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-search.json"
+    },
+    "AIBuds_Session": {
+      "file_count": 3,
+      "log_count": 37,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "create",
+        "pool"
+      ],
+      "knowledge_file": "modules/aibuds-session.json"
+    },
+    "AIBuds_Share": {
+      "file_count": 1,
+      "log_count": 3,
+      "levels": [
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-share.json"
+    },
+    "AIBuds_Tag": {
+      "file_count": 2,
+      "log_count": 15,
+      "levels": [
+        "debug",
+        "error"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-tag.json"
+    },
+    "AIBuds_Token": {
+      "file_count": 2,
+      "log_count": 16,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "create",
+        "remove",
+        "timer",
+        "update"
+      ],
+      "knowledge_file": "modules/aibuds-token.json"
+    },
+    "AIBuds_TraceEvent": {
+      "file_count": 1,
+      "log_count": 2,
+      "levels": [
+        "debug",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-traceevent.json"
+    },
+    "AIBuds_Transcribe": {
+      "file_count": 2,
+      "log_count": 14,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-transcribe.json"
+    },
+    "AIBuds_Transfer": {
+      "file_count": 3,
+      "log_count": 45,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-transfer.json"
+    },
+    "AIBuds_Translate": {
+      "file_count": 2,
+      "log_count": 39,
+      "levels": [
+        "debug",
+        "error"
+      ],
+      "scenes": [
+        "system_tts",
+        "transfer"
+      ],
+      "knowledge_file": "modules/aibuds-translate.json"
+    },
+    "AIBuds_Upload": {
+      "file_count": 3,
+      "log_count": 104,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [
+        "visit"
+      ],
+      "knowledge_file": "modules/aibuds-upload.json"
+    },
+    "AIBuds_Utils": {
+      "file_count": 3,
+      "log_count": 25,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-utils.json"
+    },
+    "AIBuds_VAD": {
+      "file_count": 2,
+      "log_count": 20,
+      "levels": [
+        "debug",
+        "error",
+        "info"
+      ],
+      "scenes": [],
+      "knowledge_file": "modules/aibuds-vad.json"
+    }
+  }
+}

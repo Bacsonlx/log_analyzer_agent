@@ -1,0 +1,298 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Network",
+  "description": "网络检测与网络工具",
+  "source_files": [
+    "ThingAudioRecordNetworkUtils.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 54,
+    "by_level": {
+      "info": 31,
+      "error": 23
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Hotspot connection successful  => .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Already connected to the hotspot  => .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Check if connected to the hotspot : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The Device has already connected to this hotspot.  => .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Connection successful after waiting  => .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "CNCopyExact match succeeded : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "CNCopy TYAPPrefix matching succeeded  - Current : '.*', Target : '.*'",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "CNCopyFuzzy matching succeeded  - Current : '.*', Target : '.*'",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Hotspot connection verification succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Unable to fetch from WiFiThe interface obtains a valid router address.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalid hotspot parameters  - SSIDEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hotspot connection failed  => .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hotspot information is invalid; unable to check network status.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hotspot connection failed  - Code: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalid configuration  - Please check. SSIDand password format  => .*,.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "SSIDInvalid  - Please check the hotspot name.  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "WPAInvalid password  - Please check the password length and format.  => .*,.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "WEPInvalid password  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "EAPInvalid setting  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "HS20Invalid setting  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "HS20Invalid domain name  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "User rejected hotspot connection  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Internal system error  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Connection still failed after waiting  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "System configuration error  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unknown error  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Not supported for one-time connection  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "App is not in the foreground  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "SSIDInvalid prefix  => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Prompt: “User not authorized” ” => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "System refused the operation. ” => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unprocessed error code : .* => .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve network interface list",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hotspot connection verification failed  - Retry attempts exhausted",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hotspot connection verification failed. Retrying in 2 seconds.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Start intelligent acquisition of router address",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start connecting to the hotspot  => SSID: .* pwd: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " WiFiInterface not yet assigned IPAddress: Unable to obtain ",
+    " en0Interface retrieves the router address. : %@",
+    " en1Interface retrieves the router address. : %@",
+    " Current  Router Address : %@",
+    " Hotspot connector detected connection : %@",
+    " Enhanced detection method detects connection : %@",
+    " No matching hotspot connection found ",
+    " Connection request is being processed; waiting for result. ",
+    " thingsdk_currentWifiSSIDConnection detected : %@",
+    " Router address detected connection : %@",
+    " Network interface detects connection : %@",
+    " No connection detected by any method. : %@",
+    " Router address detected : %@",
+    " WiFiAPI  %s Assigned IPAddress : %@",
+    " WiFiInterface not yet assigned IPAddress ",
+    " Detected TYAPHotspot connection : %@",
+    " Verify hotspot connection status  - Remaining retry attempt"
+  ]
+}

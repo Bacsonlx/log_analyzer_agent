@@ -1,0 +1,344 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_ASR",
+  "description": "语音识别、翻译、TTS模块",
+  "source_files": [
+    "ThingAudioTranslateAsr.m",
+    "ThingAudioTranslateAsrManager.m",
+    "ThingAudioTranslateAsrRequest.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "db",
+    "transfer_timing"
+  ],
+  "log_stats": {
+    "total": 68,
+    "by_level": {
+      "debug": 49,
+      "error": 19
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Task started  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task completed  - .* - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "eventId:.* requestId:.* Completed asrTime-consuming ：.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Mark ASRTask completed",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "asr & translateAll completed, cleared , requestId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ASRTask started, start time : .*, Request ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Completed TTSContext not found during request ，RequestId=.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "TTSRequest completed ，RequestId=.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Channel index out of bounds, channel : .*, Maximum number of channels : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Channel index repair remains ineffective ，newChannel: .*, Maximum number of channels : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Queue is empty, channel : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Queue or queue item is empty, channel : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestId Empty, cannot clear throttling records",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRNo data for the task, request ID: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRTask error, request ID: .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "asr & translate All data is empty. , requestId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestId Empty, skip throttling check",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "textUpdateThrottleMap Empty, skip throttling check",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestId Empty, skip clearing throttling records",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "requestId Failed to copy; skipping throttling record clearance",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "textUpdateThrottleMap Empty, skip clearing throttling records",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "An exception occurred while clearing the throttling record. : .*, requestId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: db - addAsr failed or zero asrId, requestId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to allocate memory for silence padding (Opus path)",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ASRTask ended, end time : .*, Request ID: .*, Error : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create TTScontext ，RequestId=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "dealloc .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Audio pickup  - Start  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Audio pickup  - End  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Send  - Start  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "eventId:.* requestId:.* Sending duration ：.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Received  - Start  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "eventId:.* requestId:.* Received cloud End duration ：.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "asr - End  - .* - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "text - End  - .* - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "skill - End  - .* - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "TTS - End  - .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Remove from queue ASRObject, Request ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Create ASRTask, Request ID: .*, channel : .*, Original language : .*, Target language : .*, Enable voice recognition? :.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "End-of-discovery marker is sent first. , requestId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start sending to the mini-program , requestId: .* asr: .*, translate: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "eventCount Send Asr & TranslateUpdate event  - Request ID: .*, Text length : .*, Translation length : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Release ASRTask, Request ID: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Create New TTScontext ，RequestId=.*, Queue length =.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start playing TTSRequest ，RequestId=.*, Queue Position =.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " eventId:%@ requestId:%@ Request duration ：%d",
+    " scene: transfer_timing - 5️⃣ TaskTime: %.4fs ",
+    " eventId:%@ requestId:%@ Audio pickup duration ：%d",
+    " eventId:%@ requestId:%@  update asr Time-consuming ：%d",
+    " asr - Update  - %@ - %@",
+    " text - Update  - %@ - %@",
+    " eventId:%@ requestId:%@ update text Time-consuming ：%d",
+    " eventId:%@ requestId:%@ update TTS  Time-consuming ：%d",
+    " TTS - Interrupt  - %@",
+    " Channel log, channel : %d,",
+    " Channel request，requestId: %@",
+    " hasAsrTask - channel  %lu There are also tasks. ，requestId:",
+    " asr complete, requestId: %@",
+    " asr update, requestId: %@",
+    " translate complete, requestId: %@",
+    " translate update, requestId: %@",
+    " ASRThe service requires payment. Request. ID: %@",
+    " Clear TTScontext ，RequestId=%@"
+  ]
+}

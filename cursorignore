@@ -1,0 +1,65 @@
+# ============================================
+# TuyaDeviceCoreKit Cursor 索引优化配置
+# 排除不需要 AI 分析的文件，提升索引速度和搜索精度
+# ============================================
+
+# Gradle 构建产物与缓存（全局生效）
+build/
+.gradle/
+*.apk
+*.aar
+*.dex
+*.class
+
+# IDE 配置
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 生成代码
+**/generated/
+**/build/generated/
+**/apt_generated/
+**/kapt/
+
+# 壳工程（TuyaSmart_AppShell）— 精细化排除
+# 保留：build.gradle, sdk_build.gradle, full_deps.json, config.json,
+#       permission.gradle, src/, src_appsdk/, doc/, metaAppBuilder/appEntries/ 等配置与源码
+# 排除：构建产物与临时生成文件
+TuyaSmart_AppShell/build/
+TuyaSmart_AppShell/thingbuild/
+TuyaSmart_AppShell/thingpanel/
+TuyaSmart_AppShell/thingFinalDeps.gradle
+TuyaSmart_AppShell/proguard_seeds.txt
+TuyaSmart_AppShell/proguard_usage.txt
+TuyaSmart_AppShell/metaAppBuilder/build/
+TuyaSmart_AppShell/metaAppBuilder/.gradle/
+
+# 示例与 APK 产出
+publicApk/
+sdk-sample/
+
+# 二进制与混淆产物
+*.so
+*.jar
+mapping.txt
+**/proguard/
+
+# Repo 元数据
+.repo/
+
+# 文档目录（空目录）
+docs/
+
+# Gradle Wrapper（不需要 AI 分析）
+gradle/
+
+# 其他
+.DS_Store
+*.min.js
+*.map
+.qoder/
+.vscode/
+
+# 项目改造参考文档（给人看的，不需要 AI 索引）

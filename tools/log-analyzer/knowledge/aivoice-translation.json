@@ -1,0 +1,136 @@
+{
+  "_meta": {
+    "updated": "2026-03-19",
+    "description": "AIVoice 翻译/ASR/TTS 诊断知识库，覆盖面对面翻译、电话翻译、SI 1v1、手机+耳机模式等场景。流式 WebSocket / Token / Session / 实时转写与 NLG 见 aivoice-streaming-channel.json"
+  },
+  "id": "aivoice-translation",
+  "name": "AIVoice 翻译与语音识别问题",
+  "module_refs": ["AIBuds_FaceToFace", "AIBuds_Phone", "AIBuds_SI", "AIBuds_PhoneAndBuds", "AIBuds_PhoneAndEntryBuds", "AIBuds_Translate", "AIBuds_ASR", "AIBuds_Transfer", "AIBuds_AudioInput", "AIBuds_VAD"],
+  "keywords": [
+    "translate",
+    "翻译",
+    "ASR",
+    "TTS",
+    "face-to-face",
+    "面对面",
+    "phone translation",
+    "电话翻译",
+    "SI",
+    "simultaneous interpretation",
+    "同声传译",
+    "1v1",
+    "耳机",
+    "buds",
+    "VAD",
+    "语音识别"
+  ],
+  "primary_tags": [
+    "AIBuds_FaceToFace",
+    "AIBuds_Phone",
+    "AIBuds_SI",
+    "AIBuds_PhoneAndBuds",
+    "AIBuds_PhoneAndEntryBuds",
+    "AIBuds_Translate",
+    "AIBuds_ASR"
+  ],
+  "secondary_tags": [
+    "AIBuds_Transfer",
+    "AIBuds_AudioInput",
+    "AIBuds_Record"
+  ],
+  "noise_tags": [],
+  "check_order": [
+    "1. 检查翻译任务初始化（Initialization / Start task）",
+    "2. 检查音频源和格式（Audio source / format）",
+    "3. 检查 ASR 连接和识别结果",
+    "4. 检查 VAD 状态（Start speaking / End speaking）",
+    "5. 检查翻译结果（Save translation result）",
+    "6. 检查任务结束（Release / dealloc）"
+  ],
+  "common_causes": [
+    {
+      "pattern": "ASRTimeout.*using the last updated result",
+      "cause": "ASR 超时，使用最后更新的结果（可能网络延迟或音频流中断）"
+    },
+    {
+      "pattern": "Unsupported audio format",
+      "cause": "不支持的音频格式（错误码 10071）"
+    },
+    {
+      "pattern": "Unsupported audio source type",
+      "cause": "不支持的音频源类型"
+    },
+    {
+      "pattern": "ThingAudioRecordLanguageError",
+      "cause": "语言设置错误（错误码 10003）"
+    },
+    {
+      "pattern": "Create multiple input sources CoderFailed",
+      "cause": "多输入源编码器创建失败（PhoneAndBuds 模式）"
+    },
+    {
+      "pattern": "multiSourceCoder Not initialized",
+      "cause": "多源编码器未初始化（PhoneAndBuds 模式）"
+    },
+    {
+      "pattern": "Switch.*Failed|dpReply.*Timeout",
+      "cause": "SI 模式切换失败或 dp 回复超时"
+    },
+    {
+      "pattern": "Simultaneous interpretation dp.*Failed",
+      "cause": "SI 同传 dp 下发失败"
+    },
+    {
+      "pattern": "no audio stream within 3 seconds",
+      "cause": "3 秒内无音频流，电话翻译认为通话已断开"
+    },
+    {
+      "pattern": "ThingAudioTranslateTTSUrlError",
+      "cause": "TTS URL 错误（错误码 10101）"
+    }
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "Save last time ASRResult",
+      "description": "保存最后一次 ASR 结果，任务结束时的正常行为",
+      "how_to_identify": "出现在 task stopped/completed 之前"
+    },
+    {
+      "pattern": "The recording duration has reached the limit",
+      "description": "录音时长达到上限，系统自动停止并重新开始",
+      "how_to_identify": "之后紧跟自动重新开始或结束录音"
+    },
+    {
+      "pattern": "VADMaximum length truncation",
+      "description": "VAD 最大长度截断，为防止单次说话过长的正常限制",
+      "how_to_identify": "截断后继续正常识别"
+    }
+  ],
+  "phases": [
+    {
+      "name": "任务初始化",
+      "tags": ["AIBuds_FaceToFace", "AIBuds_Phone", "AIBuds_SI", "AIBuds_PhoneAndBuds", "AIBuds_PhoneAndEntryBuds"],
+      "success_pattern": "task preparation completed|Transcription task ready|Face-to-face translation task preparation completed",
+      "failure_pattern": "Device startup exception|Unsupported audio"
+    },
+    {
+      "name": "语音识别",
+      "tags": ["AIBuds_ASR"],
+      "success_pattern": "ASR.*result|recognition",
+      "failure_pattern": "ASRTimeout|ASR.*error|ASR.*fail"
+    },
+    {
+      "name": "翻译处理",
+      "tags": ["AIBuds_Translate", "AIBuds_FaceToFace", "AIBuds_Phone"],
+      "success_pattern": "Save.*translation result|translation.*success",
+      "failure_pattern": "TranslateCommonError|TTSUrlError"
+    },
+    {
+      "name": "任务结束",
+      "tags": ["AIBuds_FaceToFace", "AIBuds_Phone", "AIBuds_SI", "AIBuds_PhoneAndBuds"],
+      "success_pattern": "Release|dealloc|task completed|task stopped",
+      "failure_pattern": "record_interrupt|Incoming call interruption"
+    }
+  ],
+  "known_issues": []
+}

@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Transcribe",
+  "description": "转写服务",
+  "source_files": [
+    "ThingAudioRecordTranscribeService.m",
+    "ThingAudioRecordUtils.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 14,
+    "by_level": {
+      "error": 9,
+      "debug": 3,
+      "info": 2
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Transcription task started successfully  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Successfully updated file status to processing.  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Write failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Invalid transcription parameter",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Transcription task failed to start  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to update file status to “Processing”: File does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to update file status to processing  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve file information; unable to update status.  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to update file status: file does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Update file status failed successfully.  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to update file status  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Start transcription task  fileId: %lld, recordId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " recordId Standardization : %@ -> %@"
+  ]
+}

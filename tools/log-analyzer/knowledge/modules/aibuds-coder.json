@@ -1,0 +1,262 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Coder",
+  "description": "编码器模块",
+  "source_files": [
+    "ThingAudioCoder.m",
+    "ThingAudioCoderRingBuffer.m",
+    "ThingAudioOPUSCoder+BatchConvert.m",
+    "ThingAudioOPUSCoder.m",
+    "ThingAudioPCMCoder.m",
+    "ThingAudioRecordFileToolManager.m",
+    "ThingMultiSourceAudioCoder.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 38,
+    "by_level": {
+      "debug": 7,
+      "error": 28,
+      "info": 3
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Initialization completed, number of audio sources : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "MP3File saved successfully",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "generateMp3File: MP3File generation completed : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "opus - Data parsing exception ，pcms nil or has a length of 0",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "opus->pcm length adjusted: got=.* expected=.* channel=.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: Invalid input data, returning empty data",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: processor Invalid, return original data",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: pcm.bytes is NULL",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: Create  mutablePcm Failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: mutableBytes is NULL",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "processPcmWith3A: An exception occurred  - .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to allocate stereo buffer",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "audioSourceList Cannot be empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unable to create sub Coder，audioSource: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "No audio channel found  .* sub Coder",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Buffer overflow, data cannot be appended",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: MP3File path is empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Left channel PCMFile path is empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Right channel PCMFile path is empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Left channel PCMFile does not exist : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Right channel PCMFile does not exist : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Create MP3Encoder failure",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Failed to create file manager",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Turn on the left audio channel PCMFile failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Turn on the right audio channel PCMFile failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Failed to merge dual-channel data; skipping this frame.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Generate MP3File exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Exception occurred while closing left-channel file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "generateMp3File: Exception occurred while closing the right-channel file handle. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "for audio channel  .* Create Sub Coder，audioSource: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start transcoding and process remaining data.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "dealloc",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " %@Saved ",
+    " Settings MP3File path : %@",
+    " finishTime to merge complete frame data, length : %lu",
+    " finishTime-merge remaining data less than one frame, length"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "device-offline",
+  "name": "设备离线问题",
+  "keywords": ["离线", "offline", "在线", "online", "心跳", "heartbeat", "dp"],
+  "primary_tags": [
+    "ConnectStatusManager",
+    "BlueDeviceOnlineCheck",
+    "BleWifiDeviceMonitor",
+    "DeviceOnlineCheck"
+  ],
+  "secondary_tags": [
+    "MqttService",
+    "ThingPushManager",
+    "thingble_BleDeviceController",
+    "AbsThingDevice_ThingMeshDevice",
+    "BleMeshEventSender"
+  ],
+  "check_order": [
+    "1. 检查 ConnectStatusManager 确认设备在线/离线事件",
+    "2. 区分 BLE 直连设备（BleWifiDeviceMonitor）还是 WiFi 设备（MqttService）",
+    "3. BLE 设备：检查 thingble_BleDeviceController 确认连接状态",
+    "4. WiFi 设备：检查 MqttService 确认 MQTT 连接",
+    "5. 检查 DeviceOnlineCheck 确认在线状态检查逻辑"
+  ],
+  "common_causes": [
+    {"pattern": "offline.*mqtt", "cause": "WiFi 设备因 MQTT 断连导致离线"},
+    {"pattern": "offline.*ble", "cause": "BLE 设备因超出蓝牙范围导致离线"},
+    {"pattern": "heartbeat.*timeout", "cause": "心跳超时，可能是网络不稳定"},
+    {"pattern": "status.*change.*offline", "cause": "设备主动上报离线，检查设备端日志"}
+  ]
+}

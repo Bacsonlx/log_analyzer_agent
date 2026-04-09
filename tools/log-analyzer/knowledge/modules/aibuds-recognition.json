@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Recognition",
+  "description": "识别与 NLG 结果（子场景用 `scene: transcribe` / `scene: nlg`）",
+  "source_files": [
+    "ThingAutomaticSpeechRecognitionRequest.m",
+    "ThingNewAutomaticSpeechRecognitionRequest.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "nlg",
+    "transcribe"
+  ],
+  "log_stats": {
+    "total": 13,
+    "by_level": {
+      "error": 4,
+      "info": 5,
+      "debug": 4
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: nlg - skill completed at .* intervalMs: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: transcribe - parse protobuf failed .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: nlg - invalid NLG data format",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: nlg - missing content field",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: nlg - append chunk: .* total: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    "scene: transcribe - partial callback at %@ intervalMs: %.3f",
+    "scene: transcribe - final callback at %@ intervalMs: %.3f",
+    "scene: nlg - partial callback at %@ intervalMs: %.3f",
+    "scene: nlg - final callback at %@ intervalMs: %.3f",
+    "scene: nlg - override mode total: %@",
+    "scene: transcribe - text packet: %@",
+    "scene: nlg - text packet: %@"
+  ]
+}

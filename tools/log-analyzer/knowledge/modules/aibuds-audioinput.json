@@ -1,0 +1,344 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_AudioInput",
+  "description": "音频输入模块",
+  "source_files": [
+    "ThingAudioRecordCallTranslationTask.m",
+    "ThingAudioRecordDeviceManager.m",
+    "ThingAudioRecordSimultaneousInterpretationTask.m",
+    "ThingAudioRecordTransferTask.m",
+    "ThingBaseAIBudsProAudioInput.m",
+    "ThingMicrophoneAudioInput.m",
+    "ThingPhoneAndProBudsRecordTask.m",
+    "ThingPhoneBluetoothAudioInput.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "ai_buds_switch"
+  ],
+  "log_stats": {
+    "total": 81,
+    "by_level": {
+      "debug": 11,
+      "info": 53,
+      "error": 17
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "ASRAll tasks completed, saving the latest version. ASRResult",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_interrupt Incoming call interruption started event",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "[Mic] ThingAudioInput Already initialized",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "[Mic] Perfusion file read/write completed",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "setPattern success: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ThingAudioInput Already initialized",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Already started; cannot be started again.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send the start command  - Success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send pause command  - Success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send restore command  - Success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send stop command  - Success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Send  record_control Heartbeat command  - Success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Device Id:.* btConnectedStatus:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Headphone Device  【Connected ] BLE deviceId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ProHeadphones BtInformation   deviceId: .* mac: .* btconnected:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "[Mic] ThingVoiceDetector createFailed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "[Mic] ThingVoiceDetector Failed to set basic parameters",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "[Mic] ThingVoiceDetector Set 3 AFailed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "[Mic] ThingVoiceDetector startFailed",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "[Mic] ThingVoiceDetector startFailed; initiating a new channel. Only the interrupt logic is marked here.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "setInputDataSource failed error: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "setPreferredInput failed error: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingVoiceDetector createFailed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingVoiceDetector Failed to set basic parameters.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingVoiceDetector Set 3 AFailed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "ThingVoiceDetector startFailed",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Device is offline; startup failed.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Send the start command  - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Send pause command  - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Send restore command  - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Send stop command  - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Hardware returns an error.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "record_control Waiting for start command  - Timeout",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Send  record_control Heartbeat command  - Failed  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Three consecutive heartbeat failures; closing the task.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "record_control Execute  Deal StopOperation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Execute Finish StopOperation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "[Mic] ThingAudioInput initSDK",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ThingAudioInput initSDK",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "ThingAudioInput start",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send the start command  - controlDpId:.*, dpValue:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Send restore command  - controlDpId:.*, dpValue:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_control Start, Send, Stop Command",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "record_interrupt No processing required 「Call interruption starts 」Command",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " scene: ai_buds_switch - mini app reset Bluetooth headset ",
+    " scene: ai_buds_switch - mini app reset Microphone ",
+    " record_control Identifier   Mark FinshOperation ",
+    " record_interrupt: %@",
+    " Save Last Time ASRResult : %@",
+    " Save the last translation result : %@",
+    " Save last time ASRResult : %@",
+    "[Mic] Enable perfusion mode ",
+    "[Mic] Dynamic flow scanning mode, path : %@",
+    "[Mic] Perfusion path  : %@",
+    "[Mic] Received perfusion command not in recording ",
+    " Received perfusion command, not in recording ",
+    " record_control: %@",
+    " deviceId: %@ bt status: %@ ",
+    " Compensation cache  deviceId: %@ bt status: %@ ",
+    " Headphone Device  [Not linked ] BLE deviceId: %@ ",
+    " Basic headset device  deviceId: %@  Connection status  == %"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Search",
+  "description": "搜索",
+  "source_files": [
+    "ThingAudioRecordCloudSearchManager.m",
+    "ThingAudioRecordDataSourceManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 5,
+    "by_level": {
+      "error": 4,
+      "info": 1
+    }
+  },
+  "success_signals": [],
+  "failure_signals": [
+    {
+      "pattern": "skip non-dict row",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "skip row without recordId",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "search error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "params is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [],
+  "noise_patterns": [
+    "merge cloud rows:%lu local matched:%lu"
+  ]
+}

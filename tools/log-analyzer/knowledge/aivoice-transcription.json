@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "updated": "2026-04-09",
+    "description": "AIVoice 转写/总结诊断知识库，覆盖 extAttribute 状态追踪、MQTT 回传、结果获取"
+  },
+  "id": "aivoice-transcription",
+  "name": "AIVoice 转写与总结问题",
+  "module_refs": ["AIBuds_DB", "AIBuds_FileUpdate", "AIBuds_Upload", "AIBuds_Transcribe", "AIBuds_MQTT", "AIBuds_CloudSync"],
+  "keywords": [
+    "transcribe", "转写", "转录", "transcription",
+    "summary", "总结",
+    "status", "extAttribute",
+    "transcribeStatus", "summaryStatus", "translateStatus",
+    "fileId", "MQTT", "trans_mqtt", "summary_mqtt"
+  ],
+  "primary_tags": [
+    "AIBuds_Upload",
+    "AIBuds_Transcribe",
+    "AIBuds_MQTT",
+    "AIBuds_DB"
+  ],
+  "secondary_tags": [
+    "AIBuds_FileUpdate",
+    "AIBuds_CloudSync"
+  ],
+  "noise_tags": [],
+  "check_order": [
+    "1. 检查 AIBuds_DB 的 transcribeStatus（本地DB：0=未知, 1=转写中, 2=转写成功, 3=转写失败）",
+    "2. 检查 AIBuds_DB 的 summaryStatus（本地DB：0=老数据, 1=未知, 2=总结中, 3=总结成功, 4=总结失败）",
+    "2b. 检查 AIBuds_DB 的 translateStatus（本地DB：0=老数据, 1=未知, 2=翻译中, 3=翻译成功, 4=翻译失败）",
+    "3. 云端 MQTT 状态码统一为：0=未知, 1=初始, 2=进行中, 9=成功, 100=失败",
+    "4. 检查 AIBuds_FileUpdate 是否触发转写/总结",
+    "5. 检查 audioUploadStatus 是否为 2（上传完成才能触发云端转写）",
+    "6. 检查 recordSource（0 本地 / 1 云端）确认数据来源",
+    "7. ASR/NLG 记录由云端流式通道产生并存储，客户端无需上报 ASR 文本至云端 transcript 存储"
+  ],
+  "common_causes": [
+    {
+      "pattern": "transcribeStatus=3",
+      "cause": "转录失败，检查音频文件是否上传成功、服务端转录服务状态"
+    },
+    {
+      "pattern": "summaryStatus=3|summaryStatus=4",
+      "cause": "总结失败，检查转录是否完成、AI 总结服务状态"
+    },
+    {
+      "pattern": "transcribeStatus=1.*长时间未变",
+      "cause": "转录状态卡在「转录中」，可能服务端任务超时或消息推送丢失"
+    },
+    {
+      "pattern": "audioUploadStatus=0|audioUploadStatus=3",
+      "cause": "音频未上传或上传失败，无法触发云端转写"
+    },
+    {
+      "pattern": "Transcription task failed to start",
+      "cause": "转写任务启动失败，检查网络或参数"
+    },
+    {
+      "pattern": "Summary request failed",
+      "cause": "总结请求失败，检查转写是否完成或网络问题"
+    }
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "File record updated successfully",
+      "description": "DB 文件记录更新成功，属于正常状态变更",
+      "how_to_identify": "每次 updateFile 后出现"
+    },
+    {
+      "pattern": "transcription record is too short and is treated as a successful summary",
+      "description": "云端返回 TranscribeTooShort 错误码时，客户端约定视为总结成功，回调给小程序展示对应错误码",
+      "how_to_identify": "AIBuds_Upload 日志中出现此行，后续 summaryStatus 更新为成功"
+    },
+    {
+      "pattern": "ASR/NLG records are cloud-generated",
+      "description": "实时 ASR 和 NLG 的识别记录由云端流式通道产生并存储，客户端无需将 ASR 全量文本上报至云端 transcript 存储。转写/总结服务直接读取云端已有的流式识别结果",
+      "how_to_identify": "系统架构约定，非日志可判断"
+    }
+  ],
+  "phases": [
+    {
+      "name": "触发转写",
+      "tags": ["AIBuds_Upload", "AIBuds_Transcribe"],
+      "success_pattern": "Transcription task started successfully|Start transcription task",
+      "failure_pattern": "Transcription task failed to start|Invalid transcription parameter"
+    },
+    {
+      "name": "转写完成",
+      "tags": ["AIBuds_MQTT", "AIBuds_DB"],
+      "success_pattern": "scene: trans_mqtt - Transcription successful|transcribeStatus=2",
+      "failure_pattern": "transcribeStatus=3|scene: trans_mqtt - Transcription failed"
+    },
+    {
+      "name": "总结完成",
+      "tags": ["AIBuds_Upload", "AIBuds_MQTT", "AIBuds_DB"],
+      "success_pattern": "Summary request succeeded|summaryStatus=2|scene: summary_mqtt.*succeeded|transcription record is too short and is treated as a successful summary",
+      "failure_pattern": "summaryStatus=3|summaryStatus=4|Summary request failed|Summary failed"
+    }
+  ],
+  "recording_boundaries": {
+    "mode": "group_by_field",
+    "field_pattern": "fileId: (\\d+)",
+    "field_name": "fileId",
+    "alias_field_pattern": "recordId: (\\S+)",
+    "tags": ["AIBuds_Upload", "AIBuds_Transcribe", "AIBuds_MQTT", "AIBuds_DB", "AIBuds_FileUpdate"],
+    "record_name_extraction": {
+      "pattern": "recordId: (\\S+)"
+    }
+  },
+  "phase_mapping": [
+    {
+      "product_phase": "触发转写",
+      "tags": ["AIBuds_Upload", "AIBuds_Transcribe"],
+      "success_pattern": "Transcription task started successfully|Start transcription task",
+      "failure_pattern": "Transcription task failed to start|Invalid transcription parameter"
+    },
+    {
+      "product_phase": "收到转写MQ",
+      "tags": ["AIBuds_MQTT"],
+      "success_pattern": "scene: trans_mqtt - Transcription successful|scene: trans_mqtt - Transcription status",
+      "failure_pattern": "scene: trans_mqtt - Transcription failed|scene: trans_mqtt.*Database synchronization failed"
+    },
+    {
+      "product_phase": "转写结果写入",
+      "tags": ["AIBuds_Upload", "AIBuds_DB"],
+      "success_pattern": "Cloud transcription result obtained successfully|Cloud transcription data updated successfully",
+      "failure_pattern": "Failed to retrieve cloud transcription result|Cloud transcription data update failed"
+    },
+    {
+      "product_phase": "触发总结",
+      "tags": ["AIBuds_Upload"],
+      "success_pattern": "Start summarizing the task|Summary request succeeded",
+      "failure_pattern": "Summary request failed|Summary failed: file does not exist"
+    },
+    {
+      "product_phase": "收到总结MQ",
+      "tags": ["AIBuds_MQTT"],
+      "success_pattern": "scene: summary_mqtt.*Summarize status.*Database synchronization succeeded",
+      "failure_pattern": "scene: summary_mqtt.*Database synchronization failed"
+    },
+    {
+      "product_phase": "总结结果写入",
+      "tags": ["AIBuds_Upload", "AIBuds_DB"],
+      "success_pattern": "Cloud summary result retrieved successfully|Update summary status to success|transcription record is too short and is treated as a successful summary",
+      "failure_pattern": "Summary result is empty|Failed to retrieve cloud summary results|Update summary status failed"
+    }
+  ],
+  "status_codes": {
+    "transcribeStatus": {
+      "source": "local_db",
+      "mapping": {"0": "未知", "1": "转写中", "2": "转写成功", "3": "转写失败"}
+    },
+    "summaryStatus": {
+      "source": "local_db",
+      "mapping": {"0": "老数据", "1": "未知", "2": "总结中", "3": "总结成功", "4": "总结失败"}
+    },
+    "translateStatus": {
+      "source": "local_db",
+      "mapping": {"0": "老数据", "1": "未知", "2": "翻译中", "3": "翻译成功", "4": "翻译失败"}
+    },
+    "cloud_status": {
+      "source": "mqtt",
+      "mapping": {"0": "未知", "1": "初始状态", "2": "进行中", "9": "成功", "100": "失败"}
+    }
+  },
+  "known_issues": []
+}

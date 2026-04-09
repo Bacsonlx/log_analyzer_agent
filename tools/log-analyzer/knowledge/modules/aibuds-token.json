@@ -1,0 +1,130 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Token",
+  "description": "Agent Token 缓存与更新（流式 ASR 等）",
+  "source_files": [
+    "ThingNewAutomaticSpeechRecognitionRequest.m",
+    "ThingSmartSteamManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "create",
+    "remove",
+    "timer",
+    "update"
+  ],
+  "log_stats": {
+    "total": 16,
+    "by_level": {
+      "info": 11,
+      "debug": 3,
+      "error": 2
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: create - new token success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: update - endpoint.update success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: timer - debug remove token on timeout tokenId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: create - params mismatch tokenId: .* cacheParams: .* newParams: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: create - new token failure",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: update - endpoint.update error tokenId: .* error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: create - reuse same token tokenId: .* params: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: create - new token request tokenId: .* params: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: update - start requestId: .* cacheRecordId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: update - no agentToken, will create tokenId: .* params: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: update - endpoint.update request tokenId: .* params: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: update - endpoint.update returned false, recreate tokenId: .* params: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: remove - tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: remove - session pool released tokenId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    "scene: update - queued token update key: %@ params: %@",
+    "scene: update - found agentToken tokenId: %@ params: %@"
+  ]
+}

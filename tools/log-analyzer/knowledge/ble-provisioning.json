@@ -1,0 +1,140 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "ble-provisioning",
+  "name": "BLE 配网问题",
+  "keywords": ["配网", "激活", "activat", "provision", "wifi", "配置", "ble配网", "双模"],
+  "primary_tags": [
+    "Act_BleWiFi",
+    "Act_BleConnectBlock",
+    "BW_Act_BleActivator",
+    "thingble_WifiV2Controller",
+    "thingble_V2WIFIBaseConnect",
+    "thingble_WifiV1Controller",
+    "ConfigEventSender",
+    "BleConfigStatHelper",
+    "thingble_BleActivator",
+    "thingble_BleDeviceController",
+    "thingble_AbsProtocolDelegate"
+  ],
+  "secondary_tags": [
+    "BaseConnect",
+    "thingble_Config_Scanner",
+    "BW_Act_ScanFilter",
+    "getActivatorToken",
+    "CheckDeviceActivatorStatus",
+    "BleWifiStatHelper",
+    "BleWifiResetDevice",
+    "thingble_ConnectManager",
+    "thingble_BleConnectAction",
+    "thingble_bluetooth",
+    "thingActivator_activator-search-result",
+    "thingActivator_AutoScanV2ViewModel"
+  ],
+  "check_order": [
+    "1. 检查 getActivatorToken 确认配网 Token 是否获取成功",
+    "2. 检查 thingble_Config_Scanner 确认是否扫描到设备",
+    "3. 检查 Act_BleConnectBlock / thingble_BleConnectAction 确认 BLE 连接阶段",
+    "4. 【双模】检查 thingble_WifiV2Controller 确认 WiFi 信息是否传输成功",
+    "5. 【单点BLE】检查 thingble_BleActivator / thingble_BleDeviceController 确认配对激活流程",
+    "6. 【关键判断】WiFi 信息传输成功后的 BLE 断开是正常流程（双模设备），不是错误（见 normal_behaviors）",
+    "7. 【关键判断】单点 BLE 设备在 active() 阶段的 GATT 0x13 断开是设备端问题（见 known_issues）",
+    "8. 检查 ConfigEventSender / CheckDeviceActivatorStatus 确认设备后续激活状态"
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "双模设备 WiFi 信息传输成功后 BLE 断开",
+      "description": "双模设备（BLE+WiFi）在通过蓝牙成功传输 WiFi 配网信息后，设备会主动断开 BLE 连接去连接 WiFi 路由器，这是正常流程。判断标准：如果 WiFi 信息（SSID/密码）已成功发送到设备，之后的 BLE disconnect 不应视为失败原因。",
+      "how_to_identify": "在 thingble_WifiV2Controller / thingble_V2WIFIBaseConnect 日志中确认 WiFi 信息发送成功，之后出现的 BLE disconnect 属于正常行为"
+    }
+  ],
+  "common_causes": [
+    {"pattern": "token.*fail|token.*error", "cause": "配网 Token 获取失败，检查网络和云端状态"},
+    {"pattern": "wifi.*password|ssid", "cause": "WiFi 密码错误或 SSID 不匹配"},
+    {"pattern": "activat.*timeout", "cause": "设备激活超时，可能是设备未正确收到 WiFi 信息或无法连接路由器"},
+    {"pattern": "scan.*not.*found", "cause": "未发现待配网设备，确认设备处于配网模式"},
+    {"pattern": "connect.*block.*fail", "cause": "BLE 连接阶段失败（WiFi 信息传输前），可能是设备固件不兼容"},
+    {"pattern": "disconnect.*after.*wifi.*send", "cause": "WiFi 信息发送后 BLE 断开 — 通常是正常流程，设备去连 WiFi 路由器了，需看后续激活是否成功"},
+    {"pattern": "status = 0x13.*newState = 0|REMOTE_USER_TERMINATED", "cause": "GATT status 0x13 表示设备端主动断开 BLE 连接，属于设备端问题"},
+    {"pattern": "superSenderPairFailure|DEVICE_PAIR_ERROR", "cause": "设备配对失败，通常在 BLE 通道建立后设备处理激活指令异常导致"},
+    {"pattern": "find uuid.*failed.*call failed|205800", "cause": "重试扫描超时未找到设备，设备在首次断连后未恢复广播，最终配网失败"}
+  ],
+  "known_issues": [
+    {
+      "title": "SINGLE_BLE 配网 — 设备端主动断开导致配网失败",
+      "error_codes": [207, 205228, 205800],
+      "error_messages": ["CONNECT_TAKE_DISCONNECT", "DEVICE_PAIR_ERROR"],
+      "description": "单点 BLE 配网流程中，App 完成 BLE 连接、设备信息获取、云端激活（获得 virtualDevId）后，调用 active() 向设备发送激活指令。如果设备在此阶段主动断开 BLE 连接（GATT status 0x13 = REMOTE_USER_TERMINATED），会触发 207 错误和重试。重试期间设备未恢复广播，最终超时报 205800。",
+      "root_cause": "设备端问题。设备固件在接收到激活指令后处理异常，触发了主动断连。App 侧的扫描、连接、鉴权、云端激活流程均正常。",
+      "key_log_sequence": [
+        "thingble_BleActivator [onSuccess] authKeyBean get success — 鉴权成功",
+        "thingble_BleConnectAction onConnectSuccess — BLE 连接成功",
+        "thingble_AbsProtocolDelegate superFetchDeviceInfoRetSuccess — 设备信息获取成功",
+        "thingble_BleDeviceController activatorToCloud — 云端激活",
+        "thingble_BleDeviceController onSuccess: mVirtualDevId — 获得虚拟设备 ID",
+        "thingble_BleDeviceController active() — 向设备发送激活指令",
+        "thingble_bluetooth thingble_lib_onConnectionStateChange status = 0x13, newState = 0 — 设备主动断开",
+        "thingble_AbsProtocolDelegate superSenderPairFailure — 配对失败",
+        "thingble_BleActivator find uuid:xxx failed, call failed — 重试扫描超时"
+      ],
+      "diagnosis_method": "判断 GATT onConnectionStateChange 中的 status 值：0x13（19）= 设备端主动断开，0x08（8）= 连接超时，0x16（22）= 本地主机终止。如果在 active() 调用后出现 0x13，说明设备端在处理激活指令时出错。",
+      "solution": [
+        "1. 重置设备后重试配网",
+        "2. 手机尽量靠近设备（30cm 以内）",
+        "3. 检查设备固件版本，确认是否有已知配网问题，如有新固件建议升级",
+        "4. 如仍失败，需获取设备端串口日志，排查设备在收到激活指令后的处理逻辑"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "name": "Token 获取",
+      "tags": ["getActivatorToken"],
+      "success_pattern": "token.*success|getActivatorToken.*ok|onSuccess",
+      "failure_pattern": "token.*fail|token.*error|onError"
+    },
+    {
+      "name": "BLE 扫描",
+      "tags": ["thingble_Config_Scanner", "BW_Act_ScanFilter"],
+      "success_pattern": "scan.*found|device.*found|onDeviceFound|onScanDeviceFound",
+      "failure_pattern": "scan.*timeout|scan.*not.*found|scan.*fail"
+    },
+    {
+      "name": "BLE 连接",
+      "tags": ["Act_BleConnectBlock", "BaseConnect", "thingble_BleConnectAction", "thingble_bluetooth"],
+      "success_pattern": "connect.*success|CONNECT_DISCOVER_SERVICE|onConnectSuccess|newState = 2",
+      "failure_pattern": "connect.*fail|CONNECT_ERROR|CONNECT_TAKE_DISCONNECT|CONNECT_AUTO_DISCONNECT|status = 0x13"
+    },
+    {
+      "name": "设备信息交换（双模）",
+      "mode": "BLE_WIFI",
+      "tags": ["thingble_WifiV2Controller", "thingble_V2WIFIBaseConnect", "thingble_WifiV1Controller"],
+      "success_pattern": "wifi.*send.*success|info.*sender.*success|WIFI_CONFIG_INFO_SENDER_SUCCESS",
+      "failure_pattern": "wifi.*fail|sender.*fail|WIFI_CONFIG_INFO_SENDER_FAIL"
+    },
+    {
+      "name": "设备信息获取与配对（单点 BLE）",
+      "mode": "SINGLE_BLE",
+      "tags": ["thingble_BleDeviceController", "thingble_AbsProtocolDelegate", "thingble_P2SecurityDelegate"],
+      "success_pattern": "superFetchDeviceInfoRetSuccess|activatorToCloud|mVirtualDevId",
+      "failure_pattern": "superSenderPairFailure|DEVICE_PAIR_ERROR|notifyConfigError"
+    },
+    {
+      "name": "云端注册与激活",
+      "tags": ["ConfigEventSender", "CheckDeviceActivatorStatus", "BW_Act_BleActivator", "thingble_BleActivator"],
+      "success_pattern": "active.*success|activat.*done|CONFIG_SERVER_ACTIVE_SUCCESS|onSuccess",
+      "failure_pattern": "active.*fail|activat.*error|activat.*timeout|CONFIG_SERVER_ACTIVE_ERROR|notifyError.*errorCode"
+    }
+  ],
+  "retry_patterns": [
+    {
+      "trigger": "needRetry.*need BLE Try|startBLERetry|startBleActivator.*retry",
+      "outcome_tags": ["thingble_Config_Scanner", "Act_BleConnectBlock", "ConfigEventSender"],
+      "outcome_window_seconds": 30,
+      "success_pattern": "active.*success|activat.*done|onSuccess",
+      "failure_pattern": "scan.*timeout|connect.*fail|active.*fail|activat.*timeout"
+    }
+  ]
+}

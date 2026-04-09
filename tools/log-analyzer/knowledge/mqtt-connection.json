@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "mqtt-connection",
+  "name": "MQTT 连接问题",
+  "keywords": ["mqtt", "断连", "subscribe", "publish", "消息", "推送"],
+  "primary_tags": [
+    "MqttService",
+    "MqttManager",
+    "MqttProcessManager",
+    "MqttClientDisconnect",
+    "ThingMqttSdkService"
+  ],
+  "secondary_tags": [
+    "MqttLog",
+    "ConnectStatusManager",
+    "ThingPushManager"
+  ],
+  "check_order": [
+    "1. 检查 MqttService / MqttManager 确认连接状态",
+    "2. 检查 MqttClientDisconnect 确认断连原因",
+    "3. 检查 MqttProcessManager 确认消息处理流程",
+    "4. 检查 ConnectStatusManager 确认设备在线状态更新"
+  ],
+  "common_causes": [
+    {"pattern": "disconnect.*reason", "cause": "MQTT 断连，检查网络环境或服务端限制"},
+    {"pattern": "connect.*refuse", "cause": "MQTT 连接被拒绝，检查认证 Token 是否过期"},
+    {"pattern": "subscribe.*fail", "cause": "订阅失败，检查 Topic 权限"},
+    {"pattern": "publish.*timeout", "cause": "消息发送超时，检查网络连通性"}
+  ]
+}

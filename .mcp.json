@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "log-analyzer": {
+      "command": "bash",
+      "args": ["tools/log-analyzer/run.sh"],
+      "env": {
+        "PROJECT_ROOT": "${workspaceFolder}"
+      }
+    }
+  }
+}

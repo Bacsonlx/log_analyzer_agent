@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "hardware-activate",
+  "name": "配网激活问题（非 BLE）",
+  "keywords": ["配网", "ap配网", "ez配网", "激活", "hardware", "token", "局域网"],
+  "primary_tags": [
+    "getActivatorToken",
+    "deviceCloudActivateWithPin",
+    "ConfigEventSender",
+    "AP_ThingSmartNewApConnect",
+    "ApConfig",
+    "ApConfigThingSmartApConnect"
+  ],
+  "secondary_tags": [
+    "APSecondConfig",
+    "ApConfigAPSearchUDP",
+    "ApConfigTCP",
+    "ApConfigUDP",
+    "AP_ThingOptimizedConfig",
+    "AP_TlsConnectHelper",
+    "BaseConnect",
+    "DevTransferService",
+    "hardware_SendCallbackImpl"
+  ],
+  "check_order": [
+    "1. 检查 getActivatorToken 确认配网 Token 获取",
+    "2. 检查 AP_ThingSmartNewApConnect / ApConfig 确认 AP 配网连接",
+    "3. 检查 ApConfigTCP / ApConfigUDP 确认数据传输",
+    "4. 检查 deviceCloudActivateWithPin 确认云端激活",
+    "5. 检查 ConfigEventSender 确认状态事件"
+  ],
+  "common_causes": [
+    {"pattern": "token.*expire|token.*invalid", "cause": "配网 Token 过期或无效"},
+    {"pattern": "ap.*connect.*fail", "cause": "AP 模式连接失败，确认手机已连接设备热点"},
+    {"pattern": "udp.*timeout", "cause": "UDP 发现超时，设备可能不在同一局域网"},
+    {"pattern": "activate.*cloud.*fail", "cause": "云端激活失败，检查云端服务状态"},
+    {"pattern": "tls.*error|ssl", "cause": "TLS 连接错误，检查证书配置"}
+  ]
+}

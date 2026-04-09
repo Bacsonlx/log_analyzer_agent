@@ -1,0 +1,13 @@
+{
+    "env": {
+      "CLAUDE_CODE_USE_BEDROCK": "1",
+      "CLAUDE_CODE_SKIP_BEDROCK_AUTH": "1",
+      "ANTHROPIC_BEDROCK_BASE_URL": "https://ocean-code-cn.tuya-inc.com:7799",
+      "ANTHROPIC_AUTH_TOKEN": "sk-eeNeuXhh8ORi4JAE5c6Bga7X4TtIWx7jHTolGKrUB1D8TnUe",
+      "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+      "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+      "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+      "CLAUDE_CODE_DISABLE_TELEMETRY": "1",
+      "CLAUDE_CODE_NO_BROWSER": "1"
+    }
+}

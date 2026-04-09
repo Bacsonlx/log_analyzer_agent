@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_MiniApp",
+  "description": "小程序侧工具与通知",
+  "source_files": [
+    "ThingAudioRecordMiniAppUtils.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 11,
+    "by_level": {
+      "debug": 8,
+      "error": 3
+    }
+  },
+  "success_signals": [],
+  "failure_signals": [
+    {
+      "pattern": "Abnormal mini-program push notification  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Incomplete parameters required to open the mini-program  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Send message to mini-program  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Open the routing link  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Send message to mini program  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " The current mini-program is running.  %@",
+    " The current mini-program is not running.  %@"
+  ]
+}

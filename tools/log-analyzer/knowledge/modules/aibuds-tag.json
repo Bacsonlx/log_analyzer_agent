@@ -1,0 +1,119 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Tag",
+  "description": "标签 CRUD 与同步",
+  "source_files": [
+    "ThingAudioRecordTagSyncManager.m",
+    "ThingAudioRecordUploadManager+Mqtt.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 15,
+    "by_level": {
+      "error": 11,
+      "debug": 4
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Tags updated successfully  recordId: .*, count: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "updateRecordTags invalid recordId",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateRecordTags empty tags recordId:.* bizType:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Skip tag list query, empty recordId",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Tag list persist failed recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Query tag list failed recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": ".* network failed recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "tag.update network failed recordId:.* error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Skip tag query because recordId is empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Serialize tags failed  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Tags update failed  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Query tags failed  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [],
+  "noise_patterns": [
+    " updateRecordTags add/delete only first tag used, recordId:%",
+    " updateRecordTags persisted fileId:%lld bizType:%ld",
+    " Tag list persisted recordId:%@ count:%lu"
+  ]
+}

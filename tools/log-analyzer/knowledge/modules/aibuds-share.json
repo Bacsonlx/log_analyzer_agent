@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Share",
+  "description": "分享模块",
+  "source_files": [
+    "ThingAudioRecordManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 3,
+    "by_level": {
+      "error": 1,
+      "info": 2
+    }
+  },
+  "success_signals": [],
+  "failure_signals": [
+    {
+      "pattern": "config Parameter cannot be empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Start generating sharing link ，config: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " File records retrieved  recordId: %@, file: %@"
+  ]
+}

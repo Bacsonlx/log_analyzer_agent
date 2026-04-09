@@ -1,0 +1,1349 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_FileTransfer",
+  "description": "文件传输模块",
+  "source_files": [
+    "ThingAudioRecordBackgroundTaskStrategy.m",
+    "ThingAudioRecordFileTransferManager+APWIFICheck.m",
+    "ThingAudioRecordFileTransferManager+DownloadTime.m",
+    "ThingAudioRecordFileTransferManager+FileTransCoder.m",
+    "ThingAudioRecordFileTransferManager+SwitchAPChannel.m",
+    "ThingAudioRecordFileTransferManager+TransferSpeedTrace.m",
+    "ThingAudioRecordFileTransferManager.m",
+    "ThingAudioRecordFileTransferObjectDeleteManager.m",
+    "ThingAudioRecordFileTransferPostProcessor.m",
+    "ThingAudioRecordFileTransferRecoder+ThingTransfer.m",
+    "ThingAudioRecordFileTransferSplitProcessor.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "ap_switch",
+    "background_task",
+    "delete",
+    "download_time",
+    "miniapp",
+    "post_process",
+    "segmented_transcode"
+  ],
+  "log_stats": {
+    "total": 284,
+    "by_level": {
+      "info": 180,
+      "error": 78,
+      "debug": 26
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: ap_switch - Open AP Success. waiting for AP service can use ...",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Hotspot connected successfully; waiting for system assignment. IPAddress ...",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Switch to APMode Steps : .* - Switch APSuccess",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Switch to APMode completed; step status has been reset. APInformation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Download canceled successfully  channel => .*, .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Device hotspot enabled successfully  .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - First connection detection succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Second connection test succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Successfully obtained the router address. : .* (.*Next attempt )",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "APInformation configuration completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: download_time - Total file size calculation completed  - Number of files :.*, Total Size :%llu Byte  (.* MB)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - The background task is already running; skipping duplicate startup.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Already in background operation; skipping duplicate startup.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Background task started : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Background task registered successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Background task scheduling succeeded : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - APTransmission and transcoding completed; background task stopped.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task completed; all files downloaded successfully.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "updateAPConnectedState: deviceId:.*, apConnectedState:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Close  AP Channel succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Retry. First, close the previous one.  AP Channel succeeded",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "retry to stop current file transfer download success",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Successfully queried the offline file list. (.*) count: .*, .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Offline file transcoding task completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Recording started successfully, Device ID: .*，Cancel current download task",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Recording ended (successful), Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File download completed, starting transcoding file ID: .*, Size : .*, Path : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: download_time - File transfer succeeded  - fileId:.*, fileSize:.*, Completed total size :.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transfer started  - fileId:.*, timestamp:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transfer succeeded  ==> .*, .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "No successful files need to be deleted.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Download canceled successfully  - channel:.*, count:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Batch deletion of files succeeded, number : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "All tasks completed, closing  AP Channel",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "All tasks completed, closing.  AP Channel",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Batch deletion completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File saved successfully; transcoding started.  - fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File saved successfully; synchronization started.  - fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Add file to successfully transcoded collection  - fileId:%lld, Current successful count :.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transcoding succeeded  - fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File successfully imported  - noteFileId:.*, fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File status updated successfully  - noteFileId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Skip delete flow completed - noteFileId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Device file deleted successfully  - noteFileId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "All subsequent file operations are completed.  - noteFileId:.*, fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transcoding succeeded; skipping duplicate transcoding.  - fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transcoding started  - fileId:%lld, deviceId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File transcoding completed  - fileId:%lld, transcodedFileId:%lld, deviceId:.* originFileId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "NoteFile update [Success ] File ID: %lld  File : .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "NoteFile update [Query successful ] File ID: %lld noteStatus:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Currently not APTransmission mode, not started WiFiDetect Timer",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: delete - Batch Add  fileId Success : Add  .* pcs, Current Total : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: delete - Batch delete  fileId Success : Delete  .* pcs, remaining total : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - File transcoding succeeded; segmented=.*, total bytes read : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - Write NoteFile [Success ] File ID: %lld  File: .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - NoteFile update [Success ] File ID: %lld  File : .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - NoteFile update [Query successful ] File ID: %lld noteStatus:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "splitFile: seg[.*] begin=%llu, end=%llu, size=%llu",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: ap_switch - Failed to locate the corresponding file transfer recorder.  - sessionId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Failed to obtain RouterAddress",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Switch to APMode failed  - Current step :.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Cancel download failed  channel => .*， .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Cancel download without callback, timeout handling  - timeout:.*, cancelled:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Failed to enable hotspot  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Notification to Device to enable hotspot has no callback; timeout handling  - timeout:.*, cancelled:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Clearing invalid hotspot configuration timed out",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Invalid hotspot configuration cleanup completed",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Single hotspot connect timed out",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Single hotspot verify timed out",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - First detection failed; retrying after 1 second. ...",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - First connection detection failed and task cancel",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The hotspot is still not connected during the second detection.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - .*Failed to obtain the router address for this attempt. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - deviceFileTransfer Object does not exist and cannot be configured. AP",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: ap_switch - Configuration APInformation timeout handling  - timeout:.*, cancelled:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: download_time - Unable to calculate total file size ：currentFileRecoder Empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: download_time - The list of files to be downloaded is empty.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: download_time - Remaining file size calculation  - Total Size :.*, Completed :.*, Failed :.*, The current file has been transferred. :.*, Remaining :.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Background task scheduling failed; keep-alive not activated.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Background task is about to expire : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Background task register threw exception: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Background task registration failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Background task scheduling failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - Failed to create inspection timer",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: background_task - fileTransferManager Empty, skip check",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Task completed, but there are  .* File download failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateAPConnectedState: deviceId is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateAPConnectedState: no transfer object for deviceId .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "updateAPConnectedState: no recorder for deviceId .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "No Device found  .* File Transfer Object",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Device  .* No active listeners",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "retry to stop current file transfer download failure",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "retry to stop current file transfer download timeout",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to query offline file list  - devId:.*, error:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "switchMode AP failed - devId invalid or not match currentRecoder.devId, devId: .*, currentDevId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Offline file transcoding task failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to start recording, Device ID: .*，Error : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Recording ended (failed), Device ID: .*，Error : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "No corresponding transmission recorder found.  - sessionId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The transmitted file cannot be found in the download queue.  - fileId:.*, waitingFiles:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The successfully downloaded file cannot be found in the download queue.  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The file that failed to download cannot be found in the pending download list.  .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "handleFailureWithFile The task has been forcibly closed.  .*， Not handling failure logic",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: download_time - File transfer failed  - fileId:.*, fileSize:.*, Total failure size :.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The transmitted file is empty.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File transfer failed  ==> .* error:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to send error event; current transmission recorder or device IDEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Send error code  .* Give to the mini program",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Cancel download failed  - channel:.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Cancel download timeout",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to delete files in batch : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Batch file deletion timed out, no callback received.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File transcoding failed  - fileId:%lld, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The target file is empty.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File IDEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Device IDEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File import failed  - noteFileId:.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File saving timed out  - noteFileId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File status updated to failed  - noteFileId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "fileTransferObject is nil，Failed to delete the file.  - noteFileId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to delete device file  - noteFileId:.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Device file deletion timed out  - noteFileId:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The file is being transcoded; skipping duplicate transcoding.  - fileId:%lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File transcoding failed  - fileId:%lld, deviceId:.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File transcoding failed, but database status updated successfully.  - fileId:%lld, deviceId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File transcoding failed; database status update failed.  - fileId:%lld, deviceId:.*, error:.*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "NoteFile update [Failed ] File ID: %lld  File : .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - addFTFileInfo: ftFileInfo is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - removeFTFileInfo: ftFileInfo is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - addFTFileInfoList: ftFileInfoList Empty or invalid",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - addFTFileInfoList An exception occurred : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - removeFTFileInfoList: ftFileInfoList Empty or invalid",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - removeFTFileInfoList An exception occurred : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - getAllFileIds An exception occurred : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - getAllFileIdsWithCompletion An exception occurred : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - splitFileListForDeleteAndDownload:diffBlock: list Empty or invalid",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - splitFileListForDeleteAndDownload:diffBlock: No valid item found  fileId",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: delete - splitFileListForDeleteAndDownload:diffBlock: An exception occurred. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Failed to create transfer directory: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Database initialization failed; file transcoding and saving cannot be performed.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Transcoding file path analysis exception",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Transcoding file: abnormal file content analysis",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Transcoding file IDDoes not exist  %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Transcoding file IDThe status has been successfully transcoded.  %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Query opusFile path failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Failed to create converter",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Failed to open file handle after multiple attempts : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Query failed file Id: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - Write NoteFile [Failed ] File Id: .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - NoteFile update [Failed ] File ID: %lld  File: .* Device ID: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - NoteFile update [Failed query ] File ID: %lld noteStatus:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - File Diagnosis  - Exists :.*, Readable :.*, Size :.*, Modify time :.*, Attribute error :.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - createFile File does not exist : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - createFile File is unreadable : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: post_process - .*Retry attempt, waiting for retry : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: segmented_transcode - fileHandle or fileCoder is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: segmented_transcode - no segments",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "fileSizeWithFileHandle: fileHandle is nil",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "splitFile: fileSize is 0, return empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: ap_switch - Start switching to APMode  - sessionId:.*, channel:.*, source:.*(.*), startStep:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Switch to APMode Steps : .* - Open APHotspot",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Switch to APMode task ended at: .*, duration: .* seconds",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: ap_switch - Start Configuration APInformation  - routerAddress:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Start scheduling background tasks.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Background task is not running; skipping stop operation.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Stop background task",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Background task has stopped.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Detected APTransmitting or transcoding （APTransmission :.*, Transcoding :.*），Start background keep-alive",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - App enters the foreground and stops background keep-alive.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Start background keep-alive",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - End background task on foreground (was running without isActive).",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Not in keep-alive mode; skip further stop.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Stop background keep-alive",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Start APTransmission status check timer (5-second interval) ）",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: background_task - Stop APTransmission Status Check Timer",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Close  AP channel",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Retry. First, close the previous one.  AP channel",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "switchMode - recording in progress, send event NoteRecordingUnableTransform to miniprogram",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "switchMode AP - start retryAPFileTransferChannelWith then switchToAPMode",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start offline file transcoding task",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop current transfer task",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop the specified transfer task  - Device Id:.*, sessionId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task status has been set to closed.  - devId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The task status has been updated to closed.  - devId:.*, sessionId:.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Initiate a new download task  - Number of files :.*, channel:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start saving the file  - noteFileId:.*, deviceId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Remove file from transcoding queue  - fileId:%lld, Current number of transcoding items :.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Enqueue transcode task - fileId:%lld, pending:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start transcoding task - fileId:%lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start deleting device files  - noteFileId:.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start querying the list of files being transcoded.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Detected as no longer APTransmission mode, stop WiFiDetect Timer",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop WiFiDetect Timer",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: delete - removeFTFileInfoList: No valid item found  fileId",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - Created transfer directory: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: post_process - Start transcoding file Id: %lld，File Name ： .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " scene: ap_switch - Switch to APMode Steps : %ld - Cancel Bl",
+    " scene: ap_switch - Switch to APMode Steps : %ld - Connect A",
+    " scene: ap_switch - Switch to APMode Steps : %ld - Hotspot c",
+    " scene: ap_switch - Switch to APMode Steps : %ld - Is the ga",
+    " scene: ap_switch - Switch to APMode Steps : %ld - Configura",
+    " scene: ap_switch - Continue downloading after switching cha",
+    " scene: ap_switch - Switch channel to download and cancel do",
+    " scene: ap_switch - Notify the Device to enable hotspot ",
+    " scene: ap_switch - Hotspot  [First time ] Connect ",
+    " scene: ap_switch - Hotspot  [Second time ] Connect ",
+    " scene: ap_switch - APConfiguration Parameters  - localPort:",
+    " scene: download_time - All statistics have been reset. ",
+    " scene: background_task - Background task has been scheduled",
+    " scene: background_task - App enters the background ",
+    " scene: background_task - Not detected APTransmission or tra",
+    " scene: background_task - iOSVersion lower than 13.0 is not ",
+    " scene: background_task - Not included during compilation Ba",
+    " scene: background_task - Cancel background task : %@",
+    " scene: background_task - Check status  - APTransmission :%@",
+    " Status changed to 2  checkAndUpdateTransferState"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_TraceEvent",
+  "description": "埋点事件模块",
+  "source_files": [
+    "ThingAIBudsTraceManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 2,
+    "by_level": {
+      "debug": 1,
+      "info": 1
+    }
+  },
+  "success_signals": [],
+  "failure_signals": [],
+  "lifecycle_signals": [],
+  "noise_patterns": [
+    " %@"
+  ]
+}

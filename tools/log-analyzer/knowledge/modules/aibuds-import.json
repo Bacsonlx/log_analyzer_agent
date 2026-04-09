@@ -1,0 +1,1081 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Import",
+  "description": "文件导入、调度管线、文件选择、PCM 转 MP3 等导入链路（子场景用 `scene:`）",
+  "source_files": [
+    "ThingAudioFileImportCoderService.m",
+    "ThingAudioFileImportManager.m",
+    "ThingAudioFileImportSchedulerService+TargetDirectory.m",
+    "ThingAudioFileImportSchedulerService.m",
+    "ThingAudioFileImportService.m",
+    "ThingFilePicker.m",
+    "ThingPCMToMP3Adapter.m",
+    "ThingTaskQueueManager.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "copy",
+    "file_access",
+    "file_picker",
+    "import_coder",
+    "manager",
+    "pcm_mp3",
+    "scheduler"
+  ],
+  "log_stats": {
+    "total": 214,
+    "by_level": {
+      "error": 79,
+      "info": 130,
+      "debug": 5
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Task completed ：.* (.*)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Task completed ：.* (.*), Success ：.*, Currently executing ：.*, Waiting ：.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Clear  .* A completed task",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Successfully created the target directory. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Saved current context successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Import completed : .* (Time-consuming : .* seconds)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Import successful (target directory) ）: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Import successful (target directory) statistics : Total =.*, Success =.*, Completed =.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: import_coder - Audio transcoding succeeded : .* -> .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Import item updated successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File imported successfully : .* -> .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File copy succeeded : .*MB",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - Import successful",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - Notify the mini-program of the audio import status refresh; notification succeeded.  listener：.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - File imported to the specified directory successfully.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: file_picker - File moved successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: pcm_mp3 - PCM To MP3 Completed : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Successfully cleared historical import records",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Number of files pending recovery after filtering : .* (isCompleted=NO)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - No files available for recovery (all files completed) ）",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Mark the context as canceled and begin canceling all operations in the queue.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [Pipeline ] All queue operations completed, manually invoked.  handleAllFilesCompleted",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Processing progress updated successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Import completed : .* (Time-consuming : .* seconds)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] File is already encoded, skipping encoding step. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Coding completed : .* (Time-consuming : .* seconds)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Post-processing task skipped （item Completed ）: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Post-processing completed : .* (Time-consuming : .* seconds)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Temporary files cleared successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - The target file already exists; delete it before moving. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - File moved successfully : .* -> .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Finalization started successfully. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Successfully updated the import item completion status. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - File processing completed : .* (isCompleted=YES)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - ========== All files processing completed event  ==========",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Context marked as completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - All files processed successfully. Starting batch clearance of import records. Quantity: : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Batch deletion of import records succeeded, quantity : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Task status: Completed",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Callback for successful cancellation invoked",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Callback on successful invocation",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - ========== All files completed event handling ended  ==========",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Successfully cleared all imported table records, total count: : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Failed to add task: invalid task parameters",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to cancel task: Task does not exist  .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "The waiting queue is empty.",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Task failed ：.* (.*), error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - File URLThe array is empty.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - The destination directory path is empty.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to create target directory : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to create basic import item : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [pipeline ] Failed to move file to destination directory : .* -> .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Target directory path not found; using the original import path.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Import task exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Source file does not exist : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Failed to initialize the decoder. Error code: : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Failed to parse file information",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Audio duration is too long. : %lld Milliseconds (exceeding  %lld Millisecond limit ）",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Failed to set output configuration, error code : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Failed to start decoding, error code : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - Decoding failed, stopping decoder ，.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: import_coder - outputPath Empty, cannot write  MP3 File",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Import item update failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: file_access - File outside sandbox, cannot access securely; try NSFileCoordinator: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File import failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to coordinate file access : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve file attributes : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File size verification failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Remaining space check failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create the target directory. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File copy failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to read file information : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File size exceeds the limit : .*MB > .*MB",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve file system attributes, path : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Unable to open the source file. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: copy - Target file exists (possibly incomplete); deleting and rewriting: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Cannot delete the existing target file. : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to create the target file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to open the target file. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File copy exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: file_picker - Failed to delete existing file : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: file_picker - Failed to move file : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Create  MP3 Encoder failure",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - MP3 File already exists (possibly incomplete); deleting and recreating it. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Delete existing  MP3 File failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Create  MP3 File failed",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Open  MP3 File handle failure",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Failed to close file handle : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Write  MP3 Data failure : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - Coding completed; ignore subsequent steps.  PCM Data",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - The coding is complete; ignore duplicate completion callbacks.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - The coding is complete; ignore the error callback.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: pcm_mp3 - PCM To MP3 Failed : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Query import history status completed (using current context) ） - Total : .*, Success : .*, Failed : .*, Completed : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Query import history status completed (from database) ） - Total : .*, Success : .*, Failed : .*, Completed : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to query import history status : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - File URL Array is Empty, User Cancel File",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - File URLThe array exceeds the maximum import quantity and cannot be imported.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to clear historical import records : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to retrieve the file to be imported. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - No import task is in progress. Check whether the import table records need to be cleared.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - The import task has been completed and cannot be canceled.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Import task exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Coding task exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Post-processing task exception : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to clean up temporary files : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Import failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Encoding failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Pipeline ] Encoding failed, encoding status updated successfully : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Production line ] Encoding failed; encoding status update failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Post-processing failed : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Source file path is empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to delete the target file. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to create target directory : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to move file : .* -> .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to move file : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to update the import item completion status. : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Context is empty; unable to process progress updates.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [Pipeline ] Progress update: All files have been completed. : Total =.*, Completed count =.*, Success =.*, Failed =.*, Pending =.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Progress update : Total =.*, Completed count =.*, Success =.*, Failed =.*, Pending =.*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Current context is empty, unable to process the completion event.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Context processing completed; duplicate processing prevented.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Statistical data collection completed  - Total : .*, Success : .*, Completed : .*, Failed : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to delete import records in batch, quantity : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to retrieve import items; unable to clean up the file. Error. : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to delete import records in batch; quantity : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed files exist （.*items); retain the import records for retrying.",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Final state construction completed  - status: .*, totalFileCount: .*, successCount: .*, completeCount: .*, failedCount: .*, totalFileSize: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Progress callback is null; skip notifying the mini program.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to clear all imported table records, quantity : .*, Error : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: scheduler - Failed to query import items : .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Waiting in queue; forcing callback with initial value",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cancel pending tasks ：.* (.*)",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start executing the task ：.* (.*), Currently executing ：.*, Waiting ：.*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Start importing the file to the specified directory. : .*, Number of files : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Basic import item has been created. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Start processing files, total number : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - [production line ] Initialized  .* The file status is pending.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: import_coder - Start audio transcoding : .* -> MP3",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start importing file (new method) ）: .* -> .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start chunked file copying : .* -> .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cancellation detected during file copying; copying stopped. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - Start Import",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - Remove listener : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: manager - Start importing the file to the specified path. : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Initialize the pipeline scheduling service ，CPU Core Count : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Start importing file",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Restore the file pending import",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - No import files pending restoration",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Restore files pending import, quantity : .* (Before filtering )",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Start recovery process; number of files : .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Create processing context",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Send progress callback (notify the mini program) ）",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: scheduler - Start clearing all imported table records.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Add Task ：%@ (%@), Waiting queue count ：%ld",
+    " Cancel the ongoing task ：%@ (%@)",
+    " Cancel all tasks and wait in the queue. ：%ld，Executing ：%ld",
+    " Maximum concurrent connections reached  %ld，Waiting ...",
+    " Task canceled ：%@ (%@)",
+    " scene: scheduler - [Production line ] Submitted  %ld An imp",
+    " scene: scheduler - [Pipeline ] Import task has been cancele",
+    " scene: scheduler - [Production line ] File imported; skippi",
+    " scene: scheduler - [Production line ] The import task was c",
+    " scene: scheduler - [production line ] The file has been mov",
+    " scene: import_coder - MP3 Code Path : %@",
+    " scene: import_coder - Number of audio channels : %d",
+    " The file is in the app sandbox and is processed directly. :",
+    " Use  FileCoordinator Import file : %@ -> %@",
+    " Import file directly (no need to)  FileCoordinator）: %@ -> ",
+    " File size : %.2fMB, Restriction : %.2fMB",
+    " Check path : %@",
+    " File system total space : %.2fGB, Remaining space : %.2fGB ",
+    " scene: manager - Import file selector callback, number of i",
+    " scene: manager - Import progress : status=%ld, totalFileCou"
+  ]
+}

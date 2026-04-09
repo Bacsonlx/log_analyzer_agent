@@ -1,0 +1,109 @@
+{
+  "_meta": {
+    "updated": "2026-03-19",
+    "description": "AIVoice 云同步/上传诊断知识库，覆盖加密→上传→DB 状态更新全流程"
+  },
+  "id": "aivoice-cloud-upload",
+  "name": "AIVoice 云同步上传问题",
+  "module_refs": ["AIBuds_CloudSync", "AIBuds_Upload", "AIBuds_DB", "AIBuds_FileUpdate"],
+  "keywords": [
+    "upload",
+    "上传",
+    "cloud sync",
+    "云同步",
+    "encryption",
+    "加密",
+    "storage config",
+    "存储配置",
+    "audioUploadStatus",
+    "Upload failed"
+  ],
+  "primary_tags": [
+    "AIBuds_CloudSync",
+    "AIBuds_Upload",
+    "AIBuds_DB"
+  ],
+  "secondary_tags": [
+    "AIBuds_FileUpdate"
+  ],
+  "noise_tags": [],
+  "check_order": [
+    "1. 检查 AIBuds_CloudSync 是否发起上传（Start uploading file）",
+    "2. 检查 Step 2：获取加密密钥是否成功",
+    "3. 检查 Step 3：文件加密是否成功（AES-128-CBC Encryption completed）",
+    "4. 检查云存储配置获取（Start obtaining cloud sync storage configuration）",
+    "5. 检查 Step 4：文件上传是否成功",
+    "6. 检查 AIBuds_DB 的 audioUploadStatus 状态（0→1→2 为正常，3 为失败）"
+  ],
+  "common_causes": [
+    {
+      "pattern": "Failed to obtain cloud synchronization storage configuration",
+      "cause": "云同步存储配置获取失败，检查网络或云端服务状态"
+    },
+    {
+      "pattern": "Step 4 failed.*File upload failed",
+      "cause": "文件上传到云存储失败，可能网络不稳定或存储配额不足"
+    },
+    {
+      "pattern": "Upload failed fileId",
+      "cause": "特定文件上传失败，检查文件完整性和网络"
+    },
+    {
+      "pattern": "audioUploadStatus=3",
+      "cause": "音频上传状态为失败，需排查上传各步骤日志"
+    },
+    {
+      "pattern": "SyncCloudSwitchNotOpen",
+      "cause": "云同步开关未开启（错误码 10213）"
+    },
+    {
+      "pattern": "SyncCloudSwitchNetworkTypeNotMatch",
+      "cause": "云同步网络类型不匹配（错误码 10214），如仅 WiFi 同步但当前为蜂窝"
+    }
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "Temporary encryption files have been cleared",
+      "description": "上传完成后清理临时加密文件，属于正常流程",
+      "how_to_identify": "出现在 Upload succeeded 之后"
+    },
+    {
+      "pattern": "Upload task resources have been cleared",
+      "description": "上传任务资源清理完成",
+      "how_to_identify": "出现在整个上传流程结束后"
+    }
+  ],
+  "phases": [
+    {
+      "name": "发起上传",
+      "tags": ["AIBuds_CloudSync"],
+      "success_pattern": "Start uploading file recordId",
+      "failure_pattern": "SyncCloudSwitchNotOpen|SyncCloudSwitchNetworkTypeNotMatch"
+    },
+    {
+      "name": "获取加密密钥",
+      "tags": ["AIBuds_CloudSync"],
+      "success_pattern": "Successfully queried the encryption key",
+      "failure_pattern": "GetDecryptKeyError"
+    },
+    {
+      "name": "文件加密",
+      "tags": ["AIBuds_CloudSync"],
+      "success_pattern": "Step 3 completed.*File encryption successful",
+      "failure_pattern": "EncryptFileError"
+    },
+    {
+      "name": "文件上传",
+      "tags": ["AIBuds_CloudSync"],
+      "success_pattern": "Batch file upload record succeeded",
+      "failure_pattern": "Step 4 failed|Upload failed"
+    },
+    {
+      "name": "DB 状态更新",
+      "tags": ["AIBuds_DB"],
+      "success_pattern": "audioUploadStatus=2",
+      "failure_pattern": "audioUploadStatus=3"
+    }
+  ],
+  "known_issues": []
+}

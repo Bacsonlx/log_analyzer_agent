@@ -1,0 +1,237 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_MQTT",
+  "description": "MQTT 全链路（上传回传、事件解析、连接状态等；子场景一律用消息内 `scene:` 区分，例如 `trans_mqtt` / `summary_mqtt` / `event`）",
+  "source_files": [
+    "ThingAudioRecordCloudDBService.m",
+    "ThingAudioRecordMQTTEventManager.m",
+    "ThingAudioRecordUploadManager+Mqtt.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "connection",
+    "edit_summary",
+    "edit_transcription",
+    "event",
+    "summary_mqtt",
+    "trans_mqtt",
+    "translate_mqtt"
+  ],
+  "log_stats": {
+    "total": 60,
+    "by_level": {
+      "debug": 43,
+      "info": 7,
+      "error": 10
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "scene: trans_mqtt - Transcription successful, synchronized with the mini-program.  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: event - tags_mqtt - detailNeedComplete already set, skip. recordId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: translate_mqtt - Translation successful, sync the mini program.  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: edit_transcription - Transcription data cleared successfully  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: edit_summary - Data summary cleanup successful  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: trans_mqtt - Transcription status ： .* recordId: .* Database synchronization succeeded",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: summary_mqtt - Summarize status : .* recordId: .* Database synchronization succeeded",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: translate_mqtt - Translation status : .* recordId: .* Database synchronization succeeded",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "scene: event - MQTT message format error, message.message is not a dictionary",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: event - eventType empty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: event - eventData format error",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: trans_mqtt - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: trans_mqtt - Transcription failed. Synchronize with the mini-program.  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: summary_mqtt - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: summary_mqtt - Sync Mini Program Failed  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: event - tags_mqtt - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: event - tags_mqtt - Failed to persist detailNeedComplete, recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: event - tags_mqtt - fileWithRecordId failed, recordId: .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: translate_mqtt - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: translate_mqtt - Synchronization failed for the mini-program.  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: edit_transcription - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: edit_summary - No corresponding file record found locally, recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: trans_mqtt - Transcription status ： .* recordId: .* Database synchronization failed",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: summary_mqtt - Summarize status ： .* recordId: .* Summarize database synchronization failure",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: translate_mqtt - Translation status : .* recordId: .* Database synchronization failed",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: event - Remove listener; current number of listeners : .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " scene: event - Add listener; current number of listeners : ",
+    " scene: event - User login, add  MQTT Agent ",
+    " scene: event - User logout and removal  MQTT Agent ",
+    " scene: event - Audio received  MQTT Message : protocol=%ld,",
+    " scene: event - Parsed data : %@",
+    " scene: event - MQTT Connection Status Change From  %d -> %d",
+    " scene: event - Parse event : %@",
+    " scene: event - Distribute event to  %lu a listener : eventT",
+    " scene: connection - MQTT connection change triggers record ",
+    " scene: trans_mqtt - type: %@ recordId: %@ status: %@ jsonSu",
+    " scene: trans_mqtt - The local file has been soft-deleted; s",
+    " scene: trans_mqtt - modifyTime (%lld) No later than local  ",
+    " scene: trans_mqtt - modifyTime (%lld) Later than local  upd",
+    " scene: trans_mqtt - Transcribing, synchronizing the mini-pr",
+    " scene: trans_mqtt -  not found file which recordId is %@ ",
+    " scene: summary_mqtt - type: %@ recordId: %@ status: %@ json",
+    " scene: summary_mqtt - The local file has been soft-deleted;",
+    " scene: summary_mqtt - modifyTime (%lld) No later than local",
+    " scene: summary_mqtt - modifyTime (%lld) Later than local  u",
+    " scene: summary_mqtt - Synchronize Mini Program in Summary  "
+  ]
+}

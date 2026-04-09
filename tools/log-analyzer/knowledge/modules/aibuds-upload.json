@@ -1,0 +1,453 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_Upload",
+  "description": "离线文件上传模块",
+  "source_files": [
+    "ThingAudioRecordUploadManager+Mqtt.m",
+    "ThingAudioRecordUploadManager.m",
+    "ThingAudioRecordUploadTask.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "visit"
+  ],
+  "log_stats": {
+    "total": 104,
+    "by_level": {
+      "info": 38,
+      "error": 32,
+      "debug": 34
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Upload and transcription process completed, file ID: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File upload completed (no transcription), file ID: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File upload in progress updated successfully  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File uploaded successfully  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "File upload status updated successfully  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Transcription task started successfully  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Summary request succeeded  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "The transcription record is too short and is treated as a successful summary.  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Request succeeded  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cloud transcription result obtained successfully  fileId: %lld, textLength: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cloud summary result retrieved successfully  fileId: %lld, textLength: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Update summary status to success.  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Successfully obtained summary template  bizType: .*, textLength: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Cloud transcription data updated successfully  recordId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: visit - preparing unread flag update after summary success",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: visit - unread flag update succeeded after summary success",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: visit - preparing unread flag update after transcribe success",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: visit - unread flag update succeeded after transcribe success",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Upload or transcription failed, file ID: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to query file data",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to update file upload status  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "File upload failed  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Successfully updated file upload failure status  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Transcription task failed to start  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to cancel task ，taskIdEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "No corresponding task found  taskId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Upload task failed ，fileIdEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Traverse uploadQueue taskId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Find the corresponding task  taskId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Summary failed: file does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Summary request failed  fileId: %lld, errorCode: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Update summary status failed  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Translation failed: file does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Translation request failed  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Update translation status to failed  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to transcribe the local query; retrieving from the cloud.  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to obtain transcription result; file does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve cloud transcription result  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to query file records  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to summarize local query results; retrieving from the cloud.  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve summary result; file does not exist.  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Summary result is empty  fileId: %lld",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve cloud summary results  fileId: %lld, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to retrieve summary template  bizType: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to clear transcription data ，recordIdEmpty",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "No file record found  recordId: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Failed to query file records  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Synchronize File Status failed, because query file operator is failed, error .*",
+      "level": "info",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Cloud transcription data update failed  recordId: .*, error: .*",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: visit - unread flag update failed after summary success",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: visit - unread flag update failed (load file) after summary success",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: visit - unread flag update failed after transcribe success",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: visit - unread flag update failed (load file) after transcribe success",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Start retrieving cloud storage configuration  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start uploading file  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start transcription task  fileId: %lld",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start transcription task  fileId: %lld, taskId: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start summarizing the task  fileId: %lld, template: .*, lang: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start translation task  fileId: %lld, targetLang: .*",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Locate the file record and start clearing.  fileId: %lld",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Skip transcription and upload the file directly.  fileId: %",
+    " File uploaded, skipping upload process  fileId: %lld, stora",
+    " The file needs to be uploaded.  fileId: %lld",
+    " User login, add  MQTT Cloud synchronization transcription /",
+    " User logout and removal  MQTT Cloud synchronization transcr",
+    " Transcription task has been added to the queue.  fileId: %l",
+    " Attempt to cancel the task  taskId: %@",
+    " Task canceled  taskId: %@",
+    " Cancel all tasks; current queue task count : %ld",
+    " All tasks have been canceled. ",
+    " File records retrieved  recordId: %@, deviceId: %@",
+    " Request Summary Interface  recordId: %@",
+    " Target language : %@ (Original parameters : %@)",
+    " Request translation interface  recordId: %@, targetLang: %@",
+    " Query transcription result  fileId: %lld",
+    " Retrieve transcription results from the local database.  fi",
+    " No local transcription result available or update required;",
+    " Retrieve transcription results from the cloud  fileId: %lld",
+    " File record found  recordId: %@, deviceId: %@",
+    " Request cloud transcription interface  recordId: %@"
+  ]
+}

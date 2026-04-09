@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(node --input-type=module)",
+      "Bash(node -e \"import\\('./src/components/report.js'\\).catch\\(e => console.log\\(e.message\\)\\)\")",
+      "Bash(node --check src/components/report.js)",
+      "Bash(node -e \"require\\('fs'\\).readFileSync\\('src/components/report.js','utf8'\\)\")",
+      "Bash(npx --yes acorn --ecma2022 --module src/components/report.js)",
+      "Bash(npx acorn:*)",
+      "Bash(python3 -c ':*)",
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\('server.py'\\).read\\(\\)\\); print\\('server.py OK'\\)\")",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(curl -s http://localhost:8080/health)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

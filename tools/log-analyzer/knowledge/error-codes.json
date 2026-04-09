@@ -1,0 +1,862 @@
+{
+  "_meta": {
+    "updated": "2026-03-11",
+    "sdk_version": "7.4.0"
+  },
+  "id": "error-codes",
+  "name": "配网错误码知识库",
+  "description": "IoT 设备配网过程中的错误码映射，包含失败原因和解决方案",
+  "categories": {
+    "ble_security": {
+      "name": "BLE 安全配网",
+      "errors": [
+        {
+          "code": "ble_active",
+          "full_code": "ble_config_ble_security_ble_active",
+          "reason": "设备云端激活失败",
+          "solution": "1. 检查设备授权信息是否正确\n2.检查网络是否正常"
+        },
+        {
+          "code": "ble_already_bind",
+          "full_code": "ble_config_ble_security_ble_already_bind",
+          "reason": "设备重复绑定",
+          "solution": "1. 联系设备所属账号管理者将设备移除\n2. 引导用户APP页面上提交解绑设备工单"
+        },
+        {
+          "code": "ble_check",
+          "full_code": "ble_config_ble_security_ble_check",
+          "reason": "app和设备之间蓝牙在激活中断开导致失败",
+          "solution": "请勿在激活过程中关闭蓝牙"
+        },
+        {
+          "code": "ble_config_cancel",
+          "full_code": "ble_config_ble_security_ble_config_cancel",
+          "reason": "用户取消激活，终止了激活。",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "ble_connect",
+          "full_code": "ble_config_ble_security_ble_connect",
+          "reason": "手机与设备蓝牙连接失败",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2.重启手机蓝牙或者开关一次飞行模式后重试\n3.找其他的型号的手机对比测试，确认现象是否一致\n4. 联系设备开发排查设备故障"
+        },
+        {
+          "code": "ble_discover_character",
+          "full_code": "ble_config_ble_security_ble_discover_character",
+          "reason": "手机与设备蓝牙连接成功，蓝牙CCC Notify发现失败",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2.重启手机蓝牙或者开关一次飞行模式后重试\n3.找其他的型号的手机对比测试，确认现象是否一致"
+        },
+        {
+          "code": "ble_discover_service",
+          "full_code": "ble_config_ble_security_ble_discover_service",
+          "reason": "蓝牙连接断开",
+          "solution": "1. 请保持手机蓝牙开关始终开启，定位开关开启\n2. 请不要远离设备防止信号弱\n3. 请保持设备正常工作，不要操作设备或断电\n4. 重试仍有故障，请联系客服"
+        },
+        {
+          "code": "ble_get_devinfo",
+          "full_code": "ble_config_ble_security_ble_get_devinfo",
+          "reason": "云端注册失败",
+          "solution": "1. 检查设备授权信息是否正确\n2.检查网络是否正常"
+        },
+        {
+          "code": "ble_get_key",
+          "full_code": "ble_config_ble_security_ble_get_key",
+          "reason": "云端设备 Key 获取失败",
+          "solution": "1. 检查手机网络后重试\n2. 联系开发排查解决故障"
+        },
+        {
+          "code": "ble_guest_not_support_bind",
+          "full_code": "ble_config_ble_security_ble_guest_not_support_bind",
+          "reason": "强绑定类型设备不可在游客模式下使用",
+          "solution": "强绑定类型设备不可在游客模式下使用"
+        },
+        {
+          "code": "ble_notify_error",
+          "full_code": "ble_config_ble_security_ble_notify_error",
+          "reason": "app通过蓝牙获取设备信息失败 0000指令交互失败。",
+          "solution": "请检查设备授权码等信息是否正常"
+        },
+        {
+          "code": "ble_pair",
+          "full_code": "ble_config_ble_security_ble_pair",
+          "reason": "蓝牙通道建立之后配对认证失败",
+          "solution": "请重试，如仍不能解决请联系设备开发"
+        },
+        {
+          "code": "ble_register",
+          "full_code": "ble_config_ble_security_ble_register",
+          "reason": "激活信息发送失败",
+          "solution": "1. 重启设备再次尝试\n2. 联系设备开发排查设备故障\n3. 排查 APP 发送激活信息通道"
+        },
+        {
+          "code": "ble_service_get_devinfo",
+          "full_code": "ble_config_ble_security_ble_service_get_devinfo",
+          "reason": "云端查询设备模型数据失败",
+          "solution": "1.检查网络是否正常\n2. 请联系软件开发排查解决"
+        },
+        {
+          "code": "ble_timeout",
+          "full_code": "ble_config_ble_security_ble_timeout",
+          "reason": "蓝牙激活超时",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2. 联系设备/软件开发排查设备故障"
+        }
+      ]
+    },
+    "ap_config": {
+      "name": "AP 热点配网",
+      "errors": [
+        {
+          "code": "1",
+          "full_code": "wifi_config_ap_3_1",
+          "reason": "客户端激活包格式错误",
+          "solution": "激活失败，请重置设备"
+        },
+        {
+          "code": "1005_android",
+          "full_code": "wifi_config_ap_3_1005_android",
+          "reason": "设备在线状态轮询失败",
+          "solution": "请重新进行激活,并检查APP激活逻辑是否有问题"
+        },
+        {
+          "code": "1006_android",
+          "full_code": "wifi_config_ap_3_1006_android",
+          "reason": "激活超时",
+          "solution": "激活超时，请重试"
+        },
+        {
+          "code": "1007_android",
+          "full_code": "wifi_config_ap_3_1007_android",
+          "reason": "网络错误",
+          "solution": "请检查网络连接是否正常"
+        },
+        {
+          "code": "103_android",
+          "full_code": "wifi_config_ap_3_103_android",
+          "reason": "网络错误",
+          "solution": "网络错误，请检查手机网络是否正常并重试"
+        },
+        {
+          "code": "1500_ios",
+          "full_code": "wifi_config_ap_3_1500_ios",
+          "reason": "网络错误",
+          "solution": "请检查网络连接是否正常"
+        },
+        {
+          "code": "1501_ios",
+          "full_code": "wifi_config_ap_3_1501_ios",
+          "reason": "激活token过期",
+          "solution": "token有效期10分钟,请重新进行激活,并检查APP激活逻辑是否有问题"
+        },
+        {
+          "code": "1512_ios",
+          "full_code": "wifi_config_ap_3_1512_ios",
+          "reason": "激活超时",
+          "solution": "激活超时，请重试"
+        },
+        {
+          "code": "2",
+          "full_code": "wifi_config_ap_3_2",
+          "reason": "找不到路由器",
+          "solution": "请靠近路由器"
+        },
+        {
+          "code": "3",
+          "full_code": "wifi_config_ap_3_3",
+          "reason": "路由器密码错误",
+          "solution": "重新输入正确的密码"
+        },
+        {
+          "code": "4",
+          "full_code": "wifi_config_ap_3_4",
+          "reason": "连上不路由器",
+          "solution": "加密模式不匹配，更换路由器"
+        },
+        {
+          "code": "5",
+          "full_code": "wifi_config_ap_3_5",
+          "reason": "DHCP 失败",
+          "solution": "检查防火墙设置等"
+        },
+        {
+          "code": "EXPIRE_android",
+          "full_code": "wifi_config_ap_3_EXPIRE_android",
+          "reason": "激活token过期",
+          "solution": "token有效期10分钟,请重新进行激活,并检查APP激活逻辑是否有问题"
+        }
+      ]
+    },
+    "ble_wifi": {
+      "name": "BLE+WiFi 双模配网",
+      "errors": [
+        {
+          "code": "1",
+          "full_code": "wifi_config_ble_wifi_2_1",
+          "reason": "数据包格式错误",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "100",
+          "full_code": "wifi_config_ble_wifi_2_100",
+          "reason": "用户取消激活，终止了激活。",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "101",
+          "full_code": "wifi_config_ble_wifi_2_101",
+          "reason": "手机与设备蓝牙连接失败",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2.重启手机蓝牙或者开关一次飞行模式后重试\n3.找其他的型号的手机对比测试，确认现象是否一致"
+        },
+        {
+          "code": "102",
+          "full_code": "wifi_config_ble_wifi_2_102",
+          "reason": "手机与设备蓝牙连接成功，蓝牙服务发现失败",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2.重启手机蓝牙或者开关一次飞行模式后重试\n3.找其他的型号的手机对比测试，确认现象是否一致"
+        },
+        {
+          "code": "103",
+          "full_code": "wifi_config_ble_wifi_2_103",
+          "reason": "手机与设备蓝牙连接成功，蓝牙CCC Notify发现失败",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2.重启手机蓝牙或者开关一次飞行模式后重试\n3.找其他的型号的手机对比测试，确认现象是否一致"
+        },
+        {
+          "code": "104",
+          "full_code": "wifi_config_ble_wifi_2_104",
+          "reason": "app通过蓝牙获取设备信息失败 0000指令交互失败。",
+          "solution": "请检查设备授权码等信息是否正常"
+        },
+        {
+          "code": "105",
+          "full_code": "wifi_config_ble_wifi_2_105",
+          "reason": "app与设备进行蓝牙配对失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "106",
+          "full_code": "wifi_config_ble_wifi_2_106",
+          "reason": "设备激活超时",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2. 请检查附近是否有路由器，并且确保设备离路由器不要太远。且设备和路由器之间不要有明显的遮挡物\n3. 请检查路由器Wi-Fi配置，如果你的Wi-Fi是5GHz, 请设置为2.4 GHz, 常用路由器的设置方法"
+        },
+        {
+          "code": "107",
+          "full_code": "wifi_config_ble_wifi_2_107",
+          "reason": "WiFi 信息发送SSID时 失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "108",
+          "full_code": "wifi_config_ble_wifi_2_108",
+          "reason": "激活token过期",
+          "solution": "token有效期10分钟,请重新进行激活,并检查APP激活逻辑是否有问题"
+        },
+        {
+          "code": "109",
+          "full_code": "wifi_config_ble_wifi_2_109",
+          "reason": "网络不通导致通信密钥获取失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "110",
+          "full_code": "wifi_config_ble_wifi_2_110",
+          "reason": "激活后查询设备详情失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "113",
+          "full_code": "wifi_config_ble_wifi_2_113",
+          "reason": "该设备为强绑定且已被其他用户绑定",
+          "solution": "1. 联系设备所属账号管理者将设备移除\n2. 引导用户APP页面上提交解绑设备工单"
+        },
+        {
+          "code": "114",
+          "full_code": "wifi_config_ble_wifi_2_114",
+          "reason": "app和设备之间蓝牙在激活中断开导致失败",
+          "solution": "设备在激活中发生断开，可重置设备后重试。若问题仍高概率出现，请检查设备的蓝牙模块是否正常。"
+        },
+        {
+          "code": "114_ios",
+          "full_code": "wifi_config_ble_wifi_2_114_ios",
+          "reason": "app和设备之间建立蓝牙连接失败",
+          "solution": "请勿在激活过程中关闭蓝牙"
+        },
+        {
+          "code": "115",
+          "full_code": "wifi_config_ble_wifi_2_115",
+          "reason": "设备信息同步失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "119",
+          "full_code": "wifi_config_ble_wifi_2_119",
+          "reason": "SSID或者激活Token不合法",
+          "solution": "请输入正确的SSID，并确保网络的通畅"
+        },
+        {
+          "code": "121",
+          "full_code": "wifi_config_ble_wifi_2_121",
+          "reason": "设备在激活中发生断开，可重置设备后重试。若问题扔高概率出现，请检查设备的蓝牙模块是否正常。",
+          "solution": ""
+        },
+        {
+          "code": "121_android",
+          "full_code": "wifi_config_ble_wifi_2_121_android",
+          "reason": "",
+          "solution": "设备蓝牙异常断开，请尝试重新激活"
+        },
+        {
+          "code": "121_ios",
+          "full_code": "wifi_config_ble_wifi_2_121_ios",
+          "reason": "蓝牙连接对象不存在",
+          "solution": "请重新开启蓝牙扫描，并尝试重新激活"
+        },
+        {
+          "code": "122_ios",
+          "full_code": "wifi_config_ble_wifi_2_122_ios",
+          "reason": "app和设备之间建立蓝牙连接失败",
+          "solution": "请重新开启蓝牙扫描，并尝试重新激活"
+        },
+        {
+          "code": "123_ios",
+          "full_code": "wifi_config_ble_wifi_2_123_ios",
+          "reason": "该设备不支持游客模式",
+          "solution": "该设备不支持游客模式，请注册账号"
+        },
+        {
+          "code": "129_ios",
+          "full_code": "wifi_config_ble_wifi_2_129_ios",
+          "reason": "激活token获取失败",
+          "solution": "请重试"
+        },
+        {
+          "code": "130",
+          "full_code": "wifi_config_ble_wifi_2_130",
+          "reason": "token失效或者未扫描到设备蓝牙",
+          "solution": "请打开蓝牙并保证网络的通畅后进行重试"
+        },
+        {
+          "code": "131",
+          "full_code": "wifi_config_ble_wifi_2_131",
+          "reason": "设备连云激活接口报错",
+          "solution": "保证网络的通畅并进行重试"
+        },
+        {
+          "code": "131_android",
+          "full_code": "wifi_config_ble_wifi_2_131_android",
+          "reason": "",
+          "solution": "请重新开启蓝牙扫描，并尝试重新激活"
+        },
+        {
+          "code": "131_android_fail",
+          "full_code": "wifi_config_ble_wifi_2_131_android_fail",
+          "reason": "",
+          "solution": "查询设备 Wi-Fi 信息失败，0x001A 指令错误"
+        },
+        {
+          "code": "133",
+          "full_code": "wifi_config_ble_wifi_2_133",
+          "reason": "App下发激活指令失败",
+          "solution": "请重试"
+        },
+        {
+          "code": "134",
+          "full_code": "wifi_config_ble_wifi_2_134",
+          "reason": "设备已激活成功，但是连接mqtt服务器上线失败",
+          "solution": "该情况在APP首页已经能看到设备,请等待设备上线,若设备一直不能上线请重新激活"
+        },
+        {
+          "code": "135",
+          "full_code": "wifi_config_ble_wifi_2_135",
+          "reason": "App查询设备信息超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "136",
+          "full_code": "wifi_config_ble_wifi_2_136",
+          "reason": "App和设备蓝牙配对超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "137",
+          "full_code": "wifi_config_ble_wifi_2_137",
+          "reason": "App查询设备信息超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "138",
+          "full_code": "wifi_config_ble_wifi_2_138",
+          "reason": "App向设备发送激活指令超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "141",
+          "full_code": "wifi_config_ble_wifi_2_141",
+          "reason": "获取设备安全配置信息失败",
+          "solution": "保证网络的通畅并进行重试"
+        },
+        {
+          "code": "142",
+          "full_code": "wifi_config_ble_wifi_2_142",
+          "reason": "App向设备发送激活信息失败",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "143",
+          "full_code": "wifi_config_ble_wifi_2_143",
+          "reason": "App向设备发送激活信息失败",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "144",
+          "full_code": "wifi_config_ble_wifi_2_144",
+          "reason": "设备查询当前环境Wifi列表超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "145",
+          "full_code": "wifi_config_ble_wifi_2_145",
+          "reason": "App与设备未建立蓝牙连接",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "146",
+          "full_code": "wifi_config_ble_wifi_2_146",
+          "reason": "当前设备尚不支持该功能",
+          "solution": "当前设备尚不支持该功能，请使用传统双模激活"
+        },
+        {
+          "code": "148",
+          "full_code": "wifi_config_ble_wifi_2_148",
+          "reason": "设备连接路由器超时",
+          "solution": "请确保待激活的WiFi是2.4G频段且输入的WiFi名称正确，并尝试重新激活"
+        },
+        {
+          "code": "149",
+          "full_code": "wifi_config_ble_wifi_2_149",
+          "reason": "设备连云激活超时",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "1501",
+          "full_code": "wifi_config_ble_wifi_2_1501",
+          "reason": "激活过程云端接口请求失败",
+          "solution": "请重置设备并尝试重新激活"
+        },
+        {
+          "code": "1512_ios",
+          "full_code": "wifi_config_ble_wifi_2_1512_ios",
+          "reason": "设备轮询超时",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "1520_ios",
+          "full_code": "wifi_config_ble_wifi_2_1520_ios",
+          "reason": "用户session失效",
+          "solution": "当前用户信息已失效，请重新登录"
+        },
+        {
+          "code": "2",
+          "full_code": "wifi_config_ble_wifi_2_2",
+          "reason": "找不到路由器",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n 2. 请检查附近是否有路由器，并且确保设备离路由器不要太远。且设备和路由器之间不要有明显的遮挡物\n  3. 请检查路由器Wi-Fi配置，如果你的Wi-Fi5GHz, 请设置为2.4 GHz, 常用路由器的设置方法"
+        },
+        {
+          "code": "2_5g",
+          "full_code": "wifi_config_ble_wifi_2_2_5g",
+          "reason": "设备无法连接路由器(当前设备使用5G频段激活)",
+          "solution": "请切换到 2.4G频段激活"
+        },
+        {
+          "code": "3",
+          "full_code": "wifi_config_ble_wifi_2_3",
+          "reason": "路由器密码错误",
+          "solution": "请再次确认路由器密码是否正确后重新激活(Wi-Fi名称和密码规范)"
+        },
+        {
+          "code": "4",
+          "full_code": "wifi_config_ble_wifi_2_4",
+          "reason": "设备连不上路由器",
+          "solution": "设备连接路由器失败"
+        },
+        {
+          "code": "400_ios",
+          "full_code": "wifi_config_ble_wifi_2_400_ios",
+          "reason": "蓝牙连接超时",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "5",
+          "full_code": "wifi_config_ble_wifi_2_5",
+          "reason": "DHCP失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "6",
+          "full_code": "wifi_config_ble_wifi_2_6",
+          "reason": "设备激活成功,但是上线失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        },
+        {
+          "code": "7",
+          "full_code": "wifi_config_ble_wifi_2_7",
+          "reason": "设备已成功连接至路由器，但是获取连云激活URL失败",
+          "solution": "请检查路由器是否能接入互联网，若确认路由器网络可达，请尝试重新激活"
+        },
+        {
+          "code": "8",
+          "full_code": "wifi_config_ble_wifi_2_8",
+          "reason": "设备已成功连接至路由器，但是设备连云激活失败",
+          "solution": "请尝试将设备重置后再重新激活"
+        }
+      ]
+    },
+    "ez_config": {
+      "name": "EZ 快连配网",
+      "errors": [
+        {
+          "code": "103_android",
+          "full_code": "wifi_config_ez_multi_103_android",
+          "reason": "网络错误",
+          "solution": ""
+        },
+        {
+          "code": "104_android",
+          "full_code": "wifi_config_ez_multi_104_android",
+          "reason": "",
+          "solution": "网络错误，请检查手机网络是否正常并重试"
+        },
+        {
+          "code": "1500_ios",
+          "full_code": "wifi_config_ez_multi_1500_ios",
+          "reason": "网络错误",
+          "solution": "请检查网络连接是否正常"
+        },
+        {
+          "code": "1501_ios",
+          "full_code": "wifi_config_ez_multi_1501_ios",
+          "reason": "激活token过期",
+          "solution": "token有效期10分钟,请重新进行激活,并检查APP激活逻辑是否有问题"
+        },
+        {
+          "code": "1512_ios",
+          "full_code": "wifi_config_ez_multi_1512_ios",
+          "reason": "激活超时",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n2. 请检查附近是否有路由器，并且确保设备离路由器不要太远。且设备和路由器之间不要有明显的遮挡物\n3. 请检查路由器Wi-Fi配置，如果你的Wi-Fi是5GHz, 请设置为2.4 GHz, 常用路由器的设置方法"
+        },
+        {
+          "code": "EXPIRE_android",
+          "full_code": "wifi_config_ez_multi_EXPIRE_android",
+          "reason": "激活token过期",
+          "solution": "token有效期10分钟,请重新进行激活,并检查APP激活逻辑是否有问题"
+        },
+        {
+          "code": "online_android",
+          "full_code": "wifi_config_ez_multi_online_android",
+          "reason": "设备已入网，但是设备上线失败",
+          "solution": "请确保网络稳定后，重置设备重试。"
+        },
+        {
+          "code": "token_android",
+          "full_code": "wifi_config_ez_multi_token_android",
+          "reason": "激活超时",
+          "solution": "1. 请检查设备是否已重置，处于待激活状态\n\n2. 请检查附近是否有路由器，并且确保设备离路由器不要太远。且设备和路由器之间\n不要有明显的遮挡物\n\n3. 请检查路由器Wi-Fi配置，如果你的Wi-Fi是5GHz或者为混频率网络， 请设置单独的2.4 GHz的网络进行尝试, 常用路由器的设置方法"
+        }
+      ]
+    },
+    "ble_gatt_config": {
+      "name": "BLE GATT 配网阶段错误码",
+      "source": "GattCode.java",
+      "errors": [
+        {
+          "code": "101",
+          "full_code": "CONFIG_DEVICE_INFO_GET_ERROR",
+          "reason": "获取设备信息失败",
+          "solution": "请检查设备是否已重置，处于待激活状态",
+          "maps_to": "104(蓝牙获取设备信息失败)"
+        },
+        {
+          "code": "103",
+          "full_code": "CONFIG_SERVER_REGISTER_ERROR",
+          "reason": "云端注册失败",
+          "solution": "检查网络后重试",
+          "maps_to": "111(设备云端注册失败)"
+        },
+        {
+          "code": "105",
+          "full_code": "CONFIG_SERVER_ACTIVE_ERROR",
+          "reason": "云端激活失败",
+          "solution": "检查设备授权信息和网络",
+          "maps_to": "112(设备云端激活失败)"
+        },
+        {
+          "code": "107",
+          "full_code": "CONFIG_DEVICE_PAIR_ERROR",
+          "reason": "设备配对失败",
+          "solution": "重置设备后重试",
+          "maps_to": "105(蓝牙配对失败)"
+        },
+        {
+          "code": "110",
+          "full_code": "CONFIG_ERROR_AUTH_KEY",
+          "reason": "认证密钥错误",
+          "solution": "检查设备授权信息",
+          "maps_to": "109(获取蓝牙加密密钥失败)"
+        },
+        {
+          "code": "111",
+          "full_code": "CONFIG_TIME_OUT",
+          "reason": "配网超时",
+          "solution": "检查设备状态后重试",
+          "maps_to": "106(配网超时)"
+        },
+        {
+          "code": "113",
+          "full_code": "CONFIG_CANCEL",
+          "reason": "用户取消配网",
+          "solution": "重置设备后重新激活",
+          "maps_to": "100(用户取消配网)"
+        },
+        {
+          "code": "114",
+          "full_code": "CONFIG_SERVER_ALREADY_BIND",
+          "reason": "设备已被其他账号绑定",
+          "solution": "联系设备所属账号管理者将设备移除",
+          "maps_to": "113(设备已被绑定)"
+        },
+        {
+          "code": "120",
+          "full_code": "CONFIG_DEVICE_NOT_FOUND",
+          "reason": "未发现设备",
+          "solution": "确认设备处于配网模式",
+          "maps_to": "110(设备不存在)"
+        },
+        {
+          "code": "121",
+          "full_code": "CONFIG_DEVICE_INFO_TIMEOUT",
+          "reason": "获取设备信息超时",
+          "solution": "检查蓝牙信号后重试",
+          "maps_to": "104(蓝牙获取设备信息失败)"
+        },
+        {
+          "code": "130",
+          "full_code": "CONFIG_PARAMS_ERROR",
+          "reason": "配网参数错误",
+          "solution": "检查传入参数是否正确",
+          "maps_to": "130(配网传参错误)"
+        },
+        {
+          "code": "131",
+          "full_code": "CONFIG_SERVER_PREACTIVE_ERROR",
+          "reason": "云端预激活失败",
+          "solution": "检查网络后重试",
+          "maps_to": "131(查询设备Wi-Fi信息失败)"
+        },
+        {
+          "code": "132",
+          "full_code": "CONFIG_COUNTRY_NOT_MATCHED_ERROR",
+          "reason": "设备不能在当前地区激活（云端限制）",
+          "solution": "确认设备所属区域与账号区域一致",
+          "maps_to": "139(设备不能在当前地区激活)"
+        },
+        {
+          "code": "133",
+          "full_code": "CONFIG_DEVICE_BIND_STATUS_ERROR",
+          "reason": "设备处于已绑定状态",
+          "solution": "先解绑再重新激活",
+          "maps_to": "120(设备绑定状态异常)"
+        }
+      ]
+    },
+    "ble_gatt_connect": {
+      "name": "BLE GATT 连接阶段错误码",
+      "source": "GattCode.java",
+      "errors": [
+        {
+          "code": "200",
+          "full_code": "CONNECT_ERROR_STAT",
+          "reason": "BLE 连接状态异常",
+          "solution": "重启蓝牙后重试",
+          "maps_to": "101(蓝牙连接错误)"
+        },
+        {
+          "code": "201",
+          "full_code": "CONNECT_ERROR_DISCOVER_SERVICE",
+          "reason": "蓝牙服务发现失败",
+          "solution": "重启蓝牙或开关飞行模式后重试",
+          "maps_to": "102(发现蓝牙服务错误)"
+        },
+        {
+          "code": "203",
+          "full_code": "CONNECT_ERROR_NOTIFY",
+          "reason": "蓝牙 Notify 通道建立失败",
+          "solution": "重启蓝牙后重试",
+          "maps_to": "103(打开蓝牙通讯通道失败)"
+        },
+        {
+          "code": "206",
+          "full_code": "CONNECT_DIRECTLY_ERROR",
+          "reason": "直接连接失败",
+          "solution": "确认设备在范围内，重启蓝牙后重试"
+        },
+        {
+          "code": "207",
+          "full_code": "CONNECT_TAKE_DISCONNECT",
+          "reason": "主动断开 BLE 连接（APP 端或用户触发）",
+          "solution": "若发生在 WiFi 信息发送成功后，属正常流程；若之前断开，检查蓝牙信号和距离",
+          "maps_to": "114(主动断开)",
+          "related_codes": ["205228", "205800", "208"]
+        },
+        {
+          "code": "208",
+          "full_code": "CONNECT_AUTO_DISCONNECT",
+          "reason": "设备端主动断开 BLE",
+          "solution": "检查设备蓝牙模块是否正常，重置设备后重试",
+          "maps_to": "121(设备主动断开)"
+        },
+        {
+          "code": "209",
+          "full_code": "CONNECT_PAIR_NO_CONNECT_ERROR",
+          "reason": "配对时未建立连接",
+          "solution": "确认设备在范围内，重启蓝牙后重试"
+        },
+        {
+          "code": "210",
+          "full_code": "CONNECT_TIME_OUT / CONNECT_MTU_ERROR",
+          "reason": "连接超时或 MTU 协商失败",
+          "solution": "确认设备在范围内，重启蓝牙后重试"
+        },
+        {
+          "code": "211",
+          "full_code": "CONNECT_DISCONNECT_AFTER_CONNECTED",
+          "reason": "连接成功后立即断开",
+          "solution": "检查设备蓝牙模块，换手机测试"
+        },
+        {
+          "code": "212",
+          "full_code": "CONNECT_DEVICE_INFO_ERROR",
+          "reason": "获取设备信息失败",
+          "solution": "检查设备固件版本"
+        },
+        {
+          "code": "213",
+          "full_code": "VERSION_NOT_SUPPORT",
+          "reason": "当前版本不支持此功能",
+          "solution": "升级 SDK 版本"
+        },
+        {
+          "code": "205228",
+          "full_code": "DEVICE_PAIR_ERROR",
+          "reason": "BLE 单点配网设备配对失败。App 与设备建立 BLE 连接并获取设备信息后，向设备发送配对/激活指令时设备端处理异常，导致配对失败。常伴随 GATT status 0x13（设备主动断开连接）。",
+          "solution": "1. 重置设备后重试\n2. 检查设备固件版本是否存在已知配对问题\n3. 如持续失败，需获取设备端串口日志排查设备固件激活逻辑",
+          "related_codes": ["207", "205800"]
+        },
+        {
+          "code": "205800",
+          "full_code": "CONNECT_TAKE_DISCONNECT (retry exhausted)",
+          "reason": "BLE 单点配网重试耗尽后最终失败。首次配网因设备主动断开（207/CONNECT_TAKE_DISCONNECT）失败后触发重试，重试期间重新扫描设备但超时未找到设备广播，最终报此错误码。通常意味着设备在首次断连后进入异常状态，未恢复 BLE 广播。",
+          "solution": "1. 重置设备使其恢复待配网广播状态后重试\n2. 手机靠近设备（30cm 以内）确保信号稳定\n3. 检查设备固件版本，升级至最新固件\n4. 如问题复现率高，需联系设备开发排查设备固件在配对断开后的状态恢复逻辑",
+          "related_codes": ["207", "205228"]
+        }
+      ]
+    },
+    "ble_gatt_ota": {
+      "name": "BLE OTA 升级错误码",
+      "source": "GattCode.java",
+      "errors": [
+        {
+          "code": "303",
+          "full_code": "BZS_OTA_FILE_FAIL",
+          "reason": "OTA 固件文件获取失败",
+          "solution": "检查网络后重试"
+        },
+        {
+          "code": "304",
+          "full_code": "BZS_OTA_UPGRADE_FAIL",
+          "reason": "OTA 升级失败",
+          "solution": "确保设备电量充足，保持蓝牙连接稳定后重试",
+          "maps_to": "117(OTA升级失败)"
+        },
+        {
+          "code": "307",
+          "full_code": "BZS_OTA_TIMEOUT",
+          "reason": "OTA 升级超时",
+          "solution": "确保设备在蓝牙范围内，重试",
+          "maps_to": "118(OTA升级超时)"
+        }
+      ]
+    },
+    "ble_gatt_wifi": {
+      "name": "BLE WiFi 配置阶段错误码",
+      "source": "GattCode.java",
+      "errors": [
+        {
+          "code": "400",
+          "full_code": "WIFI_PARAM_ERROR",
+          "reason": "WiFi 参数错误",
+          "solution": "检查 SSID 和密码是否正确",
+          "maps_to": "119(WIFI配网传参校验失败)"
+        },
+        {
+          "code": "402",
+          "full_code": "WIFI_CONFIG_INFO_SENDER_FAIL",
+          "reason": "WiFi 配置信息发送失败",
+          "solution": "重置设备后重试",
+          "maps_to": "107(Wi-Fi信息发送失败)"
+        },
+        {
+          "code": "406",
+          "full_code": "WIFI_CONFIG_CHECK_TOKEN_EXPIRE",
+          "reason": "配网 Token 过期",
+          "solution": "Token 有效期 10 分钟，请重新获取 Token 后激活",
+          "maps_to": "108(Token失效)"
+        },
+        {
+          "code": "409",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR1",
+          "reason": "设备返回错误：数据包格式错误",
+          "solution": "重置设备后重试",
+          "maps_to": "1(数据包格式错误)"
+        },
+        {
+          "code": "410",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR2",
+          "reason": "设备返回错误：找不到路由器",
+          "solution": "确保设备靠近路由器，检查路由器频段（需2.4GHz）",
+          "maps_to": "2(找不到路由器)"
+        },
+        {
+          "code": "411",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR3",
+          "reason": "设备返回错误：路由器密码错误",
+          "solution": "重新输入正确的密码",
+          "maps_to": "3(路由器密码错误)"
+        },
+        {
+          "code": "412",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR4",
+          "reason": "设备返回错误：连不上路由器",
+          "solution": "加密模式不匹配，更换路由器或检查路由器设置",
+          "maps_to": "4(连不上路由器)"
+        },
+        {
+          "code": "413",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR5",
+          "reason": "设备返回错误：DHCP 失败",
+          "solution": "检查路由器 DHCP 设置和防火墙",
+          "maps_to": "5(DHCP失败)"
+        },
+        {
+          "code": "414",
+          "full_code": "WIFI_CONFIG_RETURN_ERROR6",
+          "reason": "设备返回错误：连云失败",
+          "solution": "检查路由器是否能访问外网",
+          "maps_to": "6(连云失败)"
+        },
+        {
+          "code": "420",
+          "full_code": "BLE_CONFIG_AUTH_ERROR",
+          "reason": "云端无授权信息，设备不合法或未授权",
+          "solution": "检查设备授权信息是否正确"
+        }
+      ]
+    }
+  }
+}

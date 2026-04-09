@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "updated": "2026-03-19",
+    "description": "全局配置：噪音 TAG 黑名单，适用于所有场景诊断"
+  },
+  "id": "_global",
+  "noise_tags": [
+    "MicroServiceManager",
+    "Database-insert",
+    "Database-query",
+    "DeviceDpParser",
+    "ThingDataStore",
+    "MeshDataManager",
+    "ThingPushManager",
+    "ThingSmartShareManager",
+    "ThingUserManager",
+    "ThingFamilyManager",
+    "AIBuds_TraceEvent",
+    "AIBuds_Utils"
+  ]
+}

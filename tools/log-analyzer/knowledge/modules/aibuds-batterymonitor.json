@@ -1,0 +1,124 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_BatteryMonitor",
+  "description": "电量监听与低电量事件",
+  "source_files": [
+    "ThingAudioRecordManager.m",
+    "ThingBatteryEventManager.m",
+    "ThingBatteryMonitor.m"
+  ],
+  "related_modules": [],
+  "scenes": [
+    "battery_event"
+  ],
+  "log_stats": {
+    "total": 23,
+    "by_level": {
+      "error": 3,
+      "info": 6,
+      "debug": 14
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Already listening; ignoring duplicate calls.",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "24Already triggered within the hour; no need to monitor again.",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "24Already triggered within the hour; time since last trigger : .*Hours, still waiting : .*hour",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Battery level is below the threshold, but it has already been triggered within the last 24 hours; skipping this trigger.",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "Battery level changed, but the task does not exist.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Power level changed, but the task does not exist.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "scene: battery_event - ThingAudioRecordManagerInterface nil, skip battery notification",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "scene: battery_event - Start listening to power events.",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "scene: battery_event - Stop listening to battery events",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Start monitoring battery level; current battery level : .*%%, Threshold : .*%%",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Battery level is below the threshold at startup. : .*%%，Trigger after battery level changes",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Stop monitoring battery level",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " scene: battery_event - Manually trigger low-battery event (",
+    " scene: battery_event - Received battery level crossing thre",
+    " scene: battery_event - Through  ThingAudioRecordManagerInte",
+    " Reset pass-through status and timestamp records ",
+    " More than 24 hours since the last trigger : %.1fHours, can ",
+    " Record trigger timestamp : %.0f (%@)",
+    " User login and reload the timestamp of the last battery lev",
+    " User logs out and clears the timestamp from memory. ",
+    " Unable to retrieve battery information. ",
+    " Battery level change : %.0f%% -> %.0f%%",
+    " Battery level detected below threshold : %.0f%% (Threshold "
+  ]
+}

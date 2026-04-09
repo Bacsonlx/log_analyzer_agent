@@ -1,0 +1,219 @@
+{
+  "_meta": {
+    "updated": "2026-03-24",
+    "description": "AIVoice 流式通道与实时识别：Token 缓存、Session 池、WebSocket(AIChannel)、转写/NLG(Recognition)。"
+  },
+  "id": "aivoice-streaming-channel",
+  "name": "AIVoice 流式通道与实时识别（WebSocket / Session / Token）",
+  "module_refs": ["AIBuds_Token", "AIBuds_Session", "AIBuds_AIChannel", "AIBuds_Recognition", "AIBuds_ASR", "AIBuds_Network"],
+  "keywords": [
+    "stream",
+    "streaming",
+    "websocket",
+    "ws",
+    "session",
+    "sessionId",
+    "eventId",
+    "requestId",
+    "token",
+    "tokenId",
+    "agent",
+    "agentToken",
+    "channel",
+    "AIChannel",
+    "实时",
+    "流式",
+    "连接",
+    "断开",
+    "重连",
+    "同声",
+    "识别",
+    "转写",
+    "NLG",
+    "protobuf",
+    "pick_data",
+    "send_data",
+    "receive_data",
+    "session pool",
+    "timeout"
+  ],
+  "primary_tags": [
+    "AIBuds_Token",
+    "AIBuds_Session",
+    "AIBuds_AIChannel",
+    "AIBuds_Recognition"
+  ],
+  "secondary_tags": [
+    "AIBuds_ASR",
+    "AIBuds_Network",
+    "AIBuds_Record",
+    "AIBuds_AudioInput"
+  ],
+  "noise_tags": [],
+  "check_order": [
+    "1. Token：scene: create / scene: update / scene: remove — 是否 new token success、endpoint.update error",
+    "2. Session 池：scene: pool - * — reuse idle、creation failed、full、recoverable 边界",
+    "3. 通道连接：scene: stream / scene: ws — not connected→connecting→connected、disconnected、connection close",
+    "4. 会话创建：scene: session - create in progress → Session scene: create - success|failed",
+    "5. 音频泵：scene: pick_data / send_data / receive_data — begin/end 与 intervalMs 是否成对",
+    "6. 包与事件：scene: packet、scene: event — send end、end received、legacy ASR_START/MID/END",
+    "7. 下行解析：scene: transcribe / scene: nlg — text packet、parse protobuf failed、invalid NLG",
+    "8. 服务端消息：scene: ws_message — server error、type 变化",
+    "9. 收尾与超时：scene: request - finished、scene: timer - timeout、Token scene: timer - debug remove token on timeout"
+  ],
+  "common_causes": [
+    {
+      "pattern": "scene: create - new token failure",
+      "cause": "创建 Agent Token 失败，后续 Session/WebSocket 无凭证"
+    },
+    {
+      "pattern": "scene: update - endpoint.update error",
+      "cause": "Token 刷新/更新接口失败，可能导致连接中途鉴权失效"
+    },
+    {
+      "pattern": "scene: pool - creation failed",
+      "cause": "Session 池创建会话失败，流式请求无法绑定 sessionId"
+    },
+    {
+      "pattern": "scene: pool - full",
+      "cause": "单 token 下 Session 数达上限，新请求排队或失败"
+    },
+    {
+      "pattern": "scene: stream - not connected",
+      "cause": "发送前通道未连上，属连接时序问题或网络阻断（需结合后续 connected/disconnected）"
+    },
+    {
+      "pattern": "scene: session - state not success",
+      "cause": "会话状态非成功即断开，需回看上游 create 与 ws 错误"
+    },
+    {
+      "pattern": "scene: packet - stream end event failed",
+      "cause": "流结束事件发送或处理失败"
+    },
+    {
+      "pattern": "scene: ws_message - server error",
+      "cause": "服务端经 WebSocket 返回错误消息"
+    },
+    {
+      "pattern": "scene: transcribe - parse protobuf failed",
+      "cause": "转写下行包 Protobuf 解析失败（协议/版本/截断）"
+    },
+    {
+      "pattern": "scene: nlg - invalid NLG data format",
+      "cause": "NLG 数据格式不合法"
+    },
+    {
+      "pattern": "scene: timer - timeout",
+      "cause": "通道或事件等待超时，需对照 sessionId/eventId 是否收到 end"
+    },
+    {
+      "pattern": "scene: packet - ASR_.*send failed",
+      "cause": "旧版通道上 ASR 分包发送失败（网络或连接已断）"
+    }
+  ],
+  "normal_behaviors": [
+    {
+      "pattern": "scene: stream - already connected",
+      "description": "重复启动时通道已连接，属幂等路径",
+      "how_to_identify": "无连续 Error，后续仍有 pick_data/send_data"
+    },
+    {
+      "pattern": "recoverable: scene: pool -",
+      "description": "Session 池日志中带 recoverable，表示可恢复或边界重试场景",
+      "how_to_identify": "同一 tokenId 后续仍有 reuse idle 或新 session 创建成功"
+    },
+    {
+      "pattern": "scene: create - reuse same token",
+      "description": "Token 参数命中缓存，复用同一 tokenId",
+      "how_to_identify": "紧随其后的 update/start 正常"
+    }
+  ],
+  "phases": [
+    {
+      "name": "Token 获取与更新",
+      "tags": ["AIBuds_Token"],
+      "success_pattern": "new token success|endpoint\\.update success|reuse same token",
+      "failure_pattern": "new token failure|endpoint\\.update error"
+    },
+    {
+      "name": "Session 池与复用",
+      "tags": ["AIBuds_Session"],
+      "success_pattern": "reuse idle sessionId|create - success sessionId",
+      "failure_pattern": "pool - creation failed|pool - full|create - failed"
+    },
+    {
+      "name": "WebSocket 连接与保活",
+      "tags": ["AIBuds_AIChannel"],
+      "success_pattern": "stream - connected|ws - channel already connected",
+      "failure_pattern": "stream - disconnected|connection close|state not success"
+    },
+    {
+      "name": "音频采集与发送",
+      "tags": ["AIBuds_AIChannel"],
+      "success_pattern": "pick_data - end|send_data - end",
+      "failure_pattern": "pick_data - start already begun.*Error|send failed"
+    },
+    {
+      "name": "转写与 NLG 结果",
+      "tags": ["AIBuds_Recognition"],
+      "success_pattern": "transcribe - text packet|nlg - append chunk",
+      "failure_pattern": "parse protobuf failed|invalid NLG|missing content field"
+    },
+    {
+      "name": "请求收尾",
+      "tags": ["AIBuds_AIChannel"],
+      "success_pattern": "request - finished",
+      "failure_pattern": "timer - timeout|server error"
+    }
+  ],
+  "recording_boundaries": {
+    "start_tag": "AIBuds_Record",
+    "start_pattern": "Start recording, Device ID:",
+    "end_patterns": [
+      {"tag": "AIBuds_Record", "pattern": "Recording stopped successfully", "reason": "stopped"},
+      {"tag": "AIBuds_Record", "pattern": "Recording paused successfully", "reason": "paused"},
+      {"tag": "AIBuds_Record", "pattern": "scene: audio_record - stop when begin", "reason": "error"}
+    ],
+    "record_id_extraction": {
+      "tag": "AIBuds_AIChannel",
+      "pattern": "scene: request - started at .* requestId: (\\S+)",
+      "transform": "strip_trailing_sequence"
+    }
+  },
+  "phase_mapping": [
+    {
+      "product_phase": "选择设备",
+      "tags": ["AIBuds_Record", "AIBuds_AudioInput"],
+      "success_pattern": "Start recording, Device ID:",
+      "failure_pattern": "Device does not exist|does not support"
+    },
+    {
+      "product_phase": "选择语言",
+      "tags": ["AIBuds_ASR", "AIBuds_Translate"],
+      "success_pattern": "Token create asr config model:",
+      "failure_pattern": "source language is empty|target language is empty"
+    },
+    {
+      "product_phase": "点击开始",
+      "knowledge_phases": ["Token 获取与更新", "Session 池与复用", "WebSocket 连接与保活"],
+      "tags": ["AIBuds_Token", "AIBuds_Session", "AIBuds_AIChannel"],
+      "success_pattern": "new token success|reuse same token|create - success sessionId|stream - connected|ws - connected",
+      "failure_pattern": "new token failure|endpoint.update error|pool - creation failed|pool - full|create - failed|stream - not connected"
+    },
+    {
+      "product_phase": "开始识别",
+      "knowledge_phases": ["音频采集与发送", "转写与 NLG 结果"],
+      "tags": ["AIBuds_AIChannel", "AIBuds_Recognition", "AIBuds_ASR"],
+      "success_pattern": "pick_data - begin|send_data - begin|transcribe - text packet|nlg - append chunk",
+      "failure_pattern": "ASR_START send failed|parse protobuf failed|invalid NLG|send failed"
+    },
+    {
+      "product_phase": "识别结束",
+      "knowledge_phases": ["请求收尾"],
+      "tags": ["AIBuds_AIChannel", "AIBuds_ASR", "AIBuds_Record"],
+      "success_pattern": "request - finished|ASRTask ended.*Error: None|Recording stopped successfully",
+      "failure_pattern": "timer - timeout|server error|ASRTask ended.*Error: (?!None)"
+    }
+  ],
+  "known_issues": []
+}

@@ -1,0 +1,120 @@
+{
+  "_meta": {
+    "updated": "2026-04-03",
+    "source_repos": [
+      "ThingAudioRecordModule",
+      "ThingAutomaticSpeechRecognitionModule"
+    ],
+    "auto_generated": true,
+    "human_reviewed": false
+  },
+  "module": "AIBuds_VAD",
+  "description": "语音活动检测（VAD），含 Silero / WebRTC 等策略与缓冲",
+  "source_files": [
+    "ThingAudioRecordVoiceDetect.m",
+    "ThingAudioSileroVadStrategy.m"
+  ],
+  "related_modules": [],
+  "scenes": [],
+  "log_stats": {
+    "total": 20,
+    "by_level": {
+      "debug": 16,
+      "info": 2,
+      "error": 2
+    }
+  },
+  "success_signals": [
+    {
+      "pattern": "Voice detection started , offset=.*ms",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Silero VAD Model Retrieved successfully  .*-.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Silero VAD Model Download successful  .*-.*",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "failure_signals": [
+    {
+      "pattern": "sileroInitialization failed, switching to  WebRTC",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Reach the absolute upper limit; force sentence splitting.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Reached the absolute upper limit; the sentence is forcibly split.",
+      "level": "error",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Silero VAD Model Download failed  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    },
+    {
+      "pattern": "Silero VAD Model Failed to retrieve  .*",
+      "level": "debug",
+      "description": "",
+      "source": "auto",
+      "cause": ""
+    }
+  ],
+  "lifecycle_signals": [
+    {
+      "pattern": "Manually stop  VAD Detection",
+      "level": "info",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Aggressive mode triggered: brief silence after the phrase, then immediately ends",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Patience mode: Enter possible end state  (Observation period starts )",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    },
+    {
+      "pattern": "Voice detected as ended , offset=.*ms",
+      "level": "debug",
+      "description": "",
+      "source": "auto"
+    }
+  ],
+  "noise_patterns": [
+    " Current usage strategy : %@, isSwipeVad: %@",
+    " Statistics : active=%ld, silence=%ld",
+    " WebRTC VAD reset after %ld frames",
+    " Warning line reached; entering final stage.  (WINDING_DOWN)",
+    " Voice is too short; discarded. : %ld < %ld",
+    " Silent observation interrupted, returning to speaking state",
+    " Voice input too short; discarded. : %ld < %ld",
+    " Find an appropriate breakpoint during the final stage to el"
+  ]
+}
