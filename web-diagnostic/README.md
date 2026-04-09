@@ -105,8 +105,7 @@ npm run build    # 构建到 dist/
 
 | 模板 ID | 场景 |
 |---------|------|
-| `audio-recognition` | 语音识别（ASR） |
-| `recording` | 录音 |
+| `audio-recognition` | 实时链路（语音识别/录音链路统一） |
 | `cloud-upload` | 云端上传 |
 | `offline-transcription` | 离线转写 |
 

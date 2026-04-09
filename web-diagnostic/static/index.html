@@ -240,7 +240,7 @@ body { font-family: 'Space Grotesk', sans-serif; }
               <option value="OTA升级">OTA 升级</option>
               <option value="设备控制">设备控制</option>
               <option value="网络连接">网络连接</option>
-              <option value="录音问题">录音问题</option>
+              <option value="实时链路">实时链路</option>
               <option value="翻译/ASR">翻译 / ASR / TTS</option>
               <option value="云同步上传">云同步上传</option>
               <option value="离线文件传输">离线文件传输(AP)</option>
@@ -1215,7 +1215,7 @@ function startKnowledgeSummary() {
 }
 不要重复报告原文，直接输出 JSON。scenario_id 必须是以下已有场景之一：
 AIVoice（设备连接类）: ble-provisioning / mqtt-connection / device-offline / ota-upgrade / ble-connection / hardware-activate / lan-control / mesh-network
-AIVoice（语音/AIBuds）: aivoice-recording / aivoice-cloud-upload / aivoice-file-transfer / aivoice-translation / aivoice-transcription`;
+AIVoice（语音/AIBuds）: aivoice-streaming-channel / aivoice-cloud-upload / aivoice-file-transfer / aivoice-translation / aivoice-transcription`;
   if (userNote) {
     prompt += `\n\n用户补充说明：${userNote}`;
   }

@@ -7,6 +7,10 @@
   "name": "AIVoice 流式通道与实时识别（WebSocket / Session / Token）",
   "module_refs": ["AIBuds_Token", "AIBuds_Session", "AIBuds_AIChannel", "AIBuds_Recognition", "AIBuds_ASR", "AIBuds_Network"],
   "keywords": [
+    "录音问题",
+    "录音",
+    "recording",
+    "record",
     "stream",
     "streaming",
     "websocket",

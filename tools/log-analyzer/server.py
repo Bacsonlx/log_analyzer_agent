@@ -709,18 +709,29 @@ def _load_global_noise() -> set[str]:
 
 _knowledge_cache: list[dict] | None = None
 _knowledge_name_index: dict[str, dict] | None = None
+_knowledge_id_index: dict[str, dict] | None = None
+
+_DEPRECATED_SCENARIO_IDS = {"aivoice-recording"}
+_SCENARIO_ALIAS_TO_ID = {
+    "录音问题": "aivoice-streaming-channel",
+    "aivoice 录音问题": "aivoice-streaming-channel",
+    "aivoice recording": "aivoice-streaming-channel",
+    "aivoice-recording": "aivoice-streaming-channel",
+}
 
 
 def _load_all_knowledge() -> list[dict]:
     """Load all scenario knowledge files (cached)."""
-    global _knowledge_cache, _knowledge_name_index
+    global _knowledge_cache, _knowledge_name_index, _knowledge_id_index
     if _knowledge_cache is not None:
         return _knowledge_cache
     results = []
     name_idx: dict[str, dict] = {}
+    id_idx: dict[str, dict] = {}
     if not KNOWLEDGE_DIR.exists():
         _knowledge_cache = results
         _knowledge_name_index = name_idx
+        _knowledge_id_index = id_idx
         return results
     for fp in KNOWLEDGE_DIR.glob("*.json"):
         if fp.name.startswith("_") or fp.name == "error-codes.json":
@@ -732,20 +743,30 @@ def _load_all_knowledge() -> list[dict]:
                 name = data.get("name", "")
                 if name:
                     name_idx[name.lower()] = data
+                sid = data.get("id", "")
+                if sid:
+                    id_idx[sid.lower()] = data
         except (json.JSONDecodeError, OSError):
             continue
     _knowledge_cache = results
     _knowledge_name_index = name_idx
+    _knowledge_id_index = id_idx
     return results
 
 
 def _find_scenario(scenario: str) -> dict | None:
     """直接按名称查找场景，O(1) 命中则跳过全量模糊匹配。"""
-    global _knowledge_name_index
+    global _knowledge_name_index, _knowledge_id_index
     if _knowledge_name_index is None:
         _load_all_knowledge()
+    key = scenario.lower().strip()
+    alias_id = _SCENARIO_ALIAS_TO_ID.get(key)
+    if alias_id and _knowledge_id_index:
+        hit = _knowledge_id_index.get(alias_id.lower())
+        if hit:
+            return hit
     if _knowledge_name_index:
-        hit = _knowledge_name_index.get(scenario.lower())
+        hit = _knowledge_name_index.get(key)
         if hit:
             return hit
     return None
@@ -756,6 +777,8 @@ def _match_scenario(problem: str, knowledge: list[dict]) -> list[dict]:
     problem_lower = problem.lower()
     scored = []
     for k in knowledge:
+        if k.get("id") in _DEPRECATED_SCENARIO_IDS:
+            continue
         score = sum(1 for kw in k.get("keywords", []) if kw in problem_lower)
         if score > 0:
             scored.append((score, k))
